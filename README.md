@@ -18,7 +18,7 @@ Search PHP source code for function & method calls, variable assignments, and mo
 ## Installation
 
 ```bash
-composer require permafrost-dev/php-code-search --dev
+composer require permafrost-dev/php-code-search
 ```
 
 ## Searching
