@@ -4,7 +4,7 @@
     <img src="https://img.shields.io/github/v/release/permafrost-dev/php-code-search.svg?sort=semver&logo=github" alt="Package Version">
     <img src="https://img.shields.io/github/license/permafrost-dev/php-code-search.svg?logo=opensourceinitiative" alt="license">
     <img src="https://github.com/permafrost-dev/php-code-search/actions/workflows/run-tests.yml/badge.svg?branch=main" alt="Test Run Status">
-    <!--img src="https://codecov.io/gh/permafrost-dev/php-code-search/branch/main/graph/badge.svg?token=JPmlhRV95Y" alt="code coverage"-->
+    <img src="https://codecov.io/gh/permafrost-dev/php-code-search/branch/main/graph/badge.svg" alt="code coverage">
 </p>
 
 ---
