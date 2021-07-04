@@ -30,7 +30,7 @@ class FileSearchResults
     {
         $snippet = $this->makeSnippet($location->startLine());
 
-        $this->results[] = new SearchResult($location, $snippet);
+        $this->results[] = new SearchResult($location, $snippet, $this->file);
 
         return $this;
     }

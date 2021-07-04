@@ -16,9 +16,10 @@ class SearchResultTest extends TestCase
     /** @test */
     public function it_creates_the_object_with_correct_properties()
     {
+        $file = new File(tests_path('data/file2.txt'));
         $location = new FunctionCallLocation('my_func', 1, 1);
-        $snippet = (new CodeSnippet())->fromFile(new File(tests_path('data/file2.txt')));
-        $result = new SearchResult($location, $snippet);
+        $snippet = (new CodeSnippet())->fromFile($file);
+        $result = new SearchResult($location, $snippet, $file);
 
         $this->assertMatchesObjectSnapshot($result);
     }

@@ -5,6 +5,7 @@ namespace Permafrost\PhpCodeSearch\Results;
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Support\File;
 
 class SearchResult
 {
@@ -14,9 +15,23 @@ class SearchResult
     /** @var CodeSnippet|null */
     public $snippet;
 
-    public function __construct(CodeLocation $location, ?CodeSnippet $snippet)
+    /** @var File */
+    protected $file;
+
+    /**
+     * @param CodeLocation $location
+     * @param CodeSnippet|null $snippet
+     * @param File|string $file
+     */
+    public function __construct(CodeLocation $location, ?CodeSnippet $snippet, $file)
     {
         $this->location = $location;
         $this->snippet = $snippet;
+        $this->file = is_string($file) ? new File($file) : $file;
+    }
+
+    public function file(): File
+    {
+        return $this->file;
     }
 }
