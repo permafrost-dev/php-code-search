@@ -139,11 +139,12 @@ class Searcher
         }
 
         return array_filter($nodes, function (Node $node) use ($names, $nodeNameProp) {
-//            if (! isset($node->{$nodeNameProp}->parts)) {
-//                return false;
-//            }
             if (isset($node->{$nodeNameProp}->name)) {
                 return in_array($node->{$nodeNameProp}->name, $names, true);
+            }
+
+            if (! isset($node->{$nodeNameProp}->parts)) {
+                return false;
             }
 
             return in_array($node->{$nodeNameProp}->parts[0], $names, true);
