@@ -33,5 +33,4 @@ class VirtualFile extends File
 
         return file_put_contents($this->path, $contents) !== false;
     }
-
 }
