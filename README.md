@@ -97,6 +97,24 @@ foreach($results as $result) {
 }
 ```
 
+### Searching strings
+
+To search a string instead of a file, use the `searchCode` method.
+
+```php
+use Permafrost\PhpCodeSearch\Searcher;
+
+$searcher = new Searcher();
+
+$results = $searcher
+    ->functions(['strtolower'])
+    ->searchCode('<?php $str = strtolower("TEST");');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
+```
+
 ## Testing
 
 ```bash
