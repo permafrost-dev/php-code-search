@@ -37,6 +37,10 @@ $searcher = new Searcher();
 $results = $searcher
     ->functions(['strtolower', 'strtoupper'])
     ->search('./file1.php');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
 ```
 
 ### Static method calls
@@ -51,6 +55,10 @@ $searcher = new Searcher();
 $results = $searcher
     ->static(['Ray', 'Cache'])
     ->search('./app/Http/Controllers/MyController.php');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
 ```
 
 ### New class instances
@@ -65,6 +73,10 @@ $searcher = new Searcher();
 $results = $searcher
     ->classes(['MyClass'])
     ->search('./app/Http/Controllers/MyController.php');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
 ```
 
 ### Variable assignments
@@ -79,6 +91,10 @@ $searcher = new Searcher();
 $results = $searcher
     ->assignments(['myVar'])
     ->search('./app/Http/Controllers/MyController.php');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
 ```
 
 ## Testing
