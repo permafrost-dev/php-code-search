@@ -12,6 +12,18 @@ class SearcherTest extends TestCase
     use MatchesSnapshots;
 
     /** @test */
+    public function it_searches_code_strings()
+    {
+        $searcher = new Searcher();
+
+        $results = $searcher
+            ->functions(['strtolower', 'strtoupper'])
+            ->searchCode('<?' . "php \n\$myVar = strtolower('test');\n");
+
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
     public function it_searches_for_function_calls()
     {
         $searcher = new Searcher();
