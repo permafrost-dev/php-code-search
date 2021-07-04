@@ -5,6 +5,7 @@ namespace Permafrost\PhpCodeSearch;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Support\File;
+use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
@@ -104,6 +105,13 @@ class Searcher
         return $results;
     }
 
+    public function searchCode(string $code): FileSearchResults
+    {
+        $file = new VirtualFile($code);
+
+        return $this->search($file);
+    }
+
     protected function parseFile(File $file, FileSearchResults $results): bool
     {
         try {
@@ -139,11 +147,12 @@ class Searcher
         }
 
         return array_filter($nodes, function (Node $node) use ($names, $nodeNameProp) {
-//            if (! isset($node->{$nodeNameProp}->parts)) {
-//                return false;
-//            }
             if (isset($node->{$nodeNameProp}->name)) {
                 return in_array($node->{$nodeNameProp}->name, $names, true);
+            }
+
+            if (! isset($node->{$nodeNameProp}->parts)) {
+                return false;
             }
 
             return in_array($node->{$nodeNameProp}->parts[0], $names, true);
