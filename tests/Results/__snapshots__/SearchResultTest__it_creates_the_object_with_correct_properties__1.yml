@@ -1,0 +1,7 @@
+location:
+    name: my_func
+    startLine: 1
+    endLine: 1
+    column: 0
+snippet:
+    code: { 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }

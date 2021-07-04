@@ -1,0 +1,6 @@
+-
+    location: { name: obj, startLine: 13, endLine: 13, column: 0 }
+    snippet: { code: { 8: '    function test1()', 9: '    {', 10: '        Ray::rateLimiter()->count(5);', 11: '    }', 12: '', 13: '    $obj = new MyClass();', 14: '', 15: '    $obj->withData([123])->send();' } }
+-
+    location: { name: MyClass, startLine: 13, endLine: 13, column: 0 }
+    snippet: { code: { 8: '    function test1()', 9: '    {', 10: '        Ray::rateLimiter()->count(5);', 11: '    }', 12: '', 13: '    $obj = new MyClass();', 14: '', 15: '    $obj->withData([123])->send();' } }

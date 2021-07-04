@@ -1,0 +1,49 @@
+{
+    "name": "permafrost-dev/php-code-search",
+    "description": "Search PHP code for function & method calls, variable assignments, and more",
+    "homepage": "https://github.com/permafrost-dev/php-code-search",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick Organ",
+            "email": "patrick@permafrost.dev",
+            "homepage": "https://permafrost.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "nikic/php-parser": "^4.10"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "spatie/phpunit-snapshot-assertions": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Permafrost\\PhpCodeSearch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Permafrost\\PhpCodeSearch\\Tests\\": "tests"
+        },
+        "files": [
+            "tests/helpers.php"
+        ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/permafrost-dev"
+        }
+    ]
+}
