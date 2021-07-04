@@ -17,9 +17,13 @@ class File
     /** @var string */
     protected $path;
 
+    /** @var string */
+    public $filename;
+
     public function __construct(string $path)
     {
         $this->path = $path;
+        $this->filename = $this->getRealPath();
     }
 
     public function file(): SplFileObject
