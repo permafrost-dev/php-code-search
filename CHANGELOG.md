@@ -4,9 +4,13 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.1.1 - 2021-07-04
+
+- add `filename` property to `File` class
+
 ## 1.1.0 - 2021-07-04
 
-- add `file` property to SearchResult class
+- add `file` property to `SearchResult` class
 
 ## 1.0.0 - 2021-07-04
 
