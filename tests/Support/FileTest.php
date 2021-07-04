@@ -59,7 +59,4 @@ class FileTest extends TestCase
 
         $this->assertMatchesTextSnapshot($file->contents());
     }
-
-
-
 }

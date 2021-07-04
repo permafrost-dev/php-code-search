@@ -10,7 +10,7 @@ use PhpParser\NodeVisitorAbstract;
 
 class FunctionCallVisitor extends NodeVisitorAbstract
 {
-    /** @var FileSearchResults $results */
+    /** @var FileSearchResults */
     protected $results;
 
     public function __construct(FileSearchResults $results)
@@ -18,7 +18,8 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         $this->results = $results;
     }
 
-    public function enterNode(Node $node) {
+    public function enterNode(Node $node)
+    {
         if ($node instanceof FuncCall) {
             $location = FunctionCallLocation::create(
                 $node->name->parts[0],

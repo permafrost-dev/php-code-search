@@ -2,8 +2,8 @@
 
 namespace Permafrost\PhpCodeSearch;
 
-use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
+use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use PhpParser\Error;
@@ -16,7 +16,7 @@ use PhpParser\ParserFactory;
 
 class Searcher
 {
-    /** @var ParserFactory $parser */
+    /** @var ParserFactory */
     protected $parser;
 
     /** @var array */
@@ -58,7 +58,7 @@ class Searcher
 
     public function assignments(array $varNames): self
     {
-        $varNames = array_map(function($item) {
+        $varNames = array_map(function ($item) {
             return ltrim($item, '$');
         }, $varNames);
 
@@ -138,7 +138,7 @@ class Searcher
             return $nodes;
         }
 
-        return array_filter($nodes, function(Node $node) use ($names, $nodeNameProp) {
+        return array_filter($nodes, function (Node $node) use ($names, $nodeNameProp) {
 //            if (! isset($node->{$nodeNameProp}->parts)) {
 //                return false;
 //            }
@@ -183,7 +183,7 @@ class Searcher
     {
         $result = array_merge(...$items);
 
-        usort($result, function($a, $b) {
+        usort($result, function ($a, $b) {
             if ($a->name->getAttribute('startLine') > $b->name->getAttribute('startLine')) {
                 return 1;
             }

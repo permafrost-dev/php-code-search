@@ -4,7 +4,7 @@ namespace Permafrost\PhpCodeSearch\Code;
 
 class FunctionCallLocation implements CodeLocation
 {
-    /** @var string $name */
+    /** @var string */
     public $name;
 
     /** @var int */

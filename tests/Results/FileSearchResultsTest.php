@@ -29,5 +29,4 @@ class FileSearchResultsTest extends TestCase
         $this->assertTrue($results->hasErrors());
         $this->assertCount(1, $results->errors);
     }
-
 }

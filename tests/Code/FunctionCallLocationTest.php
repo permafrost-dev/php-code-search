@@ -17,5 +17,4 @@ class FunctionCallLocationTest extends TestCase
 
         $this->assertMatchesObjectSnapshot($location);
     }
-
 }
