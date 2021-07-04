@@ -28,6 +28,8 @@ To search a file, use the `search` method.  Its only parameter may be either a s
 To search for function calls, use the `functions` method before calling `search`.
 
 ```php
+use Permafrost\PhpCodeSearch\Searcher;
+
 $searcher = new Searcher();
 
 $results = $searcher
@@ -40,6 +42,8 @@ $results = $searcher
 To search for static method calls, use the `static` method before calling `search`.
 
 ```php
+use Permafrost\PhpCodeSearch\Searcher;
+
 $searcher = new Searcher();
 
 $results = $searcher
@@ -52,6 +56,8 @@ $results = $searcher
 To search for a class created by the `new` keyword, use the `classes` method before calling `search`.
 
 ```php
+use Permafrost\PhpCodeSearch\Searcher;
+
 $searcher = new Searcher();
 
 $results = $searcher
@@ -64,6 +70,8 @@ $results = $searcher
 To search for a variable assignment by variable name, use the `assignments` method before calling `search`. _Note: The `$` should be omitted._
 
 ```php
+use Permafrost\PhpCodeSearch\Searcher;
+
 $searcher = new Searcher();
 
 $results = $searcher
