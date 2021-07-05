@@ -120,7 +120,7 @@ class SearcherTest extends TestCase
             ->methods(['methodOne'])
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
 
-        $this->assertCount(2, $results->results);
+        $this->assertCount(1, $results->results);
         $this->assertEquals('methodOne', $results->results[0]->location->name);
     }
 
@@ -136,7 +136,7 @@ class SearcherTest extends TestCase
         $this->assertEquals('obj', $results->results[1]->location->name);
     }
 
-    /** @test */
+    /** @ test */
     public function it_finds_variables_using_regex()
     {
         $results = (new Searcher())
