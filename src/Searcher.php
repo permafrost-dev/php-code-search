@@ -4,6 +4,7 @@ namespace Permafrost\PhpCodeSearch;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\SearchError;
+use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
@@ -38,6 +39,8 @@ class Searcher
     /** @var array */
     protected $assignments = [];
 
+    protected $variables = [];
+
     /** @var bool */
     protected $withSnippets = true;
 
@@ -56,6 +59,13 @@ class Searcher
     public function methods(array $names): self
     {
         $this->methods = array_merge($this->methods, $names);
+
+        return $this;
+    }
+
+    public function variables(array $names): self
+    {
+        $this->variables = array_merge($this->variables, $names);
 
         return $this;
     }
@@ -143,8 +153,9 @@ class Searcher
         $staticMethodCalls = $this->findStaticMethodCalls($ast, $this->static);
         $assignments = $this->findVariableAssignments($ast, $this->assignments);
         $methods = $this->findMethodCalls($ast, $this->methods);
+        $variables = $this->findVariables($ast, $this->variables);
 
-        return $this->sortNodesByLineNumber($functionCalls, $classes, $staticMethodCalls, $assignments, $methods);
+        return $this->sortNodesByLineNumber($functionCalls, $classes, $staticMethodCalls, $assignments, $methods, $variables);
     }
 
     protected function findCalls(array $ast, string $class, ?string $nodeNameProp, array $names): array
@@ -186,6 +197,11 @@ class Searcher
 
             if ($node instanceof Node\Expr\StaticCall) {
                 $name = $node->class->toString();
+            }
+
+            if ($node instanceof Node\Expr\Variable) {
+                $name = $node->name;
+                return Arr::matches($name, $names, true);
             }
 
 //            if ($node instanceof Node\Expr\New_) {
@@ -237,6 +253,11 @@ class Searcher
         return $this->findCalls($ast, Node\Expr\MethodCall::class, 'name', $names);
     }
 
+    public function findVariables(array $ast, array $names): array
+    {
+        return $this->findCalls($ast, Node\Expr\Variable::class, 'name', $names);
+    }
+
     protected function traverseNodes(FileSearchResults $results, array $nodes): void
     {
         $traverser = new NodeTraverser();
@@ -251,11 +272,20 @@ class Searcher
         $result = array_merge(...$items);
 
         usort($result, function ($a, $b) {
-            if ($a->name->getAttribute('startLine') > $b->name->getAttribute('startLine')) {
+            if ($a instanceof Node\Expr\Variable) {
+                $aNode = $a;
+                $bNode = $b;
+            } else {
+                $aNode = $a->name;
+                $bNode = $b->name;
+            }
+
+
+            if ($aNode->getAttribute('startLine') > $bNode->getAttribute('startLine')) {
                 return 1;
             }
 
-            if ($a->name->getAttribute('startLine') < $b->name->getAttribute('startLine')) {
+            if ($aNode->getAttribute('startLine') < $bNode->getAttribute('startLine')) {
                 return -1;
             }
 

@@ -124,4 +124,28 @@ class SearcherTest extends TestCase
         $this->assertEquals('methodOne', $results->results[0]->location->name);
     }
 
+    /** @test */
+    public function it_finds_variables()
+    {
+        $results = (new Searcher())
+            ->variables(['obj'])
+            ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
+
+        $this->assertCount(2, $results->results);
+        $this->assertEquals('obj', $results->results[0]->location->name);
+        $this->assertEquals('obj', $results->results[1]->location->name);
+    }
+
+    /** @test */
+    public function it_finds_variables_using_regex()
+    {
+        $results = (new Searcher())
+            ->variables(['/obj[AB]/'])
+            ->searchCode('<?' . "php \n\$objC = \$objA->methodOne('one'); \$objB->methodTwo('two');\n");
+
+        $this->assertCount(2, $results->results);
+        $this->assertEquals('objA', $results->results[0]->location->name);
+        $this->assertEquals('objB', $results->results[1]->location->name);
+    }
+
 }

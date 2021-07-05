@@ -55,6 +55,16 @@ class FunctionCallVisitor extends NodeVisitorAbstract
             $this->results->addLocation($location);
         }
 
+        if ($node instanceof Node\Expr\Variable) {
+            $location = FunctionCallLocation::create(
+                $node->name,
+                $node->getStartLine(),
+                $node->getEndLine()
+            );
+
+            $this->results->addLocation($location);
+        }
+
         if ($node instanceof Node\Expr\New_) {
             $location = FunctionCallLocation::create(
                 $node->class->parts[0],
