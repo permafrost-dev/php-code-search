@@ -3,6 +3,9 @@
 All notable changes to `php-code-search` will be documented in this file.
 
 ---
+## 1.3.2 - 2021-07-05
+
+- minor fix to method searching
 
 ## 1.3.1 - 2021-07-05
 
