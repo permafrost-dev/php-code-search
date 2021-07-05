@@ -214,7 +214,7 @@ class Searcher
                 $name = $node->var->name;
             }
 
-            if (!empty($name)) {
+            if (! empty($name)) {
                 return in_array($name, $names, true);
             }
 
