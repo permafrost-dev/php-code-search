@@ -15,9 +15,6 @@ Search PHP source code for function & method calls, variable assignments, and mo
 
 ---
 
-_Note: This package is **NOT** production ready._
-
-
 ## Installation
 
 ```bash
