@@ -8,13 +8,13 @@ class FunctionCallLocation implements CodeLocation
     public $name;
 
     /** @var int */
-    public $startLine = -1;
+    public $column = 0;
 
     /** @var int */
     public $endLine = -1;
 
     /** @var int */
-    public $column = 0;
+    public $startLine = -1;
 
     public function __construct(string $name, int $startLine, int $endLine)
     {
@@ -28,9 +28,9 @@ class FunctionCallLocation implements CodeLocation
         return new static($name, $startLine, $endLine);
     }
 
-    public function startLine(): int
+    public function column(): int
     {
-        return $this->startLine;
+        return $this->column;
     }
 
     public function endLine(): int
@@ -38,8 +38,8 @@ class FunctionCallLocation implements CodeLocation
         return $this->endLine;
     }
 
-    public function column(): int
+    public function startLine(): int
     {
-        return $this->column;
+        return $this->startLine;
     }
 }
