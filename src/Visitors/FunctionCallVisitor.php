@@ -15,10 +15,13 @@ class FunctionCallVisitor extends NodeVisitorAbstract
 
     protected $functionNames = [];
 
-    public function __construct(FileSearchResults $results, array $functionNames)
+    protected $variableNames = [];
+
+    public function __construct(FileSearchResults $results, array $functionNames, array $variableNames)
     {
         $this->results = $results;
         $this->functionNames = $functionNames;
+        $this->variableNames = $variableNames;
     }
 
     public function enterNode(Node $node)
@@ -56,13 +59,15 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Expr\Variable) {
-            $location = FunctionCallLocation::create(
-                $node->name,
-                $node->getStartLine(),
-                $node->getEndLine()
-            );
+            if (in_array($node->name, $this->variableNames, true)) {
+                $location = FunctionCallLocation::create(
+                    $node->name,
+                    $node->getStartLine(),
+                    $node->getEndLine()
+                );
 
-            $this->results->addLocation($location);
+                $this->results->addLocation($location);
+            }
         }
 
         if ($node instanceof Node\Expr\New_) {

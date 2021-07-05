@@ -267,7 +267,7 @@ class Searcher
     {
         $traverser = new NodeTraverser();
 
-        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
+        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions, $this->variables));
 
         $traverser->traverse($nodes);
     }
