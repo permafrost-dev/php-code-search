@@ -15,6 +15,9 @@ Search PHP source code for function & method calls, variable assignments, and mo
 
 ---
 
+_Note: This package is **NOT** production ready._
+
+
 ## Installation
 
 ```bash
@@ -37,6 +40,27 @@ $searcher = new Searcher();
 $results = $searcher
     ->functions(['strtolower', 'strtoupper'])
     ->search('./file1.php');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
+```
+
+### Method calls
+
+To search for a method call by name, use the `methods` method before calling `search`.
+
+```php
+use Permafrost\PhpCodeSearch\Searcher;
+
+$searcher = new Searcher();
+
+$results = $searcher
+    ->methods(['testOne'])
+    ->searchCode('<?php '.
+    '    $obj->testOne("hello world 1"); '.
+    '    $obj->testTwo("hello world 2"); '.
+    '');
     
 foreach($results as $result) {
     echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
@@ -97,7 +121,7 @@ foreach($results as $result) {
 }
 ```
 
-### Searching strings
+### Searching code strings instead of files
 
 To search a string instead of a file, use the `searchCode` method.
 
