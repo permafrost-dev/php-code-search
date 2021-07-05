@@ -27,6 +27,9 @@ class Searcher
     protected $functions = [];
 
     /** @var array */
+    protected $methods = [];
+
+    /** @var array */
     protected $classes = [];
 
     /** @var array */
@@ -46,6 +49,13 @@ class Searcher
     public function functions(array $names): self
     {
         $this->functions = array_merge($this->functions, $names);
+
+        return $this;
+    }
+
+    public function methods(array $names): self
+    {
+        $this->methods = array_merge($this->methods, $names);
 
         return $this;
     }
@@ -132,8 +142,9 @@ class Searcher
         $classes = $this->findClasses($ast, $this->classes);
         $staticMethodCalls = $this->findStaticMethodCalls($ast, $this->static);
         $assignments = $this->findVariableAssignments($ast, $this->assignments);
+        $methods = $this->findMethodCalls($ast, $this->methods);
 
-        return $this->sortNodesByLineNumber($functionCalls, $classes, $staticMethodCalls, $assignments);
+        return $this->sortNodesByLineNumber($functionCalls, $classes, $staticMethodCalls, $assignments, $methods);
     }
 
     protected function findCalls(array $ast, string $class, ?string $nodeNameProp, array $names): array
@@ -166,16 +177,20 @@ class Searcher
             $name = '';
 
             if ($node instanceof FuncCall) {
-                $name = $node->name->parts[0];
+                $name = $node->name->toString();
+            }
+
+            if ($node instanceof Node\Expr\MethodCall) {
+                $name = $node->name->toString();
             }
 
             if ($node instanceof Node\Expr\StaticCall) {
-                $name = $node->name->name;
+                $name = $node->class->toString();
             }
 
-            if ($node instanceof Node\Expr\New_) {
-                $name = $node->class->name->name;
-            }
+//            if ($node instanceof Node\Expr\New_) {
+//                $name = $node->class->name->name;
+//            }
 
             if ($node instanceof Node\Expr\Assign) {
                 $name = $node->var->name;
@@ -215,6 +230,11 @@ class Searcher
     public function findVariableAssignments(array $ast, array $names): array
     {
         return $this->findCalls($ast, Node\Expr\Assign::class, 'var', $names);
+    }
+
+    public function findMethodCalls(array $ast, array $names): array
+    {
+        return $this->findCalls($ast, Node\Expr\MethodCall::class, 'name', $names);
     }
 
     protected function traverseNodes(FileSearchResults $results, array $nodes): void

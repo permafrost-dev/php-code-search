@@ -112,4 +112,16 @@ class SearcherTest extends TestCase
         $this->assertCount(1, $results->results);
         $this->assertEquals('strtoupper', $results->results[0]->location->name);
     }
+
+    /** @test */
+    public function it_finds_methods()
+    {
+        $results = (new Searcher())
+            ->methods(['methodOne'])
+            ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
+
+        $this->assertCount(1, $results->results);
+        $this->assertEquals('methodOne', $results->results[0]->location->name);
+    }
+
 }
