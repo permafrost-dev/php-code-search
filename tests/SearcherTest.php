@@ -94,4 +94,22 @@ class SearcherTest extends TestCase
 
         $this->assertMatchesSnapshot($results->results);
     }
+
+    /** @test */
+    public function it_only_returns_the_functions_being_searched_for()
+    {
+        $results = (new Searcher())
+            ->functions(['strtolower'])
+            ->searchCode('<?' . "php \n\$myVar = strtolower(strtoupper('test'));\n");
+
+        $this->assertCount(1, $results->results);
+        $this->assertEquals('strtolower', $results->results[0]->location->name);
+
+        $results = (new Searcher())
+            ->functions(['strtoupper'])
+            ->searchCode('<?' . "php \n\$myVar = strtolower(strtoupper('test'));\n");
+
+        $this->assertCount(1, $results->results);
+        $this->assertEquals('strtoupper', $results->results[0]->location->name);
+    }
 }
