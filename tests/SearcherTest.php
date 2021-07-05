@@ -147,5 +147,4 @@ class SearcherTest extends TestCase
         $this->assertEquals('objA', $results->results[0]->location->name);
         $this->assertEquals('objB', $results->results[1]->location->name);
     }
-
 }
