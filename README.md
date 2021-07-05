@@ -25,6 +25,26 @@ composer require permafrost-dev/php-code-search
 
 To search a file, use the `search` method.  Its only parameter may be either a string containing a valid filename or an instance of `\Permafrost\PhpCodeSearch\Support\File`.
 
+To search a string instead, use the `searchCode` method.
+
+### Variable names
+
+To search for variables by name, use the `variables` method before calling `search`.  To use regular expressions, surround the values with `/`.
+
+```php
+use Permafrost\PhpCodeSearch\Searcher;
+
+$searcher = new Searcher();
+
+$results = $searcher
+    ->variables(['twoA', '/^one[AB]$/'])
+    ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
+    
+foreach($results as $result) {
+    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+}
+```
+
 ### Function calls
 
 To search for function calls, use the `functions` method before calling `search`.
