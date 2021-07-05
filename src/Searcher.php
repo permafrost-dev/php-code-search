@@ -138,15 +138,53 @@ class Searcher
 
     protected function findCalls(array $ast, string $class, ?string $nodeNameProp, array $names): array
     {
+//        $result = [];
+//
+//        $nodeFinder = new NodeFinder();
+//
+//        $nodes = $nodeFinder->findInstanceOf($ast, $class);
+//
+//        foreach ($nodes as $node) {
+//            $result[] = $node->jsonSerialize();
+//        }
+//
+//        file_put_contents(getcwd() . '/test3.json', json_encode($result, JSON_PRETTY_PRINT));
+//        die();
+
+//        return [];
+
         $nodeFinder = new NodeFinder();
 
         $nodes = $nodeFinder->findInstanceOf($ast, $class);
+
 
         if (! $nodeNameProp) {
             return $nodes;
         }
 
         return array_filter($nodes, function (Node $node) use ($names, $nodeNameProp) {
+            $name = '';
+
+            if ($node instanceof FuncCall) {
+                $name = $node->name->parts[0];
+            }
+
+            if ($node instanceof Node\Expr\StaticCall) {
+                $name = $node->name->name;
+            }
+
+            if ($node instanceof Node\Expr\New_) {
+                $name = $node->class->name->name;
+            }
+
+            if ($node instanceof Node\Expr\Assign) {
+                $name = $node->var->name;
+            }
+
+            if (!empty($name)) {
+                return in_array($name, $names, true);
+            }
+
             if (isset($node->{$nodeNameProp}->name)) {
                 return in_array($node->{$nodeNameProp}->name, $names, true);
             }
@@ -183,7 +221,7 @@ class Searcher
     {
         $traverser = new NodeTraverser();
 
-        $traverser->addVisitor(new FunctionCallVisitor($results));
+        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
 
         $traverser->traverse($nodes);
     }
