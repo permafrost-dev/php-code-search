@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.2.1 - 2021-07-05
+
+- fix function search feature
+
 ## 1.2.0 - 2021-07-04
 
 - add `searchCode` method
