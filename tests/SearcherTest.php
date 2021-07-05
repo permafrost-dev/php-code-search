@@ -120,7 +120,7 @@ class SearcherTest extends TestCase
             ->methods(['methodOne'])
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
 
-        $this->assertCount(1, $results->results);
+        $this->assertCount(2, $results->results);
         $this->assertEquals('methodOne', $results->results[0]->location->name);
     }
 

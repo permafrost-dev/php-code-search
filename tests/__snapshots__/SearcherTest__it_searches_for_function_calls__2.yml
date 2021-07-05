@@ -1,12 +1,12 @@
 -
-    location: { name: printf, startLine: 4, endLine: 4, column: 0 }
+    location: { name: printf, column: 0, endLine: 4, startLine: 4 }
     snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' } }
 -
-    location: { name: strtolower, startLine: 4, endLine: 4, column: 0 }
+    location: { name: strtolower, column: 0, endLine: 4, startLine: 4 }
     snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' } }
 -
-    location: { name: strtolower, startLine: 4, endLine: 4, column: 0 }
+    location: { name: strtolower, column: 0, endLine: 4, startLine: 4 }
     snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' } }
 -
-    location: { name: strtoupper, startLine: 6, endLine: 6, column: 0 }
+    location: { name: strtoupper, column: 0, endLine: 6, startLine: 6 }
     snippet: { code: { 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()', 9: '    {' } }
