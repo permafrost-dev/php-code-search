@@ -1,4 +1,4 @@
 -
-    location: { className: Ray, methodName: rateLimiter, name: 'Ray::rateLimiter', column: 0, endLine: 10, startLine: 10 }
+    location: { column: 0, endLine: 10, startLine: 10 }
     node: { className: Ray, methodName: rateLimiter, name: 'Ray::rateLimiter' }
     snippet: { code: { 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()', 9: '    {', 10: '        Ray::rateLimiter()->count(5);', 11: '    }', 12: '', 13: '    $obj = new MyClass();' } }

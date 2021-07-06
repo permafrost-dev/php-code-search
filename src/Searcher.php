@@ -8,7 +8,12 @@ use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\PhpCodeSearch\Support\NodeSearch;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
+use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\NewClassVisitor;
+use Permafrost\PhpCodeSearch\Visitors\StaticCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\VariableCallVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -266,7 +271,12 @@ class Searcher
     {
         $traverser = new NodeTraverser();
 
-        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions, $this->variables));
+        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
+        $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
+        $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
+        $traverser->addVisitor(new VariableCallVisitor($results, $this->variables));
+        $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
+        $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
 
         $traverser->traverse($nodes);
     }

@@ -1,20 +1,17 @@
 <?php
 
+
 namespace Permafrost\PhpCodeSearch\Visitors;
+
 
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
-use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
-use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
-use Permafrost\PhpCodeSearch\Results\Nodes\MethodCallNode;
-use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
-use PhpParser\Node\Expr\FuncCall;
 use PhpParser\NodeVisitorAbstract;
 
-class FunctionCallVisitor extends NodeVisitorAbstract
+class VariableCallVisitor extends NodeVisitorAbstract
 {
     /** @var FileSearchResults */
     protected $results;
@@ -29,9 +26,9 @@ class FunctionCallVisitor extends NodeVisitorAbstract
 
     public function enterNode(Node $node)
     {
-        if ($node instanceof FuncCall) {
+        if ($node instanceof Node\Expr\Variable) {
             if (Arr::matches($node->name, $this->names, true)) {
-                $resultNode = FunctionCallNode::create($node->name->toString());
+                $resultNode = VariableNode::create($node->name);
 
                 $location = GenericCodeLocation::create(
                     $node->getStartLine(),

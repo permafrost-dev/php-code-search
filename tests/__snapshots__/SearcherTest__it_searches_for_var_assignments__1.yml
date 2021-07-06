@@ -1,6 +1,6 @@
 -
     location: { column: 0, endLine: 13, startLine: 13 }
-    node: { name: obj }
+    node: { variableName: obj, value: { subNodeNames: [class, args], type: Expr_New, line: 13, startLine: 13, endLine: 13, startTokenPos: -1, endTokenPos: -1, startFilePos: -1, endFilePos: -1, comments: {  }, docComment: null, attributes: { startLine: 13, endLine: 13 }, class: { subNodeNames: [parts], first: MyClass, last: MyClass, unqualified: true, qualified: false, fullyQualified: false, relative: false, specialClassName: false, type: Name, line: 13, startLine: 13, endLine: 13, startTokenPos: -1, endTokenPos: -1, startFilePos: -1, endFilePos: -1, comments: {  }, docComment: null, attributes: { startLine: 13, endLine: 13 }, parts: [MyClass] }, args: {  } }, name: obj }
     snippet: { code: { 9: '    {', 10: '        Ray::rateLimiter()->count(5);', 11: '    }', 12: '', 13: '    $obj = new MyClass();', 14: '', 15: '    $obj->withData([123])->send();', 16: '' } }
 -
     location: { column: 0, endLine: 13, startLine: 13 }
