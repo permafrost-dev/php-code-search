@@ -50,9 +50,6 @@ class Searcher
     /** @var array */
     protected $variables = [];
 
-    /** @var array */
-    protected $comments = [];
-
     /** @var bool */
     protected $withSnippets = true;
 
@@ -107,13 +104,6 @@ class Searcher
         return $this;
     }
 
-    public function comments(array $patterns): self
-    {
-        $this->comments = $patterns;
-
-        return $this;
-    }
-
     public function withoutSnippets(): self
     {
         $this->withSnippets = false;
@@ -137,7 +127,7 @@ class Searcher
             return $results;
         }
 
-        $calls = $this->findAllCalls($this->ast);
+        $calls = $this->findAllReferences($this->ast);
 
         $this->traverseNodes($results, $calls);
 
@@ -165,15 +155,14 @@ class Searcher
         return true;
     }
 
-    protected function findAllCalls(array $ast): array
+    protected function findAllReferences(array $ast): array
     {
-        $staticMethodCalls = $this->findCalls($ast, Node\Expr\StaticCall::class, 'class', $this->static);
-        $functionCalls = $this->findCalls($ast, FuncCall::class, 'name', $this->functions);
-        $assignments = $this->findCalls($ast, Node\Expr\Assign::class, 'var', $this->assignments);
-        $classes = $this->findCalls($ast, Node\Expr\New_::class, 'class', $this->classes);
-        $methods = $this->findCalls($ast, Node\Expr\MethodCall::class, 'name', $this->methods);
-        $variables = $this->findCalls($ast, Node\Expr\Variable::class, 'name', $this->variables);
-        $comments = $this->findCalls($ast, Comment::class, null, $this->comments);
+        $staticMethodCalls = $this->findReferences($ast, Node\Expr\StaticCall::class, 'class', $this->static);
+        $functionCalls = $this->findReferences($ast, FuncCall::class, 'name', $this->functions);
+        $assignments = $this->findReferences($ast, Node\Expr\Assign::class, 'var', $this->assignments);
+        $classes = $this->findReferences($ast, Node\Expr\New_::class, 'class', $this->classes);
+        $methods = $this->findReferences($ast, Node\Expr\MethodCall::class, 'name', $this->methods);
+        $variables = $this->findReferences($ast, Node\Expr\Variable::class, 'name', $this->variables);
 
         return $this->sortNodesByLineNumber(
             $functionCalls,
@@ -181,17 +170,15 @@ class Searcher
             $staticMethodCalls,
             $assignments,
             $methods,
-            $variables,
-            $comments
+            $variables
         );
     }
 
-    protected function findCalls(array $ast, string $class, ?string $nodeNameProp, array $names): array
+    protected function findReferences(array $ast, string $class, ?string $nodeNameProp, array $names): array
     {
         $nodeFinder = new NodeFinder();
 
         $nodes = $nodeFinder->findInstanceOf($ast, $class);
-
 
         if (! $nodeNameProp) {
             return $nodes;
@@ -248,7 +235,6 @@ class Searcher
     {
         $traverser = new NodeTraverser();
 
-        $traverser->addVisitor(new CommentVisitor($results, $this->comments));
         $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
         $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
         $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
