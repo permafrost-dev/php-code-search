@@ -38,5 +38,4 @@ class CommentVisitor extends NodeVisitorAbstract
             }
         }
     }
-
 }

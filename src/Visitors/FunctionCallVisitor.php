@@ -4,11 +4,7 @@ namespace Permafrost\PhpCodeSearch\Visitors;
 
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
-use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
-use Permafrost\PhpCodeSearch\Results\Nodes\MethodCallNode;
-use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
-use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;

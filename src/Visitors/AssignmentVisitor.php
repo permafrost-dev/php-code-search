@@ -3,7 +3,6 @@
 
 namespace Permafrost\PhpCodeSearch\Visitors;
 
-
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
@@ -36,5 +35,4 @@ class AssignmentVisitor extends NodeVisitorAbstract
             $this->results->add($resultNode, $location);
         }
     }
-
 }
