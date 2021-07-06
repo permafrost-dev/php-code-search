@@ -9,11 +9,13 @@ use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\PhpCodeSearch\Support\NodeSearch;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
+use Permafrost\PhpCodeSearch\Visitors\CommentVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\NewClassVisitor;
 use Permafrost\PhpCodeSearch\Visitors\StaticCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\VariableCallVisitor;
+use PhpParser\Comment;
 use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -45,7 +47,11 @@ class Searcher
     /** @var array */
     protected $assignments = [];
 
+    /** @var array */
     protected $variables = [];
+
+    /** @var array */
+    protected $comments = [];
 
     /** @var bool */
     protected $withSnippets = true;
@@ -97,6 +103,13 @@ class Searcher
     public function classes(array $names): self
     {
         $this->classes = $names;
+
+        return $this;
+    }
+
+    public function comments(array $patterns): self
+    {
+        $this->comments = $patterns;
 
         return $this;
     }
@@ -154,33 +167,27 @@ class Searcher
 
     protected function findAllCalls(array $ast): array
     {
-        $functionCalls = $this->findFunctionCalls($ast, $this->functions);
-        $classes = $this->findClasses($ast, $this->classes);
-        $staticMethodCalls = $this->findStaticMethodCalls($ast, $this->static);
-        $assignments = $this->findVariableAssignments($ast, $this->assignments);
-        $methods = $this->findMethodCalls($ast, $this->methods);
-        $variables = $this->findVariables($ast, $this->variables);
+        $staticMethodCalls = $this->findCalls($ast, Node\Expr\StaticCall::class, 'class', $this->static);
+        $functionCalls = $this->findCalls($ast, FuncCall::class, 'name', $this->functions);
+        $assignments = $this->findCalls($ast, Node\Expr\Assign::class, 'var', $this->assignments);
+        $classes = $this->findCalls($ast, Node\Expr\New_::class, 'class', $this->classes);
+        $methods = $this->findCalls($ast, Node\Expr\MethodCall::class, 'name', $this->methods);
+        $variables = $this->findCalls($ast, Node\Expr\Variable::class, 'name', $this->variables);
+        $comments = $this->findCalls($ast, Comment::class, null, $this->comments);
 
-        return $this->sortNodesByLineNumber($functionCalls, $classes, $staticMethodCalls, $assignments, $methods, $variables);
+        return $this->sortNodesByLineNumber(
+            $functionCalls,
+            $classes,
+            $staticMethodCalls,
+            $assignments,
+            $methods,
+            $variables,
+            $comments
+        );
     }
 
     protected function findCalls(array $ast, string $class, ?string $nodeNameProp, array $names): array
     {
-//        $result = [];
-//
-//        $nodeFinder = new NodeFinder();
-//
-//        $nodes = $nodeFinder->findInstanceOf($ast, $class);
-//
-//        foreach ($nodes as $node) {
-//            $result[] = $node->jsonSerialize();
-//        }
-//
-//        file_put_contents(getcwd() . '/test3.json', json_encode($result, JSON_PRETTY_PRINT));
-//        die();
-
-//        return [];
-
         $nodeFinder = new NodeFinder();
 
         $nodes = $nodeFinder->findInstanceOf($ast, $class);
@@ -237,40 +244,11 @@ class Searcher
         });
     }
 
-    public function findFunctionCalls(array $ast, array $functionNames): array
-    {
-        return $this->findCalls($ast, FuncCall::class, 'name', $functionNames);
-    }
-
-    public function findClasses(array $ast, array $names): array
-    {
-        return $this->findCalls($ast, Node\Expr\New_::class, 'class', $names);
-    }
-
-    public function findStaticMethodCalls(array $ast, array $classNames): array
-    {
-        return $this->findCalls($ast, Node\Expr\StaticCall::class, 'class', $classNames);
-    }
-
-    public function findVariableAssignments(array $ast, array $names): array
-    {
-        return $this->findCalls($ast, Node\Expr\Assign::class, 'var', $names);
-    }
-
-    public function findMethodCalls(array $ast, array $names): array
-    {
-        return $this->findCalls($ast, Node\Expr\MethodCall::class, 'name', $names);
-    }
-
-    public function findVariables(array $ast, array $names): array
-    {
-        return $this->findCalls($ast, Node\Expr\Variable::class, 'name', $names);
-    }
-
     protected function traverseNodes(FileSearchResults $results, array $nodes): void
     {
         $traverser = new NodeTraverser();
 
+        $traverser->addVisitor(new CommentVisitor($results, $this->comments));
         $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
         $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
         $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
