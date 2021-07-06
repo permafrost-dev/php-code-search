@@ -27,6 +27,19 @@ To search a file, use the `search` method.  Its only parameter may be either a s
 
 To search a string instead, use the `searchCode` method.
 
+The search methods return an instance of `Permafrost\PhpCodeSearch\Results\FileSearchResults`, which has a `results` property.  
+
+Each `result` is an instance of `Permafrost\PhpCodeSearch\Results\SearchResult` with the following properties:
+
+- `node` - the specific item that was found
+  - `node->name(): string`
+- `location` - the location in the file that the item was found
+  - `location->startLine(): int`
+  - `location->endLine(): int`
+- `snippet` - a snippet of code lines from the file with the result line in the middle
+  - `snippet->getCode(): string`
+- `file()` _(method)_ - provides access to the file that was searched
+
 ### Variable names
 
 To search for variables by name, use the `variables` method before calling `search`.  To use regular expressions, surround the values with `/`.
@@ -41,7 +54,7 @@ $results = $searcher
     ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 
@@ -59,7 +72,7 @@ $results = $searcher
     ->search('./file1.php');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 
@@ -80,7 +93,7 @@ $results = $searcher
     '');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 
@@ -100,7 +113,7 @@ $results = $searcher
     ->search('./app/Http/Controllers/MyController.php');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 
@@ -118,7 +131,7 @@ $results = $searcher
     ->search('./app/Http/Controllers/MyController.php');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 
@@ -136,7 +149,7 @@ $results = $searcher
     ->search('./app/Http/Controllers/MyController.php');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 
@@ -154,7 +167,7 @@ $results = $searcher
     ->searchCode('<?php $str = strtolower("TEST");');
     
 foreach($results as $result) {
-    echo "Found '{$result->location->name}' on line {$result->location->startLine}" . PHP_EOL;
+    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
 

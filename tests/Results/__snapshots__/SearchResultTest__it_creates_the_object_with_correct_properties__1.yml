@@ -3,5 +3,7 @@ location:
     column: 0
     endLine: 1
     startLine: 1
+node:
+    name: myVar
 snippet:
     code: { 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }
