@@ -7,6 +7,8 @@ All notable changes to `php-code-search` will be documented in this file.
 ## 1.4.0 - 2021-07-05
 
 - allow searching for static method calls like `MyClass` or `MyClass::someMethod`
+- add `ResultNode` class
+- add `node` property to `SearchResult` class
 
 ## 1.3.2 - 2021-07-05
 
