@@ -88,13 +88,15 @@ foreach($results as $result) {
 
 To search for static method calls, use the `static` method before calling `search`.
 
+Valid search terms are either a class name like `Cache`, or a class name and a method name like `Cache::remember`. 
+
 ```php
 use Permafrost\PhpCodeSearch\Searcher;
 
 $searcher = new Searcher();
 
 $results = $searcher
-    ->static(['Ray', 'Cache'])
+    ->static(['Ray', 'Cache::has'])
     ->search('./app/Http/Controllers/MyController.php');
     
 foreach($results as $result) {
