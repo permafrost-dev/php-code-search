@@ -2,7 +2,7 @@
 
 namespace Permafrost\PhpCodeSearch\Visitors;
 
-use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Code\StaticMethodCallLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
@@ -35,8 +35,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
             if (Arr::matches($node->name, $this->functionNames, true)) {
                 $resultNode = FunctionCallNode::create($node->name->toString());
 
-                $location = FunctionCallLocation::create(
-                    $node->name->parts[0],
+                $location = GenericCodeLocation::create(
                     $node->getStartLine(),
                     $node->getEndLine()
                 );
@@ -61,8 +60,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         if ($node instanceof Node\Expr\MethodCall) {
             $resultNode = FunctionCallNode::create($node->name->toString());
 
-            $location = FunctionCallLocation::create(
-                $node->name->toString(),
+            $location = GenericCodeLocation::create(
                 $node->getStartLine(),
                 $node->getEndLine()
             );
@@ -74,8 +72,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
             if (Arr::matches($node->name, $this->variableNames, true)) {
                 $resultNode = VariableNode::create($node->name);
 
-                $location = FunctionCallLocation::create(
-                    $node->name,
+                $location = GenericCodeLocation::create(
                     $node->getStartLine(),
                     $node->getEndLine()
                 );
@@ -87,8 +84,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         if ($node instanceof Node\Expr\New_) {
             $resultNode = VariableNode::create($node->class->toString());
 
-            $location = FunctionCallLocation::create(
-                $node->class->parts[0],
+            $location = GenericCodeLocation::create(
                 $node->getStartLine(),
                 $node->getEndLine()
             );
@@ -97,13 +93,9 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Expr\Assign) {
-//            print_r($node->expr->getSubNodeNames());
-//            print_r($node->var->getSubNodeNames());
-//            print_r([$node->var->name]);
             $resultNode = FunctionCallNode::create($node->var->name);
 
-            $location = FunctionCallLocation::create(
-                $node->var->name,
+            $location = GenericCodeLocation::create(
                 $node->getStartLine(),
                 $node->getEndLine()
             );

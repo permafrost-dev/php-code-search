@@ -1,4 +1,4 @@
 -
-    location: { name: MyClass, column: 0, endLine: 13, startLine: 13 }
+    location: { column: 0, endLine: 13, startLine: 13 }
     node: { name: MyClass }
     snippet: { code: { 9: '    {', 10: '        Ray::rateLimiter()->count(5);', 11: '    }', 12: '', 13: '    $obj = new MyClass();', 14: '', 15: '    $obj->withData([123])->send();', 16: '' } }

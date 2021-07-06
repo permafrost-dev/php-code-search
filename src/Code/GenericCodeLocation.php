@@ -2,11 +2,8 @@
 
 namespace Permafrost\PhpCodeSearch\Code;
 
-class FunctionCallLocation implements CodeLocation
+class GenericCodeLocation implements CodeLocation
 {
-    /** @var string */
-    public $name;
-
     /** @var int */
     public $column = 0;
 
@@ -16,16 +13,15 @@ class FunctionCallLocation implements CodeLocation
     /** @var int */
     public $startLine = -1;
 
-    public function __construct(string $name, int $startLine, int $endLine)
+    public function __construct(int $startLine, int $endLine)
     {
-        $this->name = $name;
         $this->startLine = $startLine;
         $this->endLine = $endLine;
     }
 
-    public static function create(string $name, int $startLine, int $endLine): self
+    public static function create(int $startLine, int $endLine): self
     {
-        return new static($name, $startLine, $endLine);
+        return new static($startLine, $endLine);
     }
 
     public function column(): int

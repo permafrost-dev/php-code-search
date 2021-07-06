@@ -117,14 +117,14 @@ class SearcherTest extends TestCase
             ->searchCode('<?' . "php \n\$myVar = strtolower(strtoupper('test'));\n");
 
         $this->assertCount(1, $results->results);
-        $this->assertEquals('strtolower', $results->results[0]->location->name);
+        $this->assertEquals('strtolower', $results->results[0]->node->name());
 
         $results = (new Searcher())
             ->functions(['strtoupper'])
             ->searchCode('<?' . "php \n\$myVar = strtolower(strtoupper('test'));\n");
 
         $this->assertCount(1, $results->results);
-        $this->assertEquals('strtoupper', $results->results[0]->location->name);
+        $this->assertEquals('strtoupper', $results->results[0]->node->name());
     }
 
     /** @test */
@@ -135,7 +135,7 @@ class SearcherTest extends TestCase
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
 
         $this->assertCount(1, $results->results);
-        $this->assertEquals('methodOne', $results->results[0]->location->name);
+        $this->assertEquals('methodOne', $results->results[0]->node->name());
     }
 
     /** @test */
@@ -146,8 +146,8 @@ class SearcherTest extends TestCase
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
 
         $this->assertCount(2, $results->results);
-        $this->assertEquals('obj', $results->results[0]->location->name);
-        $this->assertEquals('obj', $results->results[1]->location->name);
+        $this->assertEquals('obj', $results->results[0]->node->name());
+        $this->assertEquals('obj', $results->results[1]->node->name());
     }
 
     /** @test */
@@ -158,7 +158,7 @@ class SearcherTest extends TestCase
             ->searchCode('<?' . "php \n\$objC = \$objA->methodOne('one'); \$objB->methodTwo('two');\n");
 
         $this->assertCount(2, $results->results);
-        $this->assertEquals('objA', $results->results[0]->location->name);
-        $this->assertEquals('objB', $results->results[1]->location->name);
+        $this->assertEquals('objA', $results->results[0]->node->name());
+        $this->assertEquals('objB', $results->results[1]->node->name());
     }
 }
