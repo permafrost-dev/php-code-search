@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.5.1 - 2021-07-06
+
+- internal refactoring
+
 ## 1.5.0 - 2021-07-06
 
 - rename `FunctionCallLocation` to `GenericCodeLocation` and remove the name property
