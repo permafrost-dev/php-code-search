@@ -5,7 +5,6 @@ namespace Permafrost\PhpCodeSearch\Results;
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
-use Permafrost\PhpCodeSearch\Code\StaticMethodCallLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
@@ -14,7 +13,7 @@ use Permafrost\PhpCodeSearch\Support\File;
 
 class SearchResult
 {
-    /** @var CodeLocation|GenericCodeLocation|StaticMethodCallLocation */
+    /** @var CodeLocation|GenericCodeLocation */
     public $location;
 
     /** @var ResultNode|FunctionCallNode|StaticMethodCallNode|VariableNode */

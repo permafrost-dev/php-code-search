@@ -3,7 +3,6 @@
 namespace Permafrost\PhpCodeSearch\Visitors;
 
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
-use Permafrost\PhpCodeSearch\Code\StaticMethodCallLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
@@ -47,9 +46,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         if ($node instanceof Node\Expr\StaticCall) {
             $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString());
 
-            $location = StaticMethodCallLocation::create(
-                $node->class->parts[0],
-                $node->name->toString(),
+            $location = GenericCodeLocation::create(
                 $node->getStartLine(),
                 $node->getEndLine()
             );
