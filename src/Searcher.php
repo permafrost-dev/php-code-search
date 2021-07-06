@@ -6,6 +6,7 @@ use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\File;
+use Permafrost\PhpCodeSearch\Support\NodeSearch;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use PhpParser\Error;
@@ -190,7 +191,7 @@ class Searcher
             if ($node instanceof FuncCall) {
                 $name = $node->name->toString();
 
-                return Arr::matches($name, $names, false);
+                return Arr::matches($name, $names, true);
             }
 
             if ($node instanceof Node\Expr\MethodCall) {
@@ -198,7 +199,7 @@ class Searcher
             }
 
             if ($node instanceof Node\Expr\StaticCall) {
-                $name = $node->class->toString();
+                return NodeSearch::containsStaticCallName($node, $names);
             }
 
             if ($node instanceof Node\Expr\Variable) {

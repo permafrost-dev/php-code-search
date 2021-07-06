@@ -70,6 +70,20 @@ class SearcherTest extends TestCase
     }
 
     /** @test */
+    public function it_searches_for_static_method_calls_containing_the_class_and_method_name()
+    {
+        $searcher = new Searcher();
+        $file = new File(tests_path('data/file1.php'));
+
+        $results = $searcher
+            ->static(['AnotherClass::enabled'])
+            ->search($file);
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
     public function it_searches_for_var_assignments()
     {
         $searcher = new Searcher();
@@ -136,7 +150,7 @@ class SearcherTest extends TestCase
         $this->assertEquals('obj', $results->results[1]->location->name);
     }
 
-    /** @ test */
+    /** @test */
     public function it_finds_variables_using_regex()
     {
         $results = (new Searcher())
