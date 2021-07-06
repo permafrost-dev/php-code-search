@@ -4,6 +4,7 @@ namespace Permafrost\PhpCodeSearch\Tests\Results;
 
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use Permafrost\PhpCodeSearch\Results\SearchResult;
 use Permafrost\PhpCodeSearch\Support\File;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,8 @@ class SearchResultTest extends TestCase
         $file = new File(tests_path('data/file2.txt'));
         $location = new FunctionCallLocation('my_func', 1, 1);
         $snippet = (new CodeSnippet())->fromFile($file);
-        $result = new SearchResult($location, $snippet, $file);
+        $resultNode = new VariableNode('myVar');
+        $result = new SearchResult($resultNode, $location, $snippet, $file);
 
         $this->assertMatchesObjectSnapshot($result);
     }

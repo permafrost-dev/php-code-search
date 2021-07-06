@@ -1,6 +1,8 @@
 -
     location: { name: strtolower, column: 0, endLine: 4, startLine: 4 }
+    node: { name: strtolower }
     snippet: null
 -
     location: { name: strtoupper, column: 0, endLine: 6, startLine: 6 }
+    node: { name: strtoupper }
     snippet: null

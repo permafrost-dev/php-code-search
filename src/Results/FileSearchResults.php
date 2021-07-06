@@ -4,6 +4,7 @@ namespace Permafrost\PhpCodeSearch\Results;
 
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
 use Permafrost\PhpCodeSearch\Code\CodeSnippet;
+use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
 use Permafrost\PhpCodeSearch\Support\File;
 
 class FileSearchResults
@@ -26,11 +27,11 @@ class FileSearchResults
         $this->withSnippets = $withSnippets;
     }
 
-    public function addLocation(CodeLocation $location): self
+    public function add(ResultNode $resultNode, CodeLocation $location): self
     {
         $snippet = $this->makeSnippet($location->startLine());
 
-        $this->results[] = new SearchResult($location, $snippet, $this->file);
+        $this->results[] = new SearchResult($resultNode, $location, $snippet, $this->file);
 
         return $this;
     }
