@@ -8,7 +8,7 @@ class NodeSearch
 {
     public static function containsStaticCallName(StaticCall $node, array $names): bool
     {
-        foreach($names as $name) {
+        foreach ($names as $name) {
             $nodeName = $node->class->toString();
 
             if (strpos($name, '::') !== false) {
