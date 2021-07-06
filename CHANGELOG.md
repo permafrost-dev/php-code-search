@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.5.0 - 2021-07-06
+
+- rename `FunctionCallLocation` to `GenericCodeLocation` and remove the name property
+
 ## 1.4.0 - 2021-07-05
 
 - allow searching for static method calls like `MyClass` or `MyClass::someMethod`
