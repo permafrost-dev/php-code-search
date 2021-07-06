@@ -13,3 +13,6 @@
     $obj = new MyClass();
 
     $obj->withData([123])->send();
+
+    $isDisabled = AnotherClass::disabled();
+    $isEnabled = AnotherClass::enabled();

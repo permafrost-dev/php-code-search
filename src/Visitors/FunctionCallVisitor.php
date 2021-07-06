@@ -3,7 +3,9 @@
 namespace Permafrost\PhpCodeSearch\Visitors;
 
 use Permafrost\PhpCodeSearch\Code\FunctionCallLocation;
+use Permafrost\PhpCodeSearch\Code\StaticMethodCallLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
+use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\NodeVisitorAbstract;
@@ -27,7 +29,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof FuncCall) {
-            if (in_array($node->name->parts[0], $this->functionNames, true)) {
+            if (Arr::matches($node->name, $this->functionNames, true)) {
                 $location = FunctionCallLocation::create(
                     $node->name->parts[0],
                     $node->getStartLine(),
@@ -39,8 +41,9 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Expr\StaticCall) {
-            $location = FunctionCallLocation::create(
+            $location = StaticMethodCallLocation::create(
                 $node->class->parts[0],
+                $node->name->toString(),
                 $node->getStartLine(),
                 $node->getEndLine()
             );
@@ -59,7 +62,7 @@ class FunctionCallVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Expr\Variable) {
-            if (in_array($node->name, $this->variableNames, true)) {
+            if (Arr::matches($node->name, $this->variableNames, true)) {
                 $location = FunctionCallLocation::create(
                     $node->name,
                     $node->getStartLine(),
