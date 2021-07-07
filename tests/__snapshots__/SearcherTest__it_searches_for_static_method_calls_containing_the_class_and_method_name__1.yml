@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 18, startLine: 18 }
-    node: { className: AnotherClass, methodName: enabled, name: 'AnotherClass::enabled' }
+    node: { className: AnotherClass, methodName: enabled, name: 'AnotherClass::enabled', args: {  } }
     snippet: { code: { 11: '    }', 12: '', 13: '    $obj = new MyClass();', 14: '', 15: '    $obj->withData([123])->send();', 16: '', 17: '    $isDisabled = AnotherClass::disabled();', 18: '    $isEnabled = AnotherClass::enabled();' } }
