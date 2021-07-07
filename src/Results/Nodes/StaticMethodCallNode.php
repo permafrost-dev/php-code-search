@@ -2,8 +2,12 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
+use Permafrost\PhpCodeSearch\Results\Nodes\Traits\TransformsArguments;
+
 class StaticMethodCallNode implements ResultNode
 {
+    use TransformsArguments;
+
     /** @var string */
     public $className;
 
@@ -13,14 +17,18 @@ class StaticMethodCallNode implements ResultNode
     /** @var string */
     public $name;
 
-    public function __construct(string $className, string $methodName)
+    /** @var array|ResultNode[]|ValueNode[] */
+    public $args;
+
+    public function __construct(string $className, string $methodName, $args)
     {
         $this->className = $className;
         $this->methodName = $methodName;
+        $this->args = $this->transformArgumentsToNodes($args);
         $this->name = $this->name();
     }
 
-    public static function create(string $className, string $methodName): self
+    public static function create(string $className, string $methodName, $args): self
     {
         return new static(...func_get_args());
     }

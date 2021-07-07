@@ -2,7 +2,9 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-class AssignmentNode implements ResultNode
+use Permafrost\PhpCodeSearch\Support\Transformer;
+
+class AssignmentNode implements ResultNode, ValueNode
 {
     /** @var string */
     public $variableName;
@@ -16,7 +18,7 @@ class AssignmentNode implements ResultNode
     public function __construct(string $variableName, $value)
     {
         $this->variableName = $variableName;
-        $this->value = $value;
+        $this->value = Transformer::parserNodeToResultNode($value);
         $this->name = $this->name();
     }
 
@@ -28,5 +30,10 @@ class AssignmentNode implements ResultNode
     public function name(): string
     {
         return $this->variableName;
+    }
+
+    public function value()
+    {
+        return $this->value;
     }
 }

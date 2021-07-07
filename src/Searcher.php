@@ -6,14 +6,13 @@ use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\File;
-use Permafrost\PhpCodeSearch\Support\NodeSearch;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\NewClassVisitor;
 use Permafrost\PhpCodeSearch\Visitors\StaticCallVisitor;
-use Permafrost\PhpCodeSearch\Visitors\VariableCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\VariableReferenceVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -193,10 +192,16 @@ class Searcher
 
             if ($node instanceof Node\Expr\MethodCall) {
                 $name = $node->name->toString();
+
+                return Arr::matches($name, $names, true);
             }
 
             if ($node instanceof Node\Expr\StaticCall) {
-                return NodeSearch::containsStaticCallName($node, $names);
+                $name = $node->class->toString();
+                $methodName = $node->name->toString();
+
+                return Arr::matches($name, $names, true) || Arr::matches("{$name}::{$methodName}", $names, true);
+                //return NodeSearch::containsStaticCallName($node, $names);
             }
 
             if ($node instanceof Node\Expr\Variable) {
@@ -254,7 +259,7 @@ class Searcher
         $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
         $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
         $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
-        $traverser->addVisitor(new VariableCallVisitor($results, $this->variables));
+        $traverser->addVisitor(new VariableReferenceVisitor($results, $this->variables));
         $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
         $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
 
@@ -266,13 +271,15 @@ class Searcher
         $result = array_merge(...$items);
 
         usort($result, function ($a, $b) {
-            if ($a instanceof Node\Expr\Variable) {
-                $aNode = $a;
-                $bNode = $b;
-            } else {
-                $aNode = $a->name;
-                $bNode = $b->name;
-            }
+            $aNode = $a;
+            $bNode = $b;
+
+//            if ($a instanceof Node\Expr\Variable) {
+//
+//            } else {
+//                $aNode = $a->name;
+//                $bNode = $b->name;
+//            }
 
 
             if ($aNode->getAttribute('startLine') > $bNode->getAttribute('startLine')) {

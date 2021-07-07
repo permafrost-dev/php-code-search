@@ -131,12 +131,66 @@ class SearcherTest extends TestCase
     public function it_finds_methods()
     {
         $results = (new Searcher())
-            ->methods(['methodOne'])
-            ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
+            ->methods(['methodTwo'])
+            ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo(\$obj->methodOne('two'));\n");
 
         $this->assertCount(1, $results->results);
-        $this->assertEquals('$obj->methodOne', $results->results[0]->node->name());
+        $this->assertEquals('$obj->methodTwo', $results->results[0]->node->name());
     }
+
+    /** @test */
+    public function it_transforms_nested_calls_and_arguments()
+    {
+        $results = (new Searcher())
+            ->methods(['methodTwo'])
+            ->searchCode('<?' . "php \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n");
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_finds_complex_assignments()
+    {
+        $results = (new Searcher())
+            ->assignments(['myVar2'])
+            ->searchCode('<?' . "php
+                \$myVar = \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n
+                \$myVar2 = [1, 2, 3];
+                \$myVar2 = [...\$myVar2, \$myVar->someProp, 4, 5, 6];
+                \$myVar2 = ['one' => 1, 'two' => \$anotherVar->someMethod()];
+            ");
+
+        $this->assertCount(3, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_finds_binary_operations()
+    {
+        $results = (new Searcher())
+            ->assignments(['obj'])
+            ->searchCode('<?' . "php
+                \$obj = 1 + 3;
+            ");
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_finds_assign_operations()
+    {
+        $results = (new Searcher())
+            ->assignments(['obj'])
+            ->searchCode('<?' . "php
+                \$obj = 'hello ' . 'world';
+            ");
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
 
     /** @test */
     public function it_finds_variables()

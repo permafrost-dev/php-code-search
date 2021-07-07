@@ -5,6 +5,7 @@ namespace Permafrost\PhpCodeSearch\Visitors;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\MethodCallNode;
+use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
@@ -24,14 +25,16 @@ class MethodCallVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\MethodCall) {
-            $resultNode = MethodCallNode::create($node->var->name, $node->name->toString());
+            if (Arr::matches($node->name->toString(), $this->names, true)) {
+                $resultNode = MethodCallNode::create($node->var->name, $node->name->toString(), $node->args);
 
-            $location = GenericCodeLocation::create(
-                $node->getStartLine(),
-                $node->getEndLine()
-            );
+                $location = GenericCodeLocation::create(
+                    $node->getStartLine(),
+                    $node->getEndLine()
+                );
 
-            $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $location);
+            }
         }
     }
 }

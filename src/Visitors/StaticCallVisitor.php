@@ -5,6 +5,7 @@ namespace Permafrost\PhpCodeSearch\Visitors;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
+use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
@@ -24,14 +25,19 @@ class StaticCallVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\StaticCall) {
-            $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString());
+            $name = $node->class->toString();
+            $methodName = $node->name->toString();
 
-            $location = GenericCodeLocation::create(
-                $node->getStartLine(),
-                $node->getEndLine()
-            );
+            if (Arr::matches($name, $this->names, true) || Arr::matches("{$name}::{$methodName}", $this->names, true)) {
+                $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString(), $node->args);
 
-            $this->results->add($resultNode, $location);
+                $location = GenericCodeLocation::create(
+                    $node->getStartLine(),
+                    $node->getEndLine()
+                );
+
+                $this->results->add($resultNode, $location);
+            }
         }
     }
 }
