@@ -205,6 +205,20 @@ class Searcher
                 return Arr::matches($name, $names, true);
             }
 
+            if ($node instanceof Node\Expr\Array_) {
+                return false;
+            }
+
+            if ($node instanceof Node\Expr\ArrayItem) {
+                return false;
+            }
+
+            if ($node instanceof Node\Expr\ArrayDimFetch) {
+                $name = $node->var->name;
+
+                return Arr::matches($name, $names, true);
+            }
+
 //            if ($node instanceof Node\Expr\New_) {
 //                $name = $node->class->name->name;
 //            }
