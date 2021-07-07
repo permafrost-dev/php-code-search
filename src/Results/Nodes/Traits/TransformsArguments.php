@@ -2,6 +2,7 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes\Traits;
 
+use Permafrost\PhpCodeSearch\Results\Nodes\ArrayNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\MethodCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\NumberNode;
@@ -9,6 +10,7 @@ use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\StringNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use PhpParser\Node\Arg;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\StaticCall;
@@ -54,6 +56,10 @@ trait TransformsArguments
 
         if ($arg->value instanceof MethodCall) {
             return MethodCallNode::create($arg->value->var->name, $arg->value->name->toString(), $arg->value->args);
+        }
+
+        if ($arg->value instanceof Array_) {
+            return new ArrayNode($arg->value->items);
         }
 
         return $arg;
