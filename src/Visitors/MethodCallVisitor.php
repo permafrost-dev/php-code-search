@@ -24,7 +24,7 @@ class MethodCallVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\MethodCall) {
-            $resultNode = MethodCallNode::create($node->var->name, $node->name->toString());
+            $resultNode = MethodCallNode::create($node->var->name, $node->name->toString(), $node->args);
 
             $location = GenericCodeLocation::create(
                 $node->getStartLine(),
