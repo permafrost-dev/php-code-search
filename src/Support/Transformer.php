@@ -5,6 +5,8 @@ namespace Permafrost\PhpCodeSearch\Support;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayItemNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
+use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentOperationNode;
+use Permafrost\PhpCodeSearch\Results\Nodes\BinaryOperationNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\MethodCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\PropertyAccessNode;
@@ -16,6 +18,8 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\Assign;
+use PhpParser\Node\Expr\AssignOp;
+use PhpParser\Node\Expr\BinaryOp;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
@@ -91,6 +95,14 @@ class Transformer
 
         if ($value instanceof PropertyFetch) {
             return new PropertyAccessNode($value->var->name, $value->name->toString());
+        }
+
+        if ($value instanceof BinaryOp) {
+            return new BinaryOperationNode($value);
+        }
+
+        if ($value instanceof AssignOp) {
+            return new AssignmentOperationNode($value);
         }
 
         return $node;

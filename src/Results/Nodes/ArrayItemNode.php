@@ -6,7 +6,7 @@ use Permafrost\PhpCodeSearch\Support\Transformer;
 
 class ArrayItemNode implements ValueNode, ResultNode
 {
-    /** @var mixed|int|string */
+    /** @var mixed|int|string|null */
     public $key;
 
     /** @var array|mixed|ResultNode|ValueNode  */

@@ -1,0 +1,4 @@
+-
+    location: { column: 0, endLine: 2, startLine: 2 }
+    node: { variableName: obj, value: { symbol: ., left: { value: 'hello ' }, right: { value: world } }, name: obj }
+    snippet: { code: { 1: '<?php', 2: '                $obj = ''hello '' . ''world'';' } }

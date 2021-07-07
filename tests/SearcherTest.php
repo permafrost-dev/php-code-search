@@ -166,6 +166,33 @@ class SearcherTest extends TestCase
     }
 
     /** @test */
+    public function it_finds_binary_operations()
+    {
+        $results = (new Searcher())
+            ->assignments(['obj'])
+            ->searchCode('<?' . "php
+                \$obj = 1 + 3;
+            ");
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_finds_assign_operations()
+    {
+        $results = (new Searcher())
+            ->assignments(['obj'])
+            ->searchCode('<?' . "php
+                \$obj = 'hello ' . 'world';
+            ");
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+
+    /** @test */
     public function it_finds_variables()
     {
         $results = (new Searcher())
