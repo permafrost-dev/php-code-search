@@ -271,13 +271,15 @@ class Searcher
         $result = array_merge(...$items);
 
         usort($result, function ($a, $b) {
-            if ($a instanceof Node\Expr\Variable) {
-                $aNode = $a;
-                $bNode = $b;
-            } else {
-                $aNode = $a->name;
-                $bNode = $b->name;
-            }
+            $aNode = $a;
+            $bNode = $b;
+
+//            if ($a instanceof Node\Expr\Variable) {
+//
+//            } else {
+//                $aNode = $a->name;
+//                $bNode = $b->name;
+//            }
 
 
             if ($aNode->getAttribute('startLine') > $bNode->getAttribute('startLine')) {

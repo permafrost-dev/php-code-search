@@ -1,0 +1,12 @@
+-
+    location: { column: 0, endLine: 4, startLine: 4 }
+    node: { variableName: myVar2, value: [{ key: null, value: { value: 1 } }, { key: null, value: { value: 2 } }, { key: null, value: { value: 3 } }], name: myVar2 }
+    snippet: { code: { 1: '<?php', 2: '                $myVar = $obj->methodTwo(MyModel::find(1), $obj->methodOne(''two'', [2, 3]), [$this, ''handlerMethod'']);', 3: '', 4: '                $myVar2 = [1, 2, 3];', 5: '                $myVar2 = [...$myVar2, $myVar->someProp, 4, 5, 6];', 6: '                $myVar2 = [''one'' => 1, ''two'' => $anotherVar->someMethod()];' } }
+-
+    location: { column: 0, endLine: 5, startLine: 5 }
+    node: { variableName: myVar2, value: [{ key: null, value: { name: myVar2 } }, { key: null, value: { objectName: myVar, propertyName: someProp } }, { key: null, value: { value: 4 } }, { key: null, value: { value: 5 } }, { key: null, value: { value: 6 } }], name: myVar2 }
+    snippet: { code: { 1: '<?php', 2: '                $myVar = $obj->methodTwo(MyModel::find(1), $obj->methodOne(''two'', [2, 3]), [$this, ''handlerMethod'']);', 3: '', 4: '                $myVar2 = [1, 2, 3];', 5: '                $myVar2 = [...$myVar2, $myVar->someProp, 4, 5, 6];', 6: '                $myVar2 = [''one'' => 1, ''two'' => $anotherVar->someMethod()];' } }
+-
+    location: { column: 0, endLine: 6, startLine: 6 }
+    node: { variableName: myVar2, value: [{ key: { value: one }, value: { value: 1 } }, { key: { value: two }, value: { variableName: anotherVar, methodName: someMethod, name: $anotherVar->someMethod, args: {  } } }], name: myVar2 }
+    snippet: { code: { 1: '<?php', 2: '                $myVar = $obj->methodTwo(MyModel::find(1), $obj->methodOne(''two'', [2, 3]), [$this, ''handlerMethod'']);', 3: '', 4: '                $myVar2 = [1, 2, 3];', 5: '                $myVar2 = [...$myVar2, $myVar->someProp, 4, 5, 6];', 6: '                $myVar2 = [''one'' => 1, ''two'' => $anotherVar->someMethod()];' } }

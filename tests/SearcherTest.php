@@ -134,8 +134,6 @@ class SearcherTest extends TestCase
             ->methods(['methodTwo'])
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo(\$obj->methodOne('two'));\n");
 
-        print_r($results->results);
-
         $this->assertCount(1, $results->results);
         $this->assertEquals('$obj->methodTwo', $results->results[0]->node->name());
     }
@@ -148,6 +146,22 @@ class SearcherTest extends TestCase
             ->searchCode('<?' . "php \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n");
 
         $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_finds_complex_assignments()
+    {
+        $results = (new Searcher())
+            ->assignments(['myVar2'])
+            ->searchCode('<?' . "php
+                \$myVar = \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n
+                \$myVar2 = [1, 2, 3];
+                \$myVar2 = [...\$myVar2, \$myVar->someProp, 4, 5, 6];
+                \$myVar2 = ['one' => 1, 'two' => \$anotherVar->someMethod()];
+            ");
+
+        $this->assertCount(3, $results->results);
         $this->assertMatchesSnapshot($results->results);
     }
 

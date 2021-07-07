@@ -6,6 +6,7 @@ namespace Permafrost\PhpCodeSearch\Visitors;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
+use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
@@ -25,14 +26,16 @@ class AssignmentVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\Assign) {
-            $resultNode = AssignmentNode::create($node->var->name, $node->expr);
+            if (Arr::matches($node->var->name, $this->names, true)) {
+                $resultNode = AssignmentNode::create($node->var->name, $node->expr);
 
-            $location = GenericCodeLocation::create(
-                $node->getStartLine(),
-                $node->getEndLine()
-            );
+                $location = GenericCodeLocation::create(
+                    $node->getStartLine(),
+                    $node->getEndLine()
+                );
 
-            $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $location);
+            }
         }
     }
 }
