@@ -9,7 +9,7 @@ class ArrayItemNode implements ValueNode, ResultNode
     /** @var mixed|int|string|null */
     public $key;
 
-    /** @var array|mixed|ResultNode|ValueNode  */
+    /** @var array|mixed|ResultNode|ValueNode */
     public $value;
 
     public function __construct($key, $value)

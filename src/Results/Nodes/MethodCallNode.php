@@ -20,7 +20,6 @@ class MethodCallNode implements ResultNode
     /** @var array|ResultNode[]|ValueNode[] */
     public $args;
 
-
     public function __construct(string $variableName, string $methodName, $args)
     {
         $this->variableName = $variableName;

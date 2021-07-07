@@ -29,6 +29,4 @@ class FunctionCallNode implements ResultNode
     {
         return $this->name;
     }
-
-
 }

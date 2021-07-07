@@ -3,7 +3,6 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-
 interface OperationNode
 {
     public function symbol(): string;

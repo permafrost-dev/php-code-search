@@ -35,7 +35,7 @@ class Transformer
     {
         $result = [];
 
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             $result[] = static::parserNodeToResultNode($node);
         }
 

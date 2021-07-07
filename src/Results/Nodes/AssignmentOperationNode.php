@@ -28,5 +28,4 @@ class AssignmentOperationNode implements ResultNode, ValueNode
     {
         return $this->value;
     }
-
 }

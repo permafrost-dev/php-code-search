@@ -18,7 +18,6 @@ class StringNode implements \Permafrost\PhpCodeSearch\Results\Nodes\ValueNode
         $this->value = $value;
     }
 
-
     public function value()
     {
         return $this->value;

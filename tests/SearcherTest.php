@@ -191,7 +191,6 @@ class SearcherTest extends TestCase
         $this->assertMatchesSnapshot($results->results);
     }
 
-
     /** @test */
     public function it_finds_variables()
     {

@@ -37,5 +37,4 @@ class BinaryOperationNode implements OperationNode
     {
         return $this->right;
     }
-
 }
