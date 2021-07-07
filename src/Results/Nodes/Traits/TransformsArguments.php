@@ -11,6 +11,7 @@ use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Scalar;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
@@ -28,26 +29,26 @@ trait TransformsArguments
         return $nodes;
     }
 
-    public function transformArgumentToResultNode(Arg $arg)
+    protected function transformArgumentToResultNode(Arg $arg)
     {
-        if ($arg instanceof String_) {
-            return new StringNode($arg->value);
+        if ($arg->value instanceof String_) {
+            return new StringNode($arg->value->value);
         }
 
-        if ($arg instanceof LNumber || $arg instanceof DNumber) {
-            return new NumberNode($arg->value);
+        if ($arg->value instanceof LNumber || $arg->value instanceof DNumber) {
+            return new NumberNode($arg->value->value);
         }
 
-        if ($arg instanceof Variable) {
-            return VariableNode::create($arg->name);
+        if ($arg->value instanceof Variable) {
+            return VariableNode::create($arg->value->name);
         }
 
-        if ($arg instanceof FuncCall) {
-            return FunctionCallNode::create($arg->name, $arg->args);
+        if ($arg->value instanceof FuncCall) {
+            return FunctionCallNode::create($arg->value->name, $arg->value->args);
         }
 
-        if ($arg instanceof StaticCall) {
-            return StaticMethodCallNode::create($arg->class->toString(), $arg->name->toString());
+        if ($arg->value instanceof StaticCall) {
+            return StaticMethodCallNode::create($arg->value->class->toString(), $arg->value->name->toString(), $arg->value->args);
         }
 
         return $arg;

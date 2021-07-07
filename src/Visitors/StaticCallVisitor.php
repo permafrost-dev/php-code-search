@@ -24,7 +24,7 @@ class StaticCallVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\StaticCall) {
-            $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString());
+            $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString(), $node->args);
 
             $location = GenericCodeLocation::create(
                 $node->getStartLine(),
