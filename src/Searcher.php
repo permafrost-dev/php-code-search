@@ -224,6 +224,10 @@ class Searcher
 //            }
 
             if ($node instanceof Node\Expr\Assign) {
+                if (! $node->var instanceof Node\Expr\Variable) {
+                    return false;
+                }
+
                 $name = $node->var->name;
             }
 
