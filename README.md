@@ -71,7 +71,7 @@ $results = $searcher
     ->variables(['twoA', '/^one[AB]$/'])
     ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
     
-foreach($results as $result) {
+foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
@@ -85,7 +85,7 @@ $results = $searcher
     ->functions(['strtolower', 'strtoupper'])
     ->search('./file1.php');
     
-foreach($results as $result) {
+foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
@@ -102,7 +102,7 @@ $results = $searcher
     '    $obj->testTwo("hello world 2"); '.
     '');
     
-foreach($results as $result) {
+foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
@@ -118,7 +118,7 @@ $results = $searcher
     ->static(['Ray', 'Cache::has'])
     ->search('./app/Http/Controllers/MyController.php');
     
-foreach($results as $result) {
+foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
@@ -132,7 +132,7 @@ $results = $searcher
     ->classes(['MyClass'])
     ->search('./app/Http/Controllers/MyController.php');
     
-foreach($results as $result) {
+foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
@@ -146,7 +146,7 @@ $results = $searcher
     ->assignments(['myVar'])
     ->search('./app/Http/Controllers/MyController.php');
     
-foreach($results as $result) {
+foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
 }
 ```
