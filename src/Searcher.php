@@ -13,7 +13,7 @@ use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\NewClassVisitor;
 use Permafrost\PhpCodeSearch\Visitors\StaticCallVisitor;
-use Permafrost\PhpCodeSearch\Visitors\VariableCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\VariableReferenceVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -254,7 +254,7 @@ class Searcher
         $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
         $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
         $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
-        $traverser->addVisitor(new VariableCallVisitor($results, $this->variables));
+        $traverser->addVisitor(new VariableReferenceVisitor($results, $this->variables));
         $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
         $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
 

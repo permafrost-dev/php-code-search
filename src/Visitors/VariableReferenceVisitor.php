@@ -10,7 +10,7 @@ use Permafrost\PhpCodeSearch\Support\Arr;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
-class VariableCallVisitor extends NodeVisitorAbstract
+class VariableReferenceVisitor extends NodeVisitorAbstract
 {
     /** @var FileSearchResults */
     protected $results;
