@@ -40,15 +40,33 @@ Each `result` is an instance of `Permafrost\PhpCodeSearch\Results\SearchResult` 
   - `snippet->getCode(): string`
 - `file()` _(method)_ - provides access to the file that was searched
 
-### Variable names
+### Searching
 
-To search for variables by name, use the `variables` method before calling `search`.  To use regular expressions, surround the values with `/`.
+To search through the code in a string or file, use the `Searcher` class:
 
 ```php
 use Permafrost\PhpCodeSearch\Searcher;
 
 $searcher = new Searcher();
+```
 
+To search a file, use the `search` method, and the `searchCode` method to search a string of code.
+
+```php
+$results = $searcher
+    ->functions(['strtolower', 'strtoupper'])
+    ->search('./file1.php');
+
+$results = $searcher
+    ->variables(['twoA', '/^one[AB]$/'])
+    ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
+```
+
+### Variable names
+
+To search for variables by name, use the `variables` method before calling `search`.  To use regular expressions, surround the values with `/`.
+
+```php
 $results = $searcher
     ->variables(['twoA', '/^one[AB]$/'])
     ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
@@ -63,10 +81,6 @@ foreach($results as $result) {
 To search for function calls, use the `functions` method before calling `search`.
 
 ```php
-use Permafrost\PhpCodeSearch\Searcher;
-
-$searcher = new Searcher();
-
 $results = $searcher
     ->functions(['strtolower', 'strtoupper'])
     ->search('./file1.php');
@@ -81,10 +95,6 @@ foreach($results as $result) {
 To search for a method call by name, use the `methods` method before calling `search`.
 
 ```php
-use Permafrost\PhpCodeSearch\Searcher;
-
-$searcher = new Searcher();
-
 $results = $searcher
     ->methods(['testOne'])
     ->searchCode('<?php '.
@@ -104,10 +114,6 @@ To search for static method calls, use the `static` method before calling `searc
 Valid search terms are either a class name like `Cache`, or a class name and a method name like `Cache::remember`. 
 
 ```php
-use Permafrost\PhpCodeSearch\Searcher;
-
-$searcher = new Searcher();
-
 $results = $searcher
     ->static(['Ray', 'Cache::has'])
     ->search('./app/Http/Controllers/MyController.php');
@@ -122,10 +128,6 @@ foreach($results as $result) {
 To search for a class created by the `new` keyword, use the `classes` method before calling `search`.
 
 ```php
-use Permafrost\PhpCodeSearch\Searcher;
-
-$searcher = new Searcher();
-
 $results = $searcher
     ->classes(['MyClass'])
     ->search('./app/Http/Controllers/MyController.php');
@@ -140,10 +142,6 @@ foreach($results as $result) {
 To search for a variable assignment by variable name, use the `assignments` method before calling `search`. _Note: The `$` should be omitted._
 
 ```php
-use Permafrost\PhpCodeSearch\Searcher;
-
-$searcher = new Searcher();
-
 $results = $searcher
     ->assignments(['myVar'])
     ->search('./app/Http/Controllers/MyController.php');
@@ -153,23 +151,17 @@ foreach($results as $result) {
 }
 ```
 
-### Searching code strings instead of files
+### Results without code snippets
 
-To search a string instead of a file, use the `searchCode` method.
+To return search results without associated code snippets, use the `withoutSnippets` method:
 
 ```php
-use Permafrost\PhpCodeSearch\Searcher;
-
-$searcher = new Searcher();
-
 $results = $searcher
     ->functions(['strtolower'])
+    ->withoutSnippets()
     ->searchCode('<?php $str = strtolower("TEST");');
-    
-foreach($results as $result) {
-    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
-}
 ```
+
 
 ## Testing
 
