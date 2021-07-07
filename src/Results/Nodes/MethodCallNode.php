@@ -17,7 +17,7 @@ class MethodCallNode implements ResultNode
     /** @var string */
     public $name;
 
-    /** @var array|\PhpParser\Node\Arg[] */
+    /** @var array|ResultNode[]|ValueNode[] */
     public $args;
 
 

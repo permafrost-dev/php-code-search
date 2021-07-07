@@ -193,6 +193,8 @@ class Searcher
 
             if ($node instanceof Node\Expr\MethodCall) {
                 $name = $node->name->toString();
+
+                return Arr::matches($name, $names, true);
             }
 
             if ($node instanceof Node\Expr\StaticCall) {

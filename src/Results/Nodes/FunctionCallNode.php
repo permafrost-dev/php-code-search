@@ -11,7 +11,7 @@ class FunctionCallNode implements ResultNode
     /** @var string */
     public $name;
 
-    /** @var array|\PhpParser\Node\Arg[] */
+    /** @var array|ResultNode[]|ValueNode[] */
     public $args;
 
     public function __construct(string $name, $args)

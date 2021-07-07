@@ -131,11 +131,11 @@ class SearcherTest extends TestCase
     public function it_finds_methods()
     {
         $results = (new Searcher())
-            ->methods(['methodOne'])
-            ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
+            ->methods(['methodTwo'])
+            ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo(\$obj->methodOne('two'));\n");
 
         $this->assertCount(1, $results->results);
-        $this->assertEquals('$obj->methodOne', $results->results[0]->node->name());
+        $this->assertEquals('$obj->methodTwo', $results->results[0]->node->name());
     }
 
     /** @test */
