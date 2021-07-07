@@ -11,6 +11,7 @@ use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\StaticCall;
@@ -32,34 +33,48 @@ trait TransformsArguments
         return $nodes;
     }
 
-    protected function transformArgumentToResultNode(Arg $arg)
+    protected function transformArgumentToResultNode($arg)
     {
-        if ($arg->value instanceof String_) {
-            return new StringNode($arg->value->value);
+        $value = $arg;
+
+        if ($arg instanceof Array_) {
+            return $this->transformArgumentsToNodes($value->items);
         }
 
-        if ($arg->value instanceof LNumber || $arg->value instanceof DNumber) {
-            return new NumberNode($arg->value->value);
+        if ($arg instanceof Arg) {
+            $value = $arg->value;
         }
 
-        if ($arg->value instanceof Variable) {
-            return VariableNode::create($arg->value->name);
+        if ($arg instanceof ArrayItem) {
+            $value = $arg->value;
         }
 
-        if ($arg->value instanceof FuncCall) {
-            return FunctionCallNode::create($arg->value->name, $arg->value->args);
+        if ($value instanceof String_) {
+            return new StringNode($value->value);
         }
 
-        if ($arg->value instanceof StaticCall) {
-            return StaticMethodCallNode::create($arg->value->class->toString(), $arg->value->name->toString(), $arg->value->args);
+        if ($value instanceof LNumber || $value instanceof DNumber) {
+            return new NumberNode($value->value);
         }
 
-        if ($arg->value instanceof MethodCall) {
-            return MethodCallNode::create($arg->value->var->name, $arg->value->name->toString(), $arg->value->args);
+        if ($value instanceof Variable) {
+            return VariableNode::create($value->name);
         }
 
-        if ($arg->value instanceof Array_) {
-            return new ArrayNode($arg->value->items);
+        if ($value instanceof FuncCall) {
+            return FunctionCallNode::create($value->name, $value->args);
+        }
+
+        if ($value instanceof StaticCall) {
+            return StaticMethodCallNode::create($value->class->toString(), $value->name->toString(), $value->args);
+        }
+
+        if ($value instanceof MethodCall) {
+            return MethodCallNode::create($value->var->name, $value->name->toString(), $value->args);
+        }
+
+        if ($value instanceof Array_) {
+            return new ArrayNode($value->items);
         }
 
         return $arg;

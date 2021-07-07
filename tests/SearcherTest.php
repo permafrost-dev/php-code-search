@@ -134,8 +134,21 @@ class SearcherTest extends TestCase
             ->methods(['methodTwo'])
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo(\$obj->methodOne('two'));\n");
 
+        print_r($results->results);
+
         $this->assertCount(1, $results->results);
         $this->assertEquals('$obj->methodTwo', $results->results[0]->node->name());
+    }
+
+    /** @test */
+    public function it_transforms_nested_calls_and_arguments()
+    {
+        $results = (new Searcher())
+            ->methods(['methodTwo'])
+            ->searchCode('<?' . "php \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n");
+
+        $this->assertCount(1, $results->results);
+        $this->assertMatchesSnapshot($results->results);
     }
 
     /** @test */

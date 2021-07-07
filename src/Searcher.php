@@ -198,7 +198,11 @@ class Searcher
             }
 
             if ($node instanceof Node\Expr\StaticCall) {
-                return NodeSearch::containsStaticCallName($node, $names);
+                $name = $node->class->toString();
+                $methodName = $node->name->toString();
+
+                return Arr::matches($name, $names, true) || Arr::matches("{$name}::{$methodName}", $names, true);
+                //return NodeSearch::containsStaticCallName($node, $names);
             }
 
             if ($node instanceof Node\Expr\Variable) {
