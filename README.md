@@ -92,18 +92,24 @@ foreach($results->results as $result) {
 
 ### Method calls
 
-To search for a method call by name, use the `methods` method before calling `search`.
+To search for a method call by name, use the `methods` method before calling `search`.  Surround the search terms with slashes to use regular expressions.
+
+Method call nodes have an `args` property that can be looped through to retrieve the arguments for the method call.
 
 ```php
 $results = $searcher
-    ->methods(['testOne'])
+    ->methods(['/test(One|Two)/'])
     ->searchCode('<?php '.
     '    $obj->testOne("hello world 1"); '.
-    '    $obj->testTwo("hello world 2"); '.
+    '    $obj->testTwo("hello world", 2); '.
     '');
     
 foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
+
+    foreach($result->node->args as $arg) {
+        echo "  argument: '{$arg->value}'" . PHP_EOL;
+    }
 }
 ```
 
