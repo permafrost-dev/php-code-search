@@ -4,7 +4,11 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
-## 1.5.2 - 2021-07-06
+## 1.5.3 - 2021-07-07
+
+- fix issues with `Assignment` nodes
+
+## 1.5.2 - 2021-07-07
 
 - fix issues with `Array`, `ArrayItem` and `ArrayDimFetch` nodes
 
