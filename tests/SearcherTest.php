@@ -171,7 +171,7 @@ class SearcherTest extends TestCase
         $results = (new Searcher())
             ->assignments(['obj'])
             ->searchCode('<?' . "php
-                \$obj = 1 + 3;
+                \$obj = 1 + 3 + 2;
             ");
 
         $this->assertCount(1, $results->results);

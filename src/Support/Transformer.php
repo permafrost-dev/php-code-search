@@ -107,4 +107,35 @@ class Transformer
 
         return $node;
     }
+
+    public static function binaryOperationNodeToValue(BinaryOperationNode $node)
+    {
+        $nodeMap = [
+            'left' => '',
+            'right' => '',
+        ];
+
+        foreach($nodeMap as $name => &$value) {
+            $sideNode = $node->$name;
+
+            if ($sideNode instanceof BinaryOperationNode) {
+                $value = static::binaryOperationNodeToValue($sideNode);
+            }
+
+            if ($sideNode instanceof NumberNode) {
+                $value = $sideNode->value;
+            }
+
+            if ($sideNode instanceof StringNode) {
+                $value = str_replace("'", "\\'", $sideNode->value);
+                $value = "'{$value}'";
+            }
+
+            if ($sideNode instanceof VariableNode) {
+                $value = '$' . $sideNode->name;
+            }
+        }
+
+        return $nodeMap['left'] . ' ' . $node->symbol() . ' ' . $nodeMap['right'];
+    }
 }
