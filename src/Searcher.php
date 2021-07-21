@@ -201,7 +201,6 @@ class Searcher
                 $methodName = $node->name->toString();
 
                 return Arr::matches($name, $names, true) || Arr::matches("{$name}::{$methodName}", $names, true);
-                //return NodeSearch::containsStaticCallName($node, $names);
             }
 
             if ($node instanceof Node\Expr\Variable) {
@@ -273,14 +272,6 @@ class Searcher
         usort($result, function ($a, $b) {
             $aNode = $a;
             $bNode = $b;
-
-//            if ($a instanceof Node\Expr\Variable) {
-//
-//            } else {
-//                $aNode = $a->name;
-//                $bNode = $b->name;
-//            }
-
 
             if ($aNode->getAttribute('startLine') > $bNode->getAttribute('startLine')) {
                 return 1;
