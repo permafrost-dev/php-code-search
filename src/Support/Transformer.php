@@ -115,7 +115,7 @@ class Transformer
             'right' => '',
         ];
 
-        foreach($nodeMap as $name => &$value) {
+        foreach ($nodeMap as $name => &$value) {
             $sideNode = $node->$name;
 
             if ($sideNode instanceof BinaryOperationNode) {

@@ -2,7 +2,6 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\StringNode;
 use Permafrost\PhpCodeSearch\Support\Transformer;
 use PhpParser\Node\Expr\BinaryOp;
 
@@ -28,10 +27,10 @@ class BinaryOperationNode implements OperationNode, ValueNode
 
 //        $this->value = '';
 //        if (property_exists($this->left, 'value') && property_exists($this->right, 'value')) {
-            $leftValue = '';
-            $rightValue = '';
+        $leftValue = '';
+        $rightValue = '';
 
-            $this->value = Transformer::binaryOperationNodeToValue($this);
+        $this->value = Transformer::binaryOperationNodeToValue($this);
     }
 
     public function symbol(): string
