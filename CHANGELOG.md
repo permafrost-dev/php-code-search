@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.6.1 - 2021-07-22
+
+- fix issue with function call node names
+
 ## 1.6.0 - 2021-07-07
 
 - all function call, static method call, method call nodes have an `args` property containing the value node(s) of the parsed arguments.
