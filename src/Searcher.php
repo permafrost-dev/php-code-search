@@ -185,6 +185,10 @@ class Searcher
             $name = '';
 
             if ($node instanceof FuncCall) {
+                if (! method_exists($node->name, 'toString')) {
+                    return false;
+                }
+
                 $name = $node->name->toString();
 
                 return Arr::matches($name, $names, true);
