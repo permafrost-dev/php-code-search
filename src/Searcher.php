@@ -280,14 +280,11 @@ class Searcher
         $traverser->traverse($nodes);
     }
 
-    protected function sortNodesByLineNumber(...$items)
+    protected function sortNodesByLineNumber(...$items): array
     {
         $result = array_merge(...$items);
 
-        usort($result, function ($a, $b) {
-            $aNode = $a;
-            $bNode = $b;
-
+        usort($result, function ($aNode, $bNode) {
             if ($aNode->getAttribute('startLine') > $bNode->getAttribute('startLine')) {
                 return 1;
             }
