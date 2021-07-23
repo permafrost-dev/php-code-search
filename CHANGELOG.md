@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.6.2 - 2021-07-23
+
+- fix additional issues with node names
+
 ## 1.6.1 - 2021-07-22
 
 - fix issue with function call node names
