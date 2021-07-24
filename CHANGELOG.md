@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.6.3 - 2021-07-24
+
+- add `getLineNumber` helper method to the `CodeSnippet` class
+
 ## 1.6.2 - 2021-07-23
 
 - fix additional issues with node names
