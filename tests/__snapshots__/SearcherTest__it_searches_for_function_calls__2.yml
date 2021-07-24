@@ -1,16 +1,16 @@
 -
     location: { column: 0, endLine: 4, startLine: 4 }
     node: { name: printf, args: [{ value: "%s\n" }, { name: strtolower, args: [{ value: TEST }] }] }
-    snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' } }
+    snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' }, lineNumber: 4 }
 -
     location: { column: 0, endLine: 4, startLine: 4 }
     node: { name: strtolower, args: [{ value: TEST }] }
-    snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' } }
+    snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' }, lineNumber: 4 }
 -
     location: { column: 0, endLine: 4, startLine: 4 }
     node: { name: strtolower, args: [{ value: TEST }] }
-    snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' } }
+    snippet: { code: { 1: '<?php', 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()' }, lineNumber: 4 }
 -
     location: { column: 0, endLine: 6, startLine: 6 }
     node: { name: strtoupper, args: [{ value: test }] }
-    snippet: { code: { 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()', 9: '    {' } }
+    snippet: { code: { 2: '    ray(''12345'');', 3: '', 4: '    printf("%s\n", strtolower(''TEST''));', 5: '', 6: '    echo strtoupper(''test'') . PHP_EOL;', 7: '', 8: '    function test1()', 9: '    {' }, lineNumber: 6 }

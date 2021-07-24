@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 1, startLine: 1 }
     node: { variableName: obj, methodName: methodTwo, name: $obj->methodTwo, args: [{ className: MyModel, methodName: find, name: 'MyModel::find', args: [{ value: 1 }] }, { variableName: obj, methodName: methodOne, name: $obj->methodOne, args: [{ value: two }, { value: [{ key: null, value: { value: 2 } }, { key: null, value: { value: 3 } }] }] }, { value: [{ key: null, value: { name: this } }, { key: null, value: { value: handlerMethod } }] }] }
-    snippet: { code: { 1: '<?php $obj->methodTwo(MyModel::find(1), $obj->methodOne(''two'', [2, 3]), [$this, ''handlerMethod'']);' } }
+    snippet: { code: { 1: '<?php $obj->methodTwo(MyModel::find(1), $obj->methodOne(''two'', [2, 3]), [$this, ''handlerMethod'']);' }, lineNumber: 1 }
