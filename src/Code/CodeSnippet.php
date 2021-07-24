@@ -72,6 +72,11 @@ class CodeSnippet
         return $this->code;
     }
 
+    public function getLineNumber(): int
+    {
+        return $this->surroundingLine;
+    }
+
     protected function getBounds(int $totalNumberOfLineInFile): array
     {
         $startLine = max($this->surroundingLine - floor($this->snippetLineCount / 2), 1);
