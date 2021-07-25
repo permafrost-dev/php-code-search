@@ -33,7 +33,7 @@ class FileSearchResults
 
     public function add(ResultNode $resultNode, CodeLocation $location): self
     {
-        $snippet = $this->makeSnippet($location->startLine());
+        $snippet = $this->makeSnippet($location->startLine(), $location->endLine());
 
         $this->results[] = new SearchResult($resultNode, $location, $snippet, $this->file);
 
@@ -52,15 +52,16 @@ class FileSearchResults
         return $this;
     }
 
-    protected function makeSnippet(int $startLine, int $lineCount = 8): ?CodeSnippet
+    protected function makeSnippet(int $startLine, int $endLine, int $lineCount = 8): ?CodeSnippet
     {
         if (! $this->withSnippets) {
             return null;
         }
 
         return (new CodeSnippet())
-            ->surroundingLine($startLine)
-            ->snippetLineCount($lineCount)
+            ->surroundingLines($startLine, $endLine)
+            ->linesBefore($lineCount / 2)
+            ->linesAfter($lineCount / 2)
             ->fromFile($this->file->getRealPath());
     }
 }
