@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.6.4 - 2021-07-25
+
+- use the `permafrost-dev/code-snippets` package
+
 ## 1.6.3 - 2021-07-24
 
 - add `getLineNumber` helper method to the `CodeSnippet` class
