@@ -60,8 +60,7 @@ class FileSearchResults
 
         return (new CodeSnippet())
             ->surroundingLines($startLine, $endLine)
-            ->linesBefore($lineCount / 2)
-            ->linesAfter($lineCount / 2)
+            ->snippetLineCount($lineCount)
             ->fromFile($this->file->getRealPath());
     }
 }
