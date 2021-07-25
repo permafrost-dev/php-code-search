@@ -39,7 +39,7 @@ class SearchResult
         $this->file = is_string($file) ? new File($file) : $file;
     }
 
-    public function file(): File
+    public function file()
     {
         return $this->file;
     }
