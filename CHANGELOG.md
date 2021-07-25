@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.6.5 - 2021-07-25
+
+- fix typehint issue
+
 ## 1.6.4 - 2021-07-25
 
 - use the `permafrost-dev/code-snippets` package
