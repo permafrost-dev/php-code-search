@@ -2,8 +2,8 @@
 
 namespace Permafrost\PhpCodeSearch\Tests;
 
+use Permafrost\CodeSnippets\File;
 use Permafrost\PhpCodeSearch\Searcher;
-use Permafrost\PhpCodeSearch\Support\File;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 

@@ -2,10 +2,10 @@
 
 namespace Permafrost\PhpCodeSearch;
 
+use Permafrost\CodeSnippets\File;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Support\Arr;
-use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
@@ -138,7 +138,12 @@ class Searcher
         return $this->search($file);
     }
 
-    protected function parseFile(File $file, FileSearchResults $results): bool
+    /**
+     * @param \Permafrost\PhpCodeSearch\Support\File|\Permafrost\CodeSnippets\File $file
+     * @param FileSearchResults $results
+     * @return bool
+     */
+    protected function parseFile($file, FileSearchResults $results): bool
     {
         try {
             /** @var array|Stmt[] $ast */
