@@ -4,6 +4,11 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.7.0 - 2021-07-25
+
+- use latest version of `code-snippets`
+- implement multi-line highlighting for code snippets
+
 ## 1.6.5 - 2021-07-25
 
 - fix typehint issue
