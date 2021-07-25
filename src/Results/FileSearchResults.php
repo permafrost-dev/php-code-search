@@ -4,8 +4,8 @@ namespace Permafrost\PhpCodeSearch\Results;
 
 use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
-use Permafrost\PhpCodeSearch\Support\File;
 use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
+use Permafrost\PhpCodeSearch\Support\File;
 
 class FileSearchResults
 {

@@ -2,9 +2,9 @@
 
 namespace Permafrost\PhpCodeSearch\Results;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
 use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\CodeSnippets\File;
+use Permafrost\PhpCodeSearch\Code\CodeLocation;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
