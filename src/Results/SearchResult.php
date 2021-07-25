@@ -3,13 +3,13 @@
 namespace Permafrost\PhpCodeSearch\Results;
 
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
-use Permafrost\PhpCodeSearch\Code\CodeSnippet;
+use Permafrost\CodeSnippets\CodeSnippet;
+use Permafrost\CodeSnippets\File;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\FunctionCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
-use Permafrost\PhpCodeSearch\Support\File;
 
 class SearchResult
 {
@@ -28,8 +28,8 @@ class SearchResult
     /**
      * @param \Permafrost\PhpCodeSearch\Results\Nodes\ResultNode $node
      * @param \Permafrost\PhpCodeSearch\Code\CodeLocation $location
-     * @param \Permafrost\PhpCodeSearch\Code\CodeSnippet|null $snippet
-     * @param \Permafrost\PhpCodeSearch\Support\File|string $file
+     * @param \Permafrost\CodeSnippets\CodeSnippet|null $snippet
+     * @param \Permafrost\CodeSnippets\File|string $file
      */
     public function __construct(ResultNode $node, CodeLocation $location, ?CodeSnippet $snippet, $file)
     {

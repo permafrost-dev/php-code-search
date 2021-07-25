@@ -2,10 +2,10 @@
 
 namespace Permafrost\PhpCodeSearch\Results;
 
+use Permafrost\CodeSnippets\CodeSnippet;
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
-use Permafrost\PhpCodeSearch\Code\CodeSnippet;
-use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
 use Permafrost\PhpCodeSearch\Support\File;
+use Permafrost\PhpCodeSearch\Results\Nodes\ResultNode;
 
 class FileSearchResults
 {
@@ -21,7 +21,11 @@ class FileSearchResults
     /** @var bool */
     protected $withSnippets = true;
 
-    public function __construct(File $file, bool $withSnippets = true)
+    /**
+     * @param \Permafrost\PhpCodeSearch\Support\File|\Permafrost\CodeSnippets\File $file
+     * @param bool $withSnippets
+     */
+    public function __construct($file, bool $withSnippets = true)
     {
         $this->file = $file;
         $this->withSnippets = $withSnippets;
@@ -57,6 +61,6 @@ class FileSearchResults
         return (new CodeSnippet())
             ->surroundingLine($startLine)
             ->snippetLineCount($lineCount)
-            ->fromFile($this->file);
+            ->fromFile($this->file->getRealPath());
     }
 }

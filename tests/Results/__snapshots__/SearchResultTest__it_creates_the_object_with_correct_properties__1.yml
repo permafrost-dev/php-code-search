@@ -5,5 +5,7 @@ location:
 node:
     name: myVar
 snippet:
-    code: { 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }
-    lineNumber: 1
+    snippetLineCount: 10
+    lines: { 1: { selected: false, lineNumber: 1, value: '1', isSelected: false }, 2: { selected: true, lineNumber: 2, value: '2', isSelected: true }, 3: { selected: false, lineNumber: 3, value: '3', isSelected: false }, 4: { selected: false, lineNumber: 4, value: '4', isSelected: false }, 5: { selected: false, lineNumber: 5, value: '5', isSelected: false } }
+    lineNumberStart: 2
+    lineNumberEnd: 2

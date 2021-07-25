@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 2, startLine: 2 }
     node: { name: strtolower, args: [{ value: test }] }
-    snippet: { code: { 1: '<?php', 2: '$myVar = strtolower(''test'');' }, lineNumber: 2 }
+    snippet: { snippetLineCount: 8, lines: { 1: { selected: false, lineNumber: 1, value: '<?php', isSelected: false }, 2: { selected: true, lineNumber: 2, value: '$myVar = strtolower(''test'');', isSelected: true } }, lineNumberStart: 2, lineNumberEnd: 2 }
