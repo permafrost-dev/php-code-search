@@ -12,6 +12,7 @@ use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\NewClassVisitor;
 use Permafrost\PhpCodeSearch\Visitors\StaticCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\StaticPropertyVisitor;
 use Permafrost\PhpCodeSearch\Visitors\VariableReferenceVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
@@ -160,6 +161,7 @@ class Searcher
     protected function findAllReferences(array $ast): array
     {
         $staticMethodCalls = $this->findReferences($ast, Node\Expr\StaticCall::class, 'class', $this->static);
+        $staticProperties = $this->findReferences($ast, Node\Expr\StaticPropertyFetch::class, 'class', $this->static);
         $functionCalls = $this->findReferences($ast, FuncCall::class, 'name', $this->functions);
         $assignments = $this->findReferences($ast, Node\Expr\Assign::class, 'var', $this->assignments);
         $classes = $this->findReferences($ast, Node\Expr\New_::class, 'class', $this->classes);
@@ -170,6 +172,7 @@ class Searcher
             $functionCalls,
             $classes,
             $staticMethodCalls,
+            $staticProperties,
             $assignments,
             $methods,
             $variables
@@ -207,6 +210,13 @@ class Searcher
                 $name = $node->name->toString();
 
                 return Arr::matches($name, $names, true);
+            }
+
+            if ($node instanceof Node\Expr\StaticPropertyFetch) {
+                $name = $node->class->toString();
+                $methodName = $node->name->name;
+
+                return Arr::matches($methodName, $names, true) || Arr::matches("{$name}::\${$methodName}", $names, true);
             }
 
             if ($node instanceof Node\Expr\StaticCall) {
@@ -281,6 +291,7 @@ class Searcher
         $traverser->addVisitor(new VariableReferenceVisitor($results, $this->variables));
         $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
         $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
+        $traverser->addVisitor(new StaticPropertyVisitor($results, $this->static));
 
         $traverser->traverse($nodes);
     }

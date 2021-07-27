@@ -2,11 +2,15 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
+use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Support\Transformer;
 use PhpParser\Node\Expr\BinaryOp;
 
 class BinaryOperationNode implements OperationNode, ValueNode
 {
+    use HasLocation;
+
     /** @var string */
     public $symbol;
 
@@ -31,6 +35,8 @@ class BinaryOperationNode implements OperationNode, ValueNode
         $rightValue = '';
 
         $this->value = Transformer::binaryOperationNodeToValue($this);
+
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
     public function symbol(): string

@@ -57,6 +57,24 @@ class SearcherTest extends TestCase
     }
 
     /** @test */
+    public function it_searches_for_multi_line_function_calls()
+    {
+        $searcher = new Searcher();
+        $file = new File(tests_path('data/file1.php'));
+
+        $results = $searcher
+            ->functions(['strtolower', 'strtoupper'])
+            ->searchCode('<?' ."php
+                \$myStr = strtolower(
+                    'test '.
+                    'string'
+                );
+            ");
+
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
     public function it_searches_for_static_method_calls()
     {
         $searcher = new Searcher();
@@ -64,6 +82,19 @@ class SearcherTest extends TestCase
 
         $results = $searcher
             ->static(['MyClass', 'Ray'])
+            ->search($file);
+
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_searches_for_static_property_accesses()
+    {
+        $searcher = new Searcher();
+        $file = new File(tests_path('data/file1.php'));
+
+        $results = $searcher
+            ->static(['Ray::$someProperty'])
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);

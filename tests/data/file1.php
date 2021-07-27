@@ -16,3 +16,5 @@
 
     $isDisabled = AnotherClass::disabled();
     $isEnabled = AnotherClass::enabled();
+
+    $test = Ray::$someProperty->enable();

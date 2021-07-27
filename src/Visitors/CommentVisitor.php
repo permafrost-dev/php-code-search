@@ -2,7 +2,6 @@
 
 namespace Permafrost\PhpCodeSearch\Visitors;
 
-use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\CommentNode;
 use Permafrost\PhpCodeSearch\Support\Arr;
@@ -27,14 +26,9 @@ class CommentVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Comment) {
             if (Arr::matches($node->getText(), $this->patterns)) {
-                $resultNode = CommentNode::create($node->getText());
+                $resultNode = CommentNode::create($node);
 
-                $location = GenericCodeLocation::create(
-                    $node->getStartLine(),
-                    $node->getEndLine()
-                );
-
-                $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $resultNode->location());
             }
         }
     }

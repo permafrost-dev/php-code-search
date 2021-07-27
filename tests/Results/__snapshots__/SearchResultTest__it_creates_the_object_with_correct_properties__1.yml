@@ -4,8 +4,11 @@ location:
     startLine: 1
 node:
     name: myVar
+    location: { column: 0, endLine: 1, startLine: 1 }
 snippet:
     snippetLineCount: 5
     lines: { 1: { selected: false, lineNumber: 1, value: '1', isSelected: false }, 2: { selected: true, lineNumber: 2, value: '2', isSelected: true }, 3: { selected: false, lineNumber: 3, value: '3', isSelected: false }, 4: { selected: false, lineNumber: 4, value: '4', isSelected: false }, 5: { selected: false, lineNumber: 5, value: '5', isSelected: false } }
     lineNumberStart: 2
     lineNumberEnd: 2
+    lineNumbers: [1, 2, 3, 4, 5]
+    selectedBounds: { start: 2, end: 2 }

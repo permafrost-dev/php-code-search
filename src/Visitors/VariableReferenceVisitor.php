@@ -27,14 +27,9 @@ class VariableReferenceVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Node\Expr\Variable) {
             if (Arr::matches($node->name, $this->names, true)) {
-                $resultNode = VariableNode::create($node->name);
+                $resultNode = VariableNode::create($node);
 
-                $location = GenericCodeLocation::create(
-                    $node->getStartLine(),
-                    $node->getEndLine()
-                );
-
-                $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $resultNode->location());
             }
         }
     }

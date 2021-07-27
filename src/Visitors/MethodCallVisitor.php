@@ -26,14 +26,9 @@ class MethodCallVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Node\Expr\MethodCall) {
             if (Arr::matches($node->name->toString(), $this->names, true)) {
-                $resultNode = MethodCallNode::create($node->var->name, $node->name->toString(), $node->args);
+                $resultNode = MethodCallNode::create($node);
 
-                $location = GenericCodeLocation::create(
-                    $node->getStartLine(),
-                    $node->getEndLine()
-                );
-
-                $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $resultNode->location());
             }
         }
     }

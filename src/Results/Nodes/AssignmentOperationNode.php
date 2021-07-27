@@ -2,11 +2,16 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
+use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
+use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Support\Transformer;
 use PhpParser\Node\Expr\AssignOp;
 
 class AssignmentOperationNode implements ResultNode, ValueNode
 {
+    use HasLocation;
+
     /** @var string */
     public $name;
 
@@ -17,6 +22,7 @@ class AssignmentOperationNode implements ResultNode, ValueNode
     {
         $this->name = $node->var->name;
         $this->value = Transformer::parserNodeToResultNode($node->expr);
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
     public function name(): string

@@ -2,6 +2,7 @@
 
 namespace Permafrost\PhpCodeSearch\Support;
 
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayItemNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
@@ -13,6 +14,7 @@ use Permafrost\PhpCodeSearch\Results\Nodes\PropertyAccessNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\NumberNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\StringNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
+use Permafrost\PhpCodeSearch\Results\Nodes\StaticPropertyAccessNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
@@ -24,6 +26,7 @@ use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
@@ -46,6 +49,11 @@ class Transformer
     {
         $value = $node;
 
+        $location = GenericCodeLocation::create(
+            $node ? $node->getStartLine() : -1,
+            $node ? $node->getEndLine() : -1
+        );
+
         if ($node instanceof Array_) {
             return static::parserNodesToResultNodes($value->items);
         }
@@ -55,46 +63,47 @@ class Transformer
         }
 
         if ($node instanceof ArrayItem) {
-            $value = $node->value;
-            $key = $node->key;
-
-            return new ArrayItemNode($key, $value);
+            return new ArrayItemNode($node);
         }
 
         if ($value instanceof String_) {
-            return new StringNode($value->value);
+            return new StringNode($value);
         }
 
         if ($value instanceof LNumber || $value instanceof DNumber) {
-            return new NumberNode($value->value);
+            return new NumberNode($value);
         }
 
         if ($value instanceof Array_) {
-            return new ArrayNode($value->items);
+            return new ArrayNode($value);
         }
 
         if ($value instanceof Variable) {
-            return VariableNode::create($value->name);
+            return VariableNode::create($value);
         }
 
         if ($value instanceof Assign) {
-            return AssignmentNode::create($value->var->name, $value->expr);
+            return AssignmentNode::create($value);
         }
 
         if ($value instanceof FuncCall) {
-            return FunctionCallNode::create($value->name, $value->args);
+            return FunctionCallNode::create($value);
         }
 
         if ($value instanceof StaticCall) {
-            return StaticMethodCallNode::create($value->class->toString(), $value->name->toString(), $value->args);
+            return StaticMethodCallNode::create($value);
         }
 
         if ($value instanceof MethodCall) {
-            return MethodCallNode::create($value->var->name, $value->name->toString(), $value->args);
+            return MethodCallNode::create($value);
         }
 
         if ($value instanceof PropertyFetch) {
-            return new PropertyAccessNode($value->var->name, $value->name->toString());
+            return new PropertyAccessNode($value);
+        }
+
+        if ($value instanceof StaticPropertyFetch) {
+            return new StaticPropertyAccessNode($value);
         }
 
         if ($value instanceof BinaryOp) {

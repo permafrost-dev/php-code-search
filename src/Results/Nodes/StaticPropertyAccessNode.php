@@ -6,7 +6,7 @@ use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use PhpParser\Node;
 
-class PropertyAccessNode implements ValueNode, ResultNode
+class StaticPropertyAccessNode implements ValueNode, ResultNode
 {
     use HasLocation;
 
@@ -16,9 +16,9 @@ class PropertyAccessNode implements ValueNode, ResultNode
     /** @var string */
     public $propertyName;
 
-    public function __construct(Node $node)
+    public function __construct(Node\Expr\StaticPropertyFetch $node)
     {
-        $this->objectName = $node->var->name;
+        $this->objectName = $node->class->toString();
         $this->propertyName = $node->name->toString();
         $this->location = GenericCodeLocation::createFromNode($node);
     }

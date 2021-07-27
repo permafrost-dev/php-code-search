@@ -27,14 +27,9 @@ class FunctionCallVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof FuncCall) {
             if (Arr::matches($node->name, $this->names, true)) {
-                $resultNode = FunctionCallNode::create($node->name->toString(), $node->args);
+                $resultNode = FunctionCallNode::create($node);
 
-                $location = GenericCodeLocation::create(
-                    $node->getStartLine(),
-                    $node->getEndLine()
-                );
-
-                $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $resultNode->location());
             }
         }
     }

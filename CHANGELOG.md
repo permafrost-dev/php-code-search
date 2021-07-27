@@ -4,6 +4,11 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.8.0 - 2021-07-27
+
+- `static()` supports searching for static property accesses like `SomeClass::$myProperty` or `myProperty`
+- major internal refactoring of nodes 
+
 ## 1.7.0 - 2021-07-25
 
 - use latest version of `code-snippets`

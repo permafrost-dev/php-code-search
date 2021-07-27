@@ -27,14 +27,9 @@ class AssignmentVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Node\Expr\Assign) {
             if (Arr::matches($node->var->name, $this->names, true)) {
-                $resultNode = AssignmentNode::create($node->var->name, $node->expr);
+                $resultNode = AssignmentNode::create($node);
 
-                $location = GenericCodeLocation::create(
-                    $node->getStartLine(),
-                    $node->getEndLine()
-                );
-
-                $this->results->add($resultNode, $location);
+                $this->results->add($resultNode, $resultNode->location());
             }
         }
     }

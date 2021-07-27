@@ -33,7 +33,7 @@ class FileSearchResults
 
     public function add(ResultNode $resultNode, CodeLocation $location): self
     {
-        $snippet = $this->makeSnippet($location->startLine(), $location->endLine());
+        $snippet = $this->makeSnippet($resultNode->location()->startLine(), $resultNode->location()->endLine());
 
         $this->results[] = new SearchResult($resultNode, $location, $snippet, $this->file);
 
