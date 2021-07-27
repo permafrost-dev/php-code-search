@@ -4,6 +4,11 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.8.1 - 2021-07-27
+
+- require `permafrost-dev/code-snippets` v1.2.0+
+- update `composer.json` keywords
+
 ## 1.8.0 - 2021-07-27
 
 - `static()` supports searching for static property accesses like `SomeClass::$myProperty` or `myProperty`
