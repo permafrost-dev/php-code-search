@@ -2,7 +2,6 @@
 
 namespace Permafrost\PhpCodeSearch\Visitors;
 
-use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\MethodCallNode;
 use Permafrost\PhpCodeSearch\Support\Arr;

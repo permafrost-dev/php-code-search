@@ -3,7 +3,6 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\TransformsArguments;
