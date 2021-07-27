@@ -84,11 +84,11 @@ class Transformer
         }
 
         if ($value instanceof Assign) {
-            return AssignmentNode::create($value->var->name, $value->expr, $location);
+            return AssignmentNode::create($value);
         }
 
         if ($value instanceof FuncCall) {
-            return FunctionCallNode::create($value->name, $value->args, $location);
+            return FunctionCallNode::create($value);
         }
 
         if ($value instanceof StaticCall) {
@@ -96,7 +96,7 @@ class Transformer
         }
 
         if ($value instanceof MethodCall) {
-            return MethodCallNode::create($value->var->name, $value->name->toString(), $value->args, $location);
+            return MethodCallNode::create($value);
         }
 
         if ($value instanceof PropertyFetch) {

@@ -2,8 +2,9 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
+use PhpParser\Comment;
 
 class CommentNode implements ResultNode
 {
@@ -12,13 +13,13 @@ class CommentNode implements ResultNode
     /** @var string */
     public $value;
 
-    public function __construct(string $value, CodeLocation $location)
+    public function __construct(Comment $node)
     {
-        $this->value = $value;
-        $this->location = $location;
+        $this->value = $node->getText();
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
-    public static function create(string $value, CodeLocation $location): self
+    public static function create(Comment $node): self
     {
         return new static(...func_get_args());
     }

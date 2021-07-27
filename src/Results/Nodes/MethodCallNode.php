@@ -2,9 +2,10 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\TransformsArguments;
+use PhpParser\Node;
 
 class MethodCallNode implements ResultNode
 {
@@ -23,16 +24,16 @@ class MethodCallNode implements ResultNode
     /** @var array|ResultNode[]|ValueNode[] */
     public $args;
 
-    public function __construct(string $variableName, string $methodName, $args, CodeLocation $location)
+    public function __construct(Node\Expr\MethodCall $node)
     {
-        $this->variableName = $variableName;
-        $this->methodName = $methodName;
-        $this->args = $this->transformArgumentsToNodes($args);
+        $this->variableName = $node->var->name;
+        $this->methodName = $node->name->toString();
+        $this->args = $this->transformArgumentsToNodes($node->args);
         $this->name = $this->name();
-        $this->location = $location;
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
-    public static function create(string $variableName, string $methodName, $args, CodeLocation $location): self
+    public static function create(Node\Expr\MethodCall $node): self
     {
         return new static(...func_get_args());
     }

@@ -2,6 +2,8 @@
 
 namespace Permafrost\PhpCodeSearch\Code;
 
+use PhpParser\Node;
+
 class GenericCodeLocation implements CodeLocation
 {
     /** @var int */
@@ -22,6 +24,11 @@ class GenericCodeLocation implements CodeLocation
     public static function create(int $startLine, int $endLine): self
     {
         return new static($startLine, $endLine);
+    }
+
+    public static function createFromNode(Node $node): self
+    {
+        return new static($node->getStartLine(), $node->getEndLine());
     }
 
     public function column(): int

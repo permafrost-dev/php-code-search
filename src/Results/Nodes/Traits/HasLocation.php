@@ -13,4 +13,11 @@ trait HasLocation
     {
         return $this->location;
     }
+
+    public function withLocation(CodeLocation $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
 }
