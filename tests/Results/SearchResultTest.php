@@ -20,7 +20,7 @@ class SearchResultTest extends TestCase
         $file = new File(tests_path('data/file2.txt'));
         $location = new GenericCodeLocation(1, 1);
         $snippet = (new CodeSnippet())->surroundingLine(2)->snippetLineCount(10)->fromFile($file);
-        $resultNode = new VariableNode('myVar');
+        $resultNode = new VariableNode('myVar', $location);
         $result = new SearchResult($resultNode, $location, $snippet, $file);
 
         $this->assertMatchesObjectSnapshot($result);

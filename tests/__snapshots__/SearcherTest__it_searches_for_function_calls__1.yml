@@ -1,8 +1,8 @@
 -
     location: { column: 0, endLine: 4, startLine: 4 }
-    node: { name: strtolower, args: [{ value: TEST }] }
+    node: { name: strtolower, args: [{ value: TEST, location: { column: 0, endLine: 4, startLine: 4 } }], location: { column: 0, endLine: 4, startLine: 4 } }
     snippet: { snippetLineCount: 8, lines: { 1: { selected: false, lineNumber: 1, value: '<?php', isSelected: false }, 2: { selected: false, lineNumber: 2, value: '    ray(''12345'');', isSelected: false }, 3: { selected: false, lineNumber: 3, value: '', isSelected: false }, 4: { selected: true, lineNumber: 4, value: '    printf("%s\n", strtolower(''TEST''));', isSelected: true }, 5: { selected: false, lineNumber: 5, value: '', isSelected: false }, 6: { selected: false, lineNumber: 6, value: '    echo strtoupper(''test'') . PHP_EOL;', isSelected: false }, 7: { selected: false, lineNumber: 7, value: '', isSelected: false }, 8: { selected: false, lineNumber: 8, value: '    function test1()', isSelected: false } }, lineNumberStart: 4, lineNumberEnd: 4 }
 -
     location: { column: 0, endLine: 6, startLine: 6 }
-    node: { name: strtoupper, args: [{ value: test }] }
+    node: { name: strtoupper, args: [{ value: test, location: { column: 0, endLine: 6, startLine: 6 } }], location: { column: 0, endLine: 6, startLine: 6 } }
     snippet: { snippetLineCount: 8, lines: { 2: { selected: false, lineNumber: 2, value: '    ray(''12345'');', isSelected: false }, 3: { selected: false, lineNumber: 3, value: '', isSelected: false }, 4: { selected: false, lineNumber: 4, value: '    printf("%s\n", strtolower(''TEST''));', isSelected: false }, 5: { selected: false, lineNumber: 5, value: '', isSelected: false }, 6: { selected: true, lineNumber: 6, value: '    echo strtoupper(''test'') . PHP_EOL;', isSelected: true }, 7: { selected: false, lineNumber: 7, value: '', isSelected: false }, 8: { selected: false, lineNumber: 8, value: '    function test1()', isSelected: false }, 9: { selected: false, lineNumber: 9, value: '    {', isSelected: false } }, lineNumberStart: 6, lineNumberEnd: 6 }

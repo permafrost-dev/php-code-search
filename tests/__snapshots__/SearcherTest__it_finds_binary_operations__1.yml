@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 2, startLine: 2 }
-    node: { variableName: obj, value: { symbol: +, left: { symbol: +, left: { value: 1 }, right: { value: 3 }, value: '1 + 3' }, right: { value: 2 }, value: '1 + 3 + 2' }, name: obj }
+    node: { variableName: obj, value: { symbol: +, left: { symbol: +, left: { value: 1, location: { column: 0, endLine: 2, startLine: 2 } }, right: { value: 3, location: { column: 0, endLine: 2, startLine: 2 } }, value: '1 + 3', location: { column: 0, endLine: 2, startLine: 2 } }, right: { value: 2, location: { column: 0, endLine: 2, startLine: 2 } }, value: '1 + 3 + 2', location: { column: 0, endLine: 2, startLine: 2 } }, name: obj, location: { column: 0, endLine: 2, startLine: 2 } }
     snippet: { snippetLineCount: 2, lines: { 1: { selected: false, lineNumber: 1, value: '<?php', isSelected: false }, 2: { selected: true, lineNumber: 2, value: '                $obj = 1 + 3 + 2;', isSelected: true } }, lineNumberStart: 2, lineNumberEnd: 2 }

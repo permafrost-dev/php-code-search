@@ -1,8 +1,8 @@
 -
     location: { column: 0, endLine: 4, startLine: 4 }
-    node: { name: strtolower, args: [{ value: TEST }] }
+    node: { name: strtolower, args: [{ value: TEST, location: { column: 0, endLine: 4, startLine: 4 } }], location: { column: 0, endLine: 4, startLine: 4 } }
     snippet: null
 -
     location: { column: 0, endLine: 6, startLine: 6 }
-    node: { name: strtoupper, args: [{ value: test }] }
+    node: { name: strtoupper, args: [{ value: test, location: { column: 0, endLine: 6, startLine: 6 } }], location: { column: 0, endLine: 6, startLine: 6 } }
     snippet: null
