@@ -1,6 +1,13 @@
 {
     "name": "permafrost-dev/php-code-search",
     "description": "Search PHP code for function & method calls, variable assignments, and more",
+    "keywords": [
+        "permafrost",
+        "code",
+        "search",
+        "sourcecode",
+        "php"
+    ],
     "homepage": "https://github.com/permafrost-dev/php-code-search",
     "license": "MIT",
     "authors": [
@@ -14,7 +21,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "nikic/php-parser": "^4.10",
-        "permafrost-dev/code-snippets": "^1.0.2"
+        "permafrost-dev/code-snippets": "^1.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
