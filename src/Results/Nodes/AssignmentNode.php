@@ -2,10 +2,14 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
+use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Support\Transformer;
 
 class AssignmentNode implements ResultNode, ValueNode
 {
+    use HasLocation;
+
     /** @var string */
     public $variableName;
 
@@ -15,11 +19,12 @@ class AssignmentNode implements ResultNode, ValueNode
     /** @var string */
     public $name;
 
-    public function __construct(string $variableName, $value)
+    public function __construct(string $variableName, $value, CodeLocation $location)
     {
         $this->variableName = $variableName;
         $this->value = Transformer::parserNodeToResultNode($value);
         $this->name = $this->name();
+        $this->location = $location;
     }
 
     public static function create(string $variableName, $value): self
