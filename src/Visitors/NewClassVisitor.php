@@ -24,14 +24,9 @@ class NewClassVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\New_) {
-            $location = GenericCodeLocation::create(
-                $node->getStartLine(),
-                $node->getEndLine()
-            );
+            $resultNode = VariableNode::create($node);
 
-            $resultNode = VariableNode::create($node->class->toString(), $location);
-
-            $this->results->add($resultNode, $location);
+            $this->results->add($resultNode, $resultNode->location());
         }
     }
 }

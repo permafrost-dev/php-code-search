@@ -2,8 +2,9 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
+use PhpParser\Node;
 
 class VariableNode implements ResultNode
 {
@@ -12,13 +13,18 @@ class VariableNode implements ResultNode
     /** @var string */
     public $name;
 
-    public function __construct(string $name, CodeLocation $location)
+    public function __construct(Node $node)
     {
-        $this->name = $name;
-        $this->location = $location;
+        if ($node instanceof Node\Expr\New_) {
+            $this->name = $node->class->toString();
+        } else {
+            $this->name = $node->name;
+        }
+
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
-    public static function create(string $name): self
+    public static function create(Node $node): self
     {
         return new static(...func_get_args());
     }

@@ -80,7 +80,7 @@ class Transformer
         }
 
         if ($value instanceof Variable) {
-            return VariableNode::create($value->name, $location);
+            return VariableNode::create($value);
         }
 
         if ($value instanceof Assign) {
@@ -92,7 +92,7 @@ class Transformer
         }
 
         if ($value instanceof StaticCall) {
-            return StaticMethodCallNode::create($value->class->toString(), $value->name->toString(), $value->args, $location);
+            return StaticMethodCallNode::create($value);
         }
 
         if ($value instanceof MethodCall) {
