@@ -1,4 +1,4 @@
-# php-code-search
+# Searching PHP source code made easy
 
 <p align="center">
     <img src="https://static.permafrost.dev/images/php-code-search/php-code-search-logo.png" alt="php-code-search logo" height="200" style="block">
@@ -11,7 +11,7 @@
 
 ---
 
-Search PHP source code for function & method calls, variable assignments, and more.
+Search PHP source code for function & method calls, variable assignments, classes and more directly from PHP.
 
 ---
 
@@ -37,7 +37,7 @@ Each `result` is an instance of `Permafrost\PhpCodeSearch\Results\SearchResult` 
   - `location->startLine(): int`
   - `location->endLine(): int`
 - `snippet` - a snippet of code lines from the file with the result line in the middle
-  - `snippet->getCode(): string`
+  - `snippet->toString(): string`
 - `file()` _(method)_ - provides access to the file that was searched
 
 ### Searching
@@ -113,15 +113,15 @@ foreach($results->results as $result) {
 }
 ```
 
-### Static method calls
+### Static calls
 
-To search for static method calls, use the `static` method before calling `search`.
+To search for static method or property calls, use the `static` method before calling `search`.
 
 Valid search terms are either a class name like `Cache`, or a class name and a method name like `Cache::remember`. 
 
 ```php
 $results = $searcher
-    ->static(['Ray', 'Cache::has'])
+    ->static(['Ray', 'Cache::has', 'Request::$myProperty'])
     ->search('./app/Http/Controllers/MyController.php');
     
 foreach($results->results as $result) {
