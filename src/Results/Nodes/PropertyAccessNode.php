@@ -2,8 +2,9 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
+use PhpParser\Node;
 
 class PropertyAccessNode implements ValueNode, ResultNode
 {
@@ -15,11 +16,11 @@ class PropertyAccessNode implements ValueNode, ResultNode
     /** @var string */
     public $propertyName;
 
-    public function __construct(string $objectName, string $propertyName, CodeLocation $location)
+    public function __construct(Node $node)
     {
-        $this->objectName = $objectName;
-        $this->propertyName = $propertyName;
-        $this->location = $location;
+        $this->objectName = $node->var->name;
+        $this->propertyName = $node->name->toString();
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
     public function name(): string

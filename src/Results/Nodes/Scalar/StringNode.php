@@ -2,8 +2,9 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes\Scalar;
 
-use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
+use PhpParser\Node;
 use PhpParser\Node\Scalar\String_;
 
 class StringNode implements \Permafrost\PhpCodeSearch\Results\Nodes\ValueNode
@@ -13,14 +14,16 @@ class StringNode implements \Permafrost\PhpCodeSearch\Results\Nodes\ValueNode
     /** @var string */
     public $value;
 
-    public function __construct($value, CodeLocation $location)
+    public function __construct(Node $node)
     {
+        $value = $node->value;
+
         if ($value instanceof String_) {
             $value = $value->value;
         }
 
         $this->value = $value;
-        $this->location = $location;
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
     public function value()

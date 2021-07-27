@@ -61,22 +61,19 @@ class Transformer
         }
 
         if ($node instanceof ArrayItem) {
-            $value = $node->value;
-            $key = $node->key;
-
-            return new ArrayItemNode($key, $value, $location);
+            return new ArrayItemNode($node);
         }
 
         if ($value instanceof String_) {
-            return new StringNode($value->value, $location);
+            return new StringNode($value);
         }
 
         if ($value instanceof LNumber || $value instanceof DNumber) {
-            return new NumberNode($value->value, $location);
+            return new NumberNode($value);
         }
 
         if ($value instanceof Array_) {
-            return new ArrayNode($value->items, $location);
+            return new ArrayNode($value);
         }
 
         if ($value instanceof Variable) {
@@ -100,15 +97,15 @@ class Transformer
         }
 
         if ($value instanceof PropertyFetch) {
-            return new PropertyAccessNode($value->var->name, $value->name->toString(), $location);
+            return new PropertyAccessNode($value);
         }
 
         if ($value instanceof BinaryOp) {
-            return new BinaryOperationNode($value, $location);
+            return new BinaryOperationNode($value);
         }
 
         if ($value instanceof AssignOp) {
-            return new AssignmentOperationNode($value, $location);
+            return new AssignmentOperationNode($value);
         }
 
         return $node;

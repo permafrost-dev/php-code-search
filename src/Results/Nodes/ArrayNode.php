@@ -4,8 +4,10 @@
 namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\TransformsArguments;
+use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
 
 class ArrayNode implements ValueNode
@@ -16,14 +18,16 @@ class ArrayNode implements ValueNode
     /** @var array|ValueNode[]|ResultNode[] */
     public $value;
 
-    public function __construct($value, CodeLocation $location)
+    public function __construct(Node $node)
     {
-        if ($value instanceof Array_) {
-            $value = $value->items;
+        $value = $node;
+
+        if ($node instanceof Array_) {
+            $value = $node->items;
         }
 
         $this->value = $this->transformArgumentsToNodes($value);
-        $this->location = $location;
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 
     public function value()
