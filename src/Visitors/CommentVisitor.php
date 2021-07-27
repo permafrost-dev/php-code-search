@@ -27,12 +27,12 @@ class CommentVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Comment) {
             if (Arr::matches($node->getText(), $this->patterns)) {
-                $resultNode = CommentNode::create($node->getText());
-
                 $location = GenericCodeLocation::create(
                     $node->getStartLine(),
                     $node->getEndLine()
                 );
+
+                $resultNode = CommentNode::create($node->getText(), $location);
 
                 $this->results->add($resultNode, $location);
             }

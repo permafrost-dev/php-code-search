@@ -29,12 +29,12 @@ class StaticCallVisitor extends NodeVisitorAbstract
             $methodName = $node->name->toString();
 
             if (Arr::matches($name, $this->names, true) || Arr::matches("{$name}::{$methodName}", $this->names, true)) {
-                $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString(), $node->args);
-
                 $location = GenericCodeLocation::create(
                     $node->getStartLine(),
                     $node->getEndLine()
                 );
+
+                $resultNode = StaticMethodCallNode::create($node->class->toString(), $node->name->toString(), $node->args, $location);
 
                 $this->results->add($resultNode, $location);
             }

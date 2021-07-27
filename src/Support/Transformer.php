@@ -2,6 +2,7 @@
 
 namespace Permafrost\PhpCodeSearch\Support;
 
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayItemNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
@@ -46,6 +47,11 @@ class Transformer
     {
         $value = $node;
 
+        $location = GenericCodeLocation::create(
+            $node ? $node->getStartLine() : -1,
+            $node ? $node->getEndLine() : -1
+        );
+
         if ($node instanceof Array_) {
             return static::parserNodesToResultNodes($value->items);
         }
@@ -58,51 +64,51 @@ class Transformer
             $value = $node->value;
             $key = $node->key;
 
-            return new ArrayItemNode($key, $value);
+            return new ArrayItemNode($key, $value, $location);
         }
 
         if ($value instanceof String_) {
-            return new StringNode($value->value);
+            return new StringNode($value->value, $location);
         }
 
         if ($value instanceof LNumber || $value instanceof DNumber) {
-            return new NumberNode($value->value);
+            return new NumberNode($value->value, $location);
         }
 
         if ($value instanceof Array_) {
-            return new ArrayNode($value->items);
+            return new ArrayNode($value->items, $location);
         }
 
         if ($value instanceof Variable) {
-            return VariableNode::create($value->name);
+            return VariableNode::create($value->name, $location);
         }
 
         if ($value instanceof Assign) {
-            return AssignmentNode::create($value->var->name, $value->expr);
+            return AssignmentNode::create($value->var->name, $value->expr, $location);
         }
 
         if ($value instanceof FuncCall) {
-            return FunctionCallNode::create($value->name, $value->args);
+            return FunctionCallNode::create($value->name, $value->args, $location);
         }
 
         if ($value instanceof StaticCall) {
-            return StaticMethodCallNode::create($value->class->toString(), $value->name->toString(), $value->args);
+            return StaticMethodCallNode::create($value->class->toString(), $value->name->toString(), $value->args, $location);
         }
 
         if ($value instanceof MethodCall) {
-            return MethodCallNode::create($value->var->name, $value->name->toString(), $value->args);
+            return MethodCallNode::create($value->var->name, $value->name->toString(), $value->args, $location);
         }
 
         if ($value instanceof PropertyFetch) {
-            return new PropertyAccessNode($value->var->name, $value->name->toString());
+            return new PropertyAccessNode($value->var->name, $value->name->toString(), $location);
         }
 
         if ($value instanceof BinaryOp) {
-            return new BinaryOperationNode($value);
+            return new BinaryOperationNode($value, $location);
         }
 
         if ($value instanceof AssignOp) {
-            return new AssignmentOperationNode($value);
+            return new AssignmentOperationNode($value, $location);
         }
 
         return $node;
