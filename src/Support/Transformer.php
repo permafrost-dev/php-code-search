@@ -14,6 +14,7 @@ use Permafrost\PhpCodeSearch\Results\Nodes\PropertyAccessNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\NumberNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\Scalar\StringNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\StaticMethodCallNode;
+use Permafrost\PhpCodeSearch\Results\Nodes\StaticPropertyAccessNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\Array_;
@@ -25,6 +26,7 @@ use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
@@ -98,6 +100,10 @@ class Transformer
 
         if ($value instanceof PropertyFetch) {
             return new PropertyAccessNode($value);
+        }
+
+        if ($value instanceof StaticPropertyFetch) {
+            return new StaticPropertyAccessNode($value);
         }
 
         if ($value instanceof BinaryOp) {
