@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.9.0 - 2021-07-28
+
+- add support for function definition searches using `functions()` 
+
 ## 1.8.1 - 2021-07-27
 
 - require `permafrost-dev/code-snippets` v1.2.0+
