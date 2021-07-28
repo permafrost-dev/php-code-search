@@ -91,3 +91,10 @@ if (! function_exists('value')) {
         return $value instanceof Closure ? $value(...$args) : $value;
     }
 }
+
+if (! function_exists('collect')) {
+    function collect($items)
+    {
+        return new Collection($items);
+    }
+}
