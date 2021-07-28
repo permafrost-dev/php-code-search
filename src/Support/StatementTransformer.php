@@ -18,8 +18,12 @@ class StatementTransformer
 
     public function parserNodesToResultNode(array $nodes)
     {
-        return collect($nodes)->map(function($node) {
-            return $this->parserNodeToResultNode($node);
-        })->toArray();
+        $result = [];
+
+        foreach($nodes as $node) {
+            $result[] = $this->parserNodeToResultNode($node);
+        }
+
+        return $result;
     }
 }
