@@ -4,7 +4,7 @@ if (! function_exists('optional')) {
     function optional($value) {
         if (! $value) {
             return new class {
-                public function __get($name, $args) {
+                public function __get($name) {
                     return null;
                 }
                 public function __call($name, $arguments)
