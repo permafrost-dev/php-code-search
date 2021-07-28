@@ -171,13 +171,13 @@ class Searcher
         $functionDefs = $this->findReferences($ast, Node\Stmt\Function_::class, 'name', $this->functions);
 
         return $this->sortNodesByLineNumber(
+            $assignments,
+            $classes,
             $functionCalls,
             $functionDefs,
-            $classes,
+            $methods,
             $staticMethodCalls,
             $staticProperties,
-            $assignments,
-            $methods,
             $variables
         );
     }
