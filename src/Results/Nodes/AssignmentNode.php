@@ -4,7 +4,7 @@ namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
-use Permafrost\PhpCodeSearch\Support\Transformer;
+use Permafrost\PhpCodeSearch\Support\ExpressionTransformer;
 use PhpParser\Node;
 
 class AssignmentNode implements ResultNode, ValueNode
@@ -23,7 +23,7 @@ class AssignmentNode implements ResultNode, ValueNode
     public function __construct(Node\Expr\Assign $node)
     {
         $this->variableName = $node->var->name;
-        $this->value = Transformer::parserNodeToResultNode($node->expr);
+        $this->value = ExpressionTransformer::parserNodeToResultNode($node->expr);
         $this->location = GenericCodeLocation::createFromNode($node);
         $this->name = $this->name();
     }

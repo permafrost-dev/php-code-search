@@ -32,7 +32,7 @@ use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 
-class Transformer
+class ExpressionTransformer
 {
     public static function parserNodesToResultNodes(array $nodes): array
     {
