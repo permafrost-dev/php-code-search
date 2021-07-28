@@ -294,14 +294,14 @@ class Searcher
     {
         $traverser = new NodeTraverser();
 
-        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
-        $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
-        $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
-        $traverser->addVisitor(new VariableReferenceVisitor($results, $this->variables));
-        $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
         $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
-        $traverser->addVisitor(new StaticPropertyVisitor($results, $this->static));
+        $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
         $traverser->addVisitor(new FunctionDefinitionVisitor($results, $this->functions));
+        $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
+        $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
+        $traverser->addVisitor(new StaticCallVisitor($results, $this->static));
+        $traverser->addVisitor(new StaticPropertyVisitor($results, $this->static));
+        $traverser->addVisitor(new VariableReferenceVisitor($results, $this->variables));
 
         $traverser->traverse($nodes);
     }
