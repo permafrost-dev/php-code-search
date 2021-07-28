@@ -9,21 +9,23 @@ class StatementTransformer
 {
     public function parserNodeToResultNode(Node $node)
     {
-        if ($node instanceof Node\Param) {
-            return new ParameterNode($node);
+        $map = [
+            Node\Param::class => ParameterNode::class,
+        ];
+
+        foreach ($map as $parserNodeClass => $resultNodeClass) {
+            if ($node instanceof $parserNodeClass) {
+                return new $resultNodeClass($node);
+            }
         }
 
         return $node;
     }
 
-    public function parserNodesToResultNode(array $nodes)
+    public function parserNodesToResultNode(array $nodes): array
     {
-        $result = [];
-
-        foreach ($nodes as $node) {
-            $result[] = $this->parserNodeToResultNode($node);
-        }
-
-        return $result;
+        return collect($nodes)->map(function($node) {
+            return $this->parserNodeToResultNode($node);
+        })->toArray();
     }
 }
