@@ -258,5 +258,12 @@ class SearcherTest extends TestCase
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);
+
+        $results = $searcher
+            ->functions(['/test\d+/'])
+            ->withoutSnippets()
+            ->search($file);
+
+        $this->assertMatchesSnapshot($results->results);
     }
 }
