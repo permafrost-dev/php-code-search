@@ -242,6 +242,12 @@ class Searcher
                 return Arr::matches($name, $names, true);
             }
 
+            if ($node instanceof Node\Stmt\Function_) {
+                $name = $node->name->name;
+
+                return Arr::matches($name, $names, true);
+            }
+
             if ($node instanceof Node\Expr\Array_) {
                 return false;
             }

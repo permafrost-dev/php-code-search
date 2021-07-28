@@ -25,7 +25,7 @@ class FunctionDefinitionVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Stmt\Function_) {
-            if (Arr::matches($node->name, $this->names, true)) {
+            if (Arr::matches($node->name->toString(), $this->names, true)) {
                 $resultNode = FunctionDefinitionNode::create($node);
 
                 $this->results->add($resultNode, $resultNode->location());
