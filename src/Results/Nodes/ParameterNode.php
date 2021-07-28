@@ -16,7 +16,7 @@ class ParameterNode implements ResultNode
     /** @var string|null */
     public $type;
 
-    /** @var array|mixed|ArrayItemNode|ArrayNode|AssignmentNode|BinaryOperationNode|FunctionCallNode|MethodCallNode|PropertyAccessNode|Scalar\NumberNode|Scalar\StringNode|StaticMethodCallNode|StaticPropertyAccessNode|VariableNode|Node\Arg|null  */
+    /** @var array|mixed|ArrayItemNode|ArrayNode|AssignmentNode|BinaryOperationNode|FunctionCallNode|MethodCallNode|PropertyAccessNode|Scalar\NumberNode|Scalar\StringNode|StaticMethodCallNode|StaticPropertyAccessNode|VariableNode|Node\Arg|null */
     public $default;
 
     public function __construct(Node\Param $node)

@@ -1,12 +1,15 @@
 <?php
 
 if (! function_exists('optional')) {
-    function optional($value) {
+    function optional($value)
+    {
         if (! $value) {
             return new class {
-                public function __get($name) {
+                public function __get($name)
+                {
                     return null;
                 }
+
                 public function __call($name, $arguments)
                 {
                     return null;

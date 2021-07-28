@@ -20,7 +20,7 @@ class StatementTransformer
     {
         $result = [];
 
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             $result[] = $this->parserNodeToResultNode($node);
         }
 
