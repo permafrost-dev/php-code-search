@@ -250,5 +250,4 @@ class Collection implements Arrayable, \ArrayAccess
     {
         unset($this->items[$offset]);
     }
-
 }

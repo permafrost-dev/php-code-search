@@ -94,7 +94,6 @@ class Arr
         return array_key_exists($key, $array);
     }
 
-
     /**
      * Pluck an array of values from an array.
      *

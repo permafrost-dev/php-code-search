@@ -1,7 +1,7 @@
 <?php
 
-use Permafrost\PhpCodeSearch\Support\Collections\Collection;
 use Permafrost\PhpCodeSearch\Support\Arr;
+use Permafrost\PhpCodeSearch\Support\Collections\Collection;
 
 if (! function_exists('optional')) {
     function optional($value)
