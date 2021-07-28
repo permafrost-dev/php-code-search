@@ -20,6 +20,7 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "illuminate/collections": "^8.52",
         "nikic/php-parser": "^4.10",
         "permafrost-dev/code-snippets": "^1.2.0"
     },
