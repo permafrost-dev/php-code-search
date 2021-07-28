@@ -245,4 +245,18 @@ class SearcherTest extends TestCase
         $this->assertEquals('objA', $results->results[0]->node->name());
         $this->assertEquals('objB', $results->results[1]->node->name());
     }
+
+    /** @test */
+    public function it_searches_for_function_definitions()
+    {
+        $searcher = new Searcher();
+        $file = new File(tests_path('data/file2.php'));
+
+        $results = $searcher
+            ->functions(['test2'])
+            ->withoutSnippets()
+            ->search($file);
+
+        $this->assertMatchesSnapshot($results->results);
+    }
 }
