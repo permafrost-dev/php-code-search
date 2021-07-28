@@ -76,13 +76,14 @@ foreach($results->results as $result) {
 }
 ```
 
-### Function calls
+### Functions
 
-To search for function calls, use the `functions` method before calling `search`.
+To search for function calls or definitions, use the `functions` method.  Regular expressions can be used by surrounding the name with slashes `/`, i.e. `/test\d+/`.
 
 ```php
+// this will search for references AND definitions for 'strtolower' and 'myfunc'
 $results = $searcher
-    ->functions(['strtolower', 'strtoupper'])
+    ->functions(['strtolower', 'myfunc'])
     ->search('./file1.php');
     
 foreach($results->results as $result) {

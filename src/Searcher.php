@@ -9,6 +9,7 @@ use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
+use Permafrost\PhpCodeSearch\Visitors\FunctionDefinitionVisitor;
 use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\NewClassVisitor;
 use Permafrost\PhpCodeSearch\Visitors\StaticCallVisitor;
@@ -167,14 +168,16 @@ class Searcher
         $classes = $this->findReferences($ast, Node\Expr\New_::class, 'class', $this->classes);
         $methods = $this->findReferences($ast, Node\Expr\MethodCall::class, 'name', $this->methods);
         $variables = $this->findReferences($ast, Node\Expr\Variable::class, 'name', $this->variables);
+        $functionDefs = $this->findReferences($ast, Node\Stmt\Function_::class, 'name', $this->functions);
 
         return $this->sortNodesByLineNumber(
-            $functionCalls,
+            $assignments,
             $classes,
+            $functionCalls,
+            $functionDefs,
+            $methods,
             $staticMethodCalls,
             $staticProperties,
-            $assignments,
-            $methods,
             $variables
         );
     }
@@ -239,6 +242,12 @@ class Searcher
                 return Arr::matches($name, $names, true);
             }
 
+            if ($node instanceof Node\Stmt\Function_) {
+                $name = $node->name->name;
+
+                return Arr::matches($name, $names, true);
+            }
+
             if ($node instanceof Node\Expr\Array_) {
                 return false;
             }
@@ -292,6 +301,7 @@ class Searcher
         $traverser->addVisitor(new NewClassVisitor($results, $this->classes));
         $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
         $traverser->addVisitor(new StaticPropertyVisitor($results, $this->static));
+        $traverser->addVisitor(new FunctionDefinitionVisitor($results, $this->functions));
 
         $traverser->traverse($nodes);
     }

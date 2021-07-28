@@ -2,12 +2,12 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes\Traits;
 
-use Permafrost\PhpCodeSearch\Support\Transformer;
+use Permafrost\PhpCodeSearch\Support\ExpressionTransformer;
 
 trait TransformsArguments
 {
     public function transformArgumentsToNodes(array $args): array
     {
-        return Transformer::parserNodesToResultNodes($args);
+        return ExpressionTransformer::parserNodesToResultNodes($args);
     }
 }

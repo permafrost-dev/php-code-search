@@ -4,7 +4,7 @@ namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
-use Permafrost\PhpCodeSearch\Support\Transformer;
+use Permafrost\PhpCodeSearch\Support\ExpressionTransformer;
 use PhpParser\Node\Expr\BinaryOp;
 
 class BinaryOperationNode implements OperationNode, ValueNode
@@ -26,15 +26,15 @@ class BinaryOperationNode implements OperationNode, ValueNode
     public function __construct(BinaryOp $node)
     {
         $this->symbol = $node->getOperatorSigil();
-        $this->left = Transformer::parserNodeToResultNode($node->left);
-        $this->right = Transformer::parserNodeToResultNode($node->right);
+        $this->left = ExpressionTransformer::parserNodeToResultNode($node->left);
+        $this->right = ExpressionTransformer::parserNodeToResultNode($node->right);
 
 //        $this->value = '';
 //        if (property_exists($this->left, 'value') && property_exists($this->right, 'value')) {
         $leftValue = '';
         $rightValue = '';
 
-        $this->value = Transformer::binaryOperationNodeToValue($this);
+        $this->value = ExpressionTransformer::binaryOperationNodeToValue($this);
 
         $this->location = GenericCodeLocation::createFromNode($node);
     }

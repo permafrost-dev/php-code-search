@@ -30,7 +30,10 @@
     "autoload": {
         "psr-4": {
             "Permafrost\\PhpCodeSearch\\": "src/"
-        }
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
