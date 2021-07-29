@@ -1,4 +1,4 @@
 -
-    location: { column: 0, endLine: 11, startLine: 3 }
-    node: { properties: [{ default: { value: 1, location: { column: 0, endLine: 5, startLine: 5 } }, visibility: public, isStatic: false, name: id, location: { column: 0, endLine: 5, startLine: 5 } }], name: MyClass1, location: { column: 0, endLine: 11, startLine: 3 } }
+    location: { column: 0, endLine: 16, startLine: 3 }
+    node: { properties: [{ default: { value: 1, location: { column: 0, endLine: 5, startLine: 5 } }, isStatic: false, name: id, location: { column: 0, endLine: 5, startLine: 5 }, visibility: public }], methods: [{ returnType: string, isStatic: false, isAbstract: false, params: {  }, name: getData, location: { column: 0, endLine: 10, startLine: 7 }, visibility: public }, { returnType: array, isStatic: false, isAbstract: false, params: [{ type: string, default: null, location: { column: 0, endLine: 12, startLine: 12 }, name: endpoint }, { type: int, default: { value: 1, location: { column: 0, endLine: 12, startLine: 12 } }, location: { column: 0, endLine: 12, startLine: 12 }, name: count }], name: callExternalApi, location: { column: 0, endLine: 15, startLine: 12 }, visibility: protected }], name: MyClass1, location: { column: 0, endLine: 16, startLine: 3 } }
     snippet: null
