@@ -6,6 +6,7 @@ use Permafrost\CodeSnippets\File;
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\SearchError;
 use Permafrost\PhpCodeSearch\Support\Arr;
+use Permafrost\PhpCodeSearch\Support\NameResolver;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
@@ -98,7 +99,7 @@ class Searcher
 
     public function classes(array $names): self
     {
-        $this->classes = $names;
+        $this->classes = array_merge($this->classes, $names);
 
         return $this;
     }
@@ -111,7 +112,7 @@ class Searcher
     }
 
     /**
-     * @param File|string $file
+     * @param File|VirtualFile|string $file
      * @return FileSearchResults
      */
     public function search($file): FileSearchResults
@@ -135,9 +136,7 @@ class Searcher
 
     public function searchCode(string $code): FileSearchResults
     {
-        $file = new VirtualFile($code);
-
-        return $this->search($file);
+        return $this->search(new VirtualFile($code));
     }
 
     /**
@@ -161,133 +160,35 @@ class Searcher
 
     protected function findAllReferences(array $ast): array
     {
-        $staticMethodCalls = $this->findReferences($ast, Node\Expr\StaticCall::class, 'class', $this->static);
-        $staticProperties = $this->findReferences($ast, Node\Expr\StaticPropertyFetch::class, 'class', $this->static);
-        $functionCalls = $this->findReferences($ast, FuncCall::class, 'name', $this->functions);
-        $assignments = $this->findReferences($ast, Node\Expr\Assign::class, 'var', $this->assignments);
-        $classes = $this->findReferences($ast, Node\Expr\New_::class, 'class', $this->classes);
-        $methods = $this->findReferences($ast, Node\Expr\MethodCall::class, 'name', $this->methods);
-        $variables = $this->findReferences($ast, Node\Expr\Variable::class, 'name', $this->variables);
-        $functionDefs = $this->findReferences($ast, Node\Stmt\Function_::class, 'name', $this->functions);
+        $nodeMap = [
+            Node\Expr\Assign::class => $this->assignments,
+            Node\Expr\FuncCall::class => $this->functions,
+            Node\Expr\MethodCall::class => $this->methods,
+            Node\Expr\New_::class => $this->classes,
+            Node\Expr\StaticCall::class => $this->static,
+            Node\Expr\StaticPropertyFetch::class => $this->static,
+            Node\Expr\Variable::class => $this->variables,
+            Node\Stmt\Function_::class => $this->functions,
+        ];
 
-        return $this->sortNodesByLineNumber(
-            $assignments,
-            $classes,
-            $functionCalls,
-            $functionDefs,
-            $methods,
-            $staticMethodCalls,
-            $staticProperties,
-            $variables
-        );
-    }
+        $result = [];
 
-    protected function findReferences(array $ast, string $class, ?string $nodeNameProp, array $names): array
-    {
-        $nodeFinder = new NodeFinder();
-
-        $nodes = $nodeFinder->findInstanceOf($ast, $class);
-
-        if (! $nodeNameProp) {
-            return $nodes;
+        foreach($nodeMap as $parserNodeClass => $names) {
+            $result[] = $this->findReferences($ast, $parserNodeClass, $names);
         }
 
-        return array_filter($nodes, function (Node $node) use ($names, $nodeNameProp) {
-            $name = '';
+        return $this->sortNodesByLineNumber(...$result);
+    }
 
-            if ($node instanceof FuncCall) {
-                if (! method_exists($node->name, 'toString')) {
-                    return false;
-                }
+    protected function findReferences(array $ast, string $class, array $names): array
+    {
+        $nodes = (new NodeFinder())->findInstanceOf($ast, $class);
 
-                $name = $node->name->toString();
+        return collect($nodes)->filter(function(Node $node) use ($names) {
+            $name = NameResolver::resolve($node) ?? false;
 
-                return Arr::matches($name, $names, true);
-            }
-
-            if ($node instanceof Node\Expr\MethodCall) {
-                if (! method_exists($node->name, 'toString')) {
-                    return false;
-                }
-
-                $name = $node->name->toString();
-
-                return Arr::matches($name, $names, true);
-            }
-
-            if ($node instanceof Node\Expr\StaticPropertyFetch) {
-                $name = $node->class->toString();
-                $methodName = $node->name->name;
-
-                return Arr::matches($methodName, $names, true) || Arr::matches("{$name}::\${$methodName}", $names, true);
-            }
-
-            if ($node instanceof Node\Expr\StaticCall) {
-                if (! method_exists($node->class, 'toString')) {
-                    return false;
-                }
-                if (! method_exists($node->name, 'toString')) {
-                    return false;
-                }
-
-                $name = $node->class->toString();
-                $methodName = $node->name->toString();
-
-                return Arr::matches($name, $names, true) || Arr::matches("{$name}::{$methodName}", $names, true);
-            }
-
-            if ($node instanceof Node\Expr\Variable) {
-                $name = $node->name;
-
-                return Arr::matches($name, $names, true);
-            }
-
-            if ($node instanceof Node\Stmt\Function_) {
-                $name = $node->name->name;
-
-                return Arr::matches($name, $names, true);
-            }
-
-            if ($node instanceof Node\Expr\Array_) {
-                return false;
-            }
-
-            if ($node instanceof Node\Expr\ArrayItem) {
-                return false;
-            }
-
-            if ($node instanceof Node\Expr\ArrayDimFetch) {
-                $name = $node->var->name;
-
-                return Arr::matches($name, $names, true);
-            }
-
-//            if ($node instanceof Node\Expr\New_) {
-//                $name = $node->class->name->name;
-//            }
-
-            if ($node instanceof Node\Expr\Assign) {
-                if (! $node->var instanceof Node\Expr\Variable) {
-                    return false;
-                }
-
-                $name = $node->var->name;
-            }
-
-            if (! empty($name)) {
-                return in_array($name, $names, true);
-            }
-
-            if (isset($node->{$nodeNameProp}->name)) {
-                return in_array($node->{$nodeNameProp}->name, $names, true);
-            }
-
-            if (! isset($node->{$nodeNameProp}->parts)) {
-                return false;
-            }
-
-            return in_array($node->{$nodeNameProp}->parts[0], $names, true);
-        });
+            return $name && Arr::matchesAny($name, $names, true);
+        })->all();
     }
 
     protected function traverseNodes(FileSearchResults $results, array $nodes): void

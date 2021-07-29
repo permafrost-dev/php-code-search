@@ -40,6 +40,19 @@ class Arr
         return false;
     }
 
+    public static function matchesAny($strings, array $values, bool $allowRegex = true): bool
+    {
+        if (! is_array($strings)) {
+            $strings = [$strings];
+        }
+
+        return collect($strings)->map(function(string $str) use ($values, $allowRegex) {
+            return self::matches($str, $values, $allowRegex);
+        })->filter(function($value) {
+            return $value;
+        })->count() > 0;
+    }
+
     /**
      * Determine whether the given value is array accessible.
      *
