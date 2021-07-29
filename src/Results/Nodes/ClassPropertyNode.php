@@ -26,7 +26,7 @@ class ClassPropertyNode implements ResultNode
     {
         $this->bootTraits($node);
 
-        $this->default = ExpressionTransformer::parserNodeToResultNode($node->props[0]->default);
         $this->isStatic = $node->isStatic();
+        $this->default = ExpressionTransformer::parserNodeToResultNode($node->props[0]->default);
     }
 }
