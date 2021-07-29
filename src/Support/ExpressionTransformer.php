@@ -36,82 +36,48 @@ class ExpressionTransformer
 {
     public static function parserNodesToResultNodes(array $nodes): array
     {
-        $result = [];
-
-        foreach ($nodes as $node) {
-            $result[] = static::parserNodeToResultNode($node);
-        }
-
-        return $result;
+        return collect($nodes)->map(function($node) {
+            return static::parserNodeToResultNode($node);
+        })->all();
     }
 
     public static function parserNodeToResultNode($node)
     {
         $value = $node;
 
-        $location = GenericCodeLocation::create(
-            $node ? $node->getStartLine() : -1,
-            $node ? $node->getEndLine() : -1
-        );
+        $nodeMap = [
+            Array_::class => ArrayNode::class,
+            //ArrayItem::class => ArrayItemNode::class,
+            Assign::class => AssignmentNode::class,
+            AssignOp::class => AssignmentOperationNode::class,
+            BinaryOp::class => BinaryOperationNode::class,
+            DNumber::class => NumberNode::class,
+            FuncCall::class => FunctionCallNode::class,
+            LNumber::class => NumberNode::class,
+            MethodCall::class => MethodCallNode::class,
+            PropertyFetch::class => PropertyAccessNode::class,
+            StaticCall::class => StaticMethodCallNode::class,
+            StaticPropertyFetch::class => StaticPropertyAccessNode::class,
+            String_::class => StringNode::class,
+            Variable::class => VariableNode::class,
+        ];
 
         if ($node instanceof Array_) {
             return static::parserNodesToResultNodes($value->items);
-        }
-
-        if ($node instanceof Arg) {
-            $value = $node->value;
         }
 
         if ($node instanceof ArrayItem) {
             return new ArrayItemNode($node);
         }
 
-        if ($value instanceof String_) {
-            return new StringNode($value);
+        if ($node instanceof Arg) {
+            $value = $node->value;
         }
 
-        if ($value instanceof LNumber || $value instanceof DNumber) {
-            return new NumberNode($value);
-        }
-
-        if ($value instanceof Array_) {
-            return new ArrayNode($value);
-        }
-
-        if ($value instanceof Variable) {
-            return VariableNode::create($value);
-        }
-
-        if ($value instanceof Assign) {
-            return AssignmentNode::create($value);
-        }
-
-        if ($value instanceof FuncCall) {
-            return FunctionCallNode::create($value);
-        }
-
-        if ($value instanceof StaticCall) {
-            return StaticMethodCallNode::create($value);
-        }
-
-        if ($value instanceof MethodCall) {
-            return MethodCallNode::create($value);
-        }
-
-        if ($value instanceof PropertyFetch) {
-            return new PropertyAccessNode($value);
-        }
-
-        if ($value instanceof StaticPropertyFetch) {
-            return new StaticPropertyAccessNode($value);
-        }
-
-        if ($value instanceof BinaryOp) {
-            return new BinaryOperationNode($value);
-        }
-
-        if ($value instanceof AssignOp) {
-            return new AssignmentOperationNode($value);
+        foreach($nodeMap as $parserNodeClass => $resultNodeClass) {
+            if ($value instanceof $parserNodeClass) {
+                return new $resultNodeClass($value);
+            }
         }
 
         return $node;
