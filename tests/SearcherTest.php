@@ -17,6 +17,7 @@ class SearcherTest extends TestCase
         $searcher = new Searcher();
 
         $results = $searcher
+            ->withoutSnippets()
             ->functions(['strtolower', 'strtoupper'])
             ->searchCode('<?' . "php \n\$myVar = strtolower('test');\n");
 
@@ -30,12 +31,14 @@ class SearcherTest extends TestCase
         $file = new File(tests_path('data/file1.php'));
 
         $results = $searcher
+            ->withoutSnippets()
             ->functions(['strtolower', 'strtoupper'])
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);
 
         $results = $searcher
+            ->withoutSnippets()
             ->functions(['strtoupper', 'printf', 'strtolower'])
             ->search($file);
 
