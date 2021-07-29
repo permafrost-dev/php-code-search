@@ -18,7 +18,6 @@ use Permafrost\PhpCodeSearch\Visitors\StaticPropertyVisitor;
 use Permafrost\PhpCodeSearch\Visitors\VariableReferenceVisitor;
 use PhpParser\Error;
 use PhpParser\Node;
-use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Stmt;
 use PhpParser\NodeFinder;
 use PhpParser\NodeTraverser;
@@ -33,19 +32,19 @@ class Searcher
     protected $ast = [];
 
     /** @var array */
+    protected $assignments = [];
+
+    /** @var array */
+    protected $classes = [];
+
+    /** @var array */
     protected $functions = [];
 
     /** @var array */
     protected $methods = [];
 
     /** @var array */
-    protected $classes = [];
-
-    /** @var array */
     protected $static = [];
-
-    /** @var array */
-    protected $assignments = [];
 
     /** @var array */
     protected $variables = [];
@@ -56,6 +55,20 @@ class Searcher
     public function __construct($parser = null)
     {
         $this->parser = $parser ?? (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+    }
+
+    public function assignments(array $varNames): self
+    {
+        $this->assignments = array_merge($this->assignments, $varNames);
+
+        return $this;
+    }
+
+    public function classes(array $names): self
+    {
+        $this->classes = array_merge($this->classes, $names);
+
+        return $this;
     }
 
     public function functions(array $names): self
@@ -72,13 +85,6 @@ class Searcher
         return $this;
     }
 
-    public function variables(array $names): self
-    {
-        $this->variables = array_merge($this->variables, $names);
-
-        return $this;
-    }
-
     public function static(array $names): self
     {
         $this->static = array_merge($this->static, $names);
@@ -86,20 +92,9 @@ class Searcher
         return $this;
     }
 
-    public function assignments(array $varNames): self
+    public function variables(array $names): self
     {
-        $varNames = array_map(function ($item) {
-            return ltrim($item, '$');
-        }, $varNames);
-
-        $this->assignments = array_merge($this->assignments, $varNames);
-
-        return $this;
-    }
-
-    public function classes(array $names): self
-    {
-        $this->classes = array_merge($this->classes, $names);
+        $this->variables = array_merge($this->variables, $names);
 
         return $this;
     }
@@ -117,9 +112,7 @@ class Searcher
      */
     public function search($file): FileSearchResults
     {
-        if (is_string($file)) {
-            $file = new File($file);
-        }
+        $file = is_string($file) ? new File($file) : $file;
 
         $results = new FileSearchResults($file, $this->withSnippets);
 
@@ -127,9 +120,10 @@ class Searcher
             return $results;
         }
 
-        $calls = $this->findAllReferences($this->ast);
-
-        $this->traverseNodes($results, $calls);
+        $this->traverseNodes(
+            $results,
+            $this->findAllReferences($this->ast)
+        );
 
         return $results;
     }
