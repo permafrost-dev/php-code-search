@@ -1,0 +1,4 @@
+-
+    location: { column: 0, endLine: 11, startLine: 3 }
+    node: { properties: [{ default: { value: 1, location: { column: 0, endLine: 5, startLine: 5 } }, visibility: public, isStatic: false, name: id, location: { column: 0, endLine: 5, startLine: 5 } }], name: MyClass1, location: { column: 0, endLine: 11, startLine: 3 } }
+    snippet: null

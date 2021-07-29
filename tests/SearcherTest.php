@@ -141,6 +141,20 @@ class SearcherTest extends TestCase
     }
 
     /** @test */
+    public function it_searches_for_class_definitions()
+    {
+        $searcher = new Searcher();
+        $file = new File(tests_path('data/file3.php'));
+
+        $results = $searcher
+            ->classes(['MyClass1'])
+            ->withoutSnippets()
+            ->search($file);
+
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
     public function it_only_returns_the_functions_being_searched_for()
     {
         $results = (new Searcher())
