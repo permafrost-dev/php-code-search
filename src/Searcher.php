@@ -9,6 +9,7 @@ use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\NameResolver;
 use Permafrost\PhpCodeSearch\Support\VirtualFile;
 use Permafrost\PhpCodeSearch\Visitors\AssignmentVisitor;
+use Permafrost\PhpCodeSearch\Visitors\ClassDefinitionVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionCallVisitor;
 use Permafrost\PhpCodeSearch\Visitors\FunctionDefinitionVisitor;
 use Permafrost\PhpCodeSearch\Visitors\MethodCallVisitor;
@@ -162,6 +163,7 @@ class Searcher
             Node\Expr\StaticCall::class => $this->static,
             Node\Expr\StaticPropertyFetch::class => $this->static,
             Node\Expr\Variable::class => $this->variables,
+            Node\Stmt\Class_::class => $this->classes,
             Node\Stmt\Function_::class => $this->functions,
         ];
 
@@ -190,6 +192,7 @@ class Searcher
         $traverser = new NodeTraverser();
 
         $traverser->addVisitor(new AssignmentVisitor($results, $this->assignments));
+        $traverser->addVisitor(new ClassDefinitionVisitor($results, $this->classes));
         $traverser->addVisitor(new FunctionCallVisitor($results, $this->functions));
         $traverser->addVisitor(new FunctionDefinitionVisitor($results, $this->functions));
         $traverser->addVisitor(new MethodCallVisitor($results, $this->methods));
