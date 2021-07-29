@@ -24,7 +24,7 @@ class StatementTransformer
 
     public function parserNodesToResultNode(array $nodes): array
     {
-        return collect($nodes)->map(function($node) {
+        return collect($nodes)->map(function ($node) {
             return $this->parserNodeToResultNode($node);
         })->toArray();
     }

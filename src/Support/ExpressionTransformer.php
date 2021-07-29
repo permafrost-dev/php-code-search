@@ -2,7 +2,6 @@
 
 namespace Permafrost\PhpCodeSearch\Support;
 
-use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayItemNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ArrayNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\AssignmentNode;
@@ -36,7 +35,7 @@ class ExpressionTransformer
 {
     public static function parserNodesToResultNodes(array $nodes): array
     {
-        return collect($nodes)->map(function($node) {
+        return collect($nodes)->map(function ($node) {
             return static::parserNodeToResultNode($node);
         })->all();
     }
@@ -74,7 +73,7 @@ class ExpressionTransformer
             $value = $node->value;
         }
 
-        foreach($nodeMap as $parserNodeClass => $resultNodeClass) {
+        foreach ($nodeMap as $parserNodeClass => $resultNodeClass) {
             if ($value instanceof $parserNodeClass) {
                 return new $resultNodeClass($value);
             }

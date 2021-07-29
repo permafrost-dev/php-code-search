@@ -46,9 +46,9 @@ class Arr
             $strings = [$strings];
         }
 
-        return collect($strings)->map(function(string $str) use ($values, $allowRegex) {
+        return collect($strings)->map(function (string $str) use ($values, $allowRegex) {
             return self::matches($str, $values, $allowRegex);
-        })->filter(function($value) {
+        })->filter(function ($value) {
             return $value;
         })->count() > 0;
     }

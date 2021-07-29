@@ -56,7 +56,7 @@ class NameResolver
 
     protected static function propertiesExist($object, array $propertyNames): bool
     {
-        foreach($propertyNames as $propertyName) {
+        foreach ($propertyNames as $propertyName) {
             if (! property_exists($object, $propertyName)) {
                 return false;
             }

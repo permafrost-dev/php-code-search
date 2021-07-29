@@ -167,7 +167,7 @@ class Searcher
 
         $result = [];
 
-        foreach($nodeMap as $parserNodeClass => $names) {
+        foreach ($nodeMap as $parserNodeClass => $names) {
             $result[] = $this->findReferences($ast, $parserNodeClass, $names);
         }
 
@@ -178,7 +178,7 @@ class Searcher
     {
         $nodes = (new NodeFinder())->findInstanceOf($ast, $class);
 
-        return collect($nodes)->filter(function(Node $node) use ($names) {
+        return collect($nodes)->filter(function (Node $node) use ($names) {
             $name = NameResolver::resolve($node) ?? false;
 
             return $name && Arr::matchesAny($name, $names, true);
