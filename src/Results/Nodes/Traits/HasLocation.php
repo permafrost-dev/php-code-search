@@ -3,6 +3,7 @@
 namespace Permafrost\PhpCodeSearch\Results\Nodes\Traits;
 
 use Permafrost\PhpCodeSearch\Code\CodeLocation;
+use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 
 trait HasLocation
 {
@@ -19,5 +20,10 @@ trait HasLocation
         $this->location = $location;
 
         return $this;
+    }
+
+    protected function bootHasLocation($node): void
+    {
+        $this->location = GenericCodeLocation::createFromNode($node);
     }
 }

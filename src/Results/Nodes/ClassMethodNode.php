@@ -7,26 +7,34 @@ use Permafrost\PhpCodeSearch\Results\Nodes\Traits\BootsTraits;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasName;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasVisibility;
-use Permafrost\PhpCodeSearch\Support\ExpressionTransformer;
+use Permafrost\PhpCodeSearch\Support\NameResolver;
+use Permafrost\PhpCodeSearch\Support\StatementTransformer;
 use PhpParser\Node;
 
-class ClassPropertyNode implements ResultNode
+class ClassMethodNode implements ResultNode
 {
     use BootsTraits;
     use HasName;
     use HasLocation;
     use HasVisibility;
 
-    /** @var ResultNode|ValueNode|null */
-    public $default;
+    /** @var string|null */
+    public $returnType;
 
     public $isStatic = false;
 
-    public function __construct(Node\Stmt\Property $node)
+    public $isAbstract = false;
+
+    /** @var array|ResultNode[]|ValueNode[] */
+    public $params = [];
+
+    public function __construct(Node\Stmt\ClassMethod $node)
     {
         $this->bootTraits($node);
 
-        $this->default = ExpressionTransformer::parserNodeToResultNode($node->props[0]->default);
         $this->isStatic = $node->isStatic();
+        $this->isAbstract = $node->isAbstract();
+        $this->returnType = NameResolver::resolve($node->getReturnType());
+        $this->params = StatementTransformer::parserNodesToResultNode($node->params);
     }
 }

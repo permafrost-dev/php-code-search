@@ -16,10 +16,15 @@ class ClassDefinitionNode implements ResultNode
     /** @var array|ResultNode[]|ValueNode[] */
     public $properties;
 
+    /** @var array|ResultNode[]|ValueNode[] */
+    public $methods;
+
     public function __construct(Node\Stmt\Class_ $node)
     {
         $this->name = $node->name->toString();
         $this->properties = StatementTransformer::parserNodesToResultNode($node->getProperties());
+        $this->methods = StatementTransformer::parserNodesToResultNode($node->getMethods());
         $this->location = GenericCodeLocation::createFromNode($node);
+
     }
 }

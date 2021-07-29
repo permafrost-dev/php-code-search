@@ -2,6 +2,7 @@
 
 namespace Permafrost\PhpCodeSearch\Support;
 
+use Permafrost\PhpCodeSearch\Results\Nodes\ClassMethodNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ClassPropertyNode;
 use Permafrost\PhpCodeSearch\Results\Nodes\ParameterNode;
 use PhpParser\Node;
@@ -13,6 +14,7 @@ class StatementTransformer
         $map = [
             Node\Param::class => ParameterNode::class,
             Node\Stmt\Property::class => ClassPropertyNode::class,
+            Node\Stmt\ClassMethod::class => ClassMethodNode::class,
         ];
 
         foreach ($map as $parserNodeClass => $resultNodeClass) {

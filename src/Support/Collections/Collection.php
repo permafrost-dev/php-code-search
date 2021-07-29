@@ -26,7 +26,7 @@ class Collection implements Arrayable, \ArrayAccess
 
     public function each(callable $callback): self
     {
-        foreach ($this as $key => $item) {
+        foreach ($this->getIterator() as $key => $item) {
             if ($callback($item, $key) === false) {
                 break;
             }
@@ -43,6 +43,19 @@ class Collection implements Arrayable, \ArrayAccess
 
         return new static(array_filter($this->items));
     }
+
+    /**
+     * Get the first item from the collection passing the given truth test.
+     *
+     * @param  callable|null  $callback
+     * @param  mixed  $default
+     * @return mixed
+     */
+    public function first(callable $callback = null, $default = null)
+    {
+        return Arr::first($this->items, $callback, $default);
+    }
+
 
     public function get($key, $default = null)
     {

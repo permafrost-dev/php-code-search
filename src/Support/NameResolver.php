@@ -2,6 +2,7 @@
 
 namespace Permafrost\PhpCodeSearch\Support;
 
+use Permafrost\PhpCodeSearch\Results\Nodes\ClassPropertyNode;
 use PhpParser\Node;
 
 class NameResolver
@@ -18,6 +19,10 @@ class NameResolver
 
         if (method_exists($node, 'toString')) {
             return $node->toString();
+        }
+
+        if ($node instanceof Node\Stmt\Property) {
+            return $node->props[0]->name;
         }
 
         if (self::propertiesExist($node, ['class', 'name'])) {
