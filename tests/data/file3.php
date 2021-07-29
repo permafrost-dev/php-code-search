@@ -8,6 +8,11 @@ class MyClass1
     {
         return 'test';
     }
+
+    protected function callExternalApi(string $endpoint, int $count = 1): array
+    {
+        return [1, 2];
+    }
 }
 
 $obj = new MyClass2();
