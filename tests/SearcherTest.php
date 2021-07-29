@@ -64,6 +64,7 @@ class SearcherTest extends TestCase
 
         $results = $searcher
             ->functions(['strtolower', 'strtoupper'])
+            ->withoutSnippets()
             ->searchCode('<?' ."php
                 \$myStr = strtolower(
                     'test '.

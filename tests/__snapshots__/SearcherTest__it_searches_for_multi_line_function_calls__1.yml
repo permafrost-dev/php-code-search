@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 5, startLine: 2 }
-    node: { name: strtolower, args: [{ symbol: ., left: { value: 'test ', location: { column: 0, endLine: 3, startLine: 3 } }, right: { value: string, location: { column: 0, endLine: 4, startLine: 4 } }, value: '''test '' . ''string''', location: { column: 0, endLine: 4, startLine: 3 } }], location: { column: 0, endLine: 5, startLine: 2 } }
-    snippet: { snippetLineCount: 5, lines: { 1: { selected: false, lineNumber: 1, value: '<?php', isSelected: false }, 2: { selected: true, lineNumber: 2, value: '                $myStr = strtolower(', isSelected: true }, 3: { selected: true, lineNumber: 3, value: '                    ''test ''.', isSelected: true }, 4: { selected: true, lineNumber: 4, value: '                    ''string''', isSelected: true }, 5: { selected: true, lineNumber: 5, value: '                );', isSelected: true } }, lineNumberStart: 2, lineNumberEnd: 5, lineNumbers: [1, 2, 3, 4, 5], selectedBounds: { start: 2, end: 5 } }
+    node: { args: [{ symbol: ., left: { value: 'test ', location: { column: 0, endLine: 3, startLine: 3 } }, right: { value: string, location: { column: 0, endLine: 4, startLine: 4 } }, value: '''test '' . ''string''', location: { column: 0, endLine: 4, startLine: 3 } }], name: strtolower, location: { column: 0, endLine: 5, startLine: 2 } }
+    snippet: null
