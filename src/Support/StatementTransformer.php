@@ -7,7 +7,7 @@ use PhpParser\Node;
 
 class StatementTransformer
 {
-    public function parserNodeToResultNode(Node $node)
+    public static function parserNodeToResultNode(Node $node)
     {
         $map = [
             Node\Param::class => ParameterNode::class,
@@ -22,10 +22,10 @@ class StatementTransformer
         return $node;
     }
 
-    public function parserNodesToResultNode(array $nodes): array
+    public static function parserNodesToResultNode(array $nodes): array
     {
         return collect($nodes)->map(function ($node) {
-            return $this->parserNodeToResultNode($node);
+            return self::parserNodeToResultNode($node);
         })->toArray();
     }
 }
