@@ -5,8 +5,10 @@ namespace Permafrost\PhpCodeSearch\Support\Collections;
 use Permafrost\PhpCodeSearch\Support\Arr;
 
 /** @codeCoverageIgnore */
-class Collection implements Arrayable, \ArrayAccess
+class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
 {
+    use Enumerable;
+
     protected $items = [];
 
     public function __construct($items = [])
@@ -26,7 +28,7 @@ class Collection implements Arrayable, \ArrayAccess
 
     public function each(callable $callback): self
     {
-        foreach ($this->getIterator() as $key => $item) {
+        foreach ($this as $key => $item) {
             if ($callback($item, $key) === false) {
                 break;
             }
@@ -238,29 +240,5 @@ class Collection implements Arrayable, \ArrayAccess
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->items);
-    }
-
-    public function offsetExists($offset)
-    {
-        return isset($this->items[$offset]);
-    }
-
-    public function offsetGet($offset)
-    {
-        return $this->items[$offset];
-    }
-
-    public function offsetSet($key, $value)
-    {
-        if (is_null($key)) {
-            $this->items[] = $value;
-        } else {
-            $this->items[$key] = $value;
-        }
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->items[$offset]);
     }
 }
