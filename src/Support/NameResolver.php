@@ -2,7 +2,6 @@
 
 namespace Permafrost\PhpCodeSearch\Support;
 
-use Permafrost\PhpCodeSearch\Results\Nodes\ClassPropertyNode;
 use PhpParser\Node;
 
 class NameResolver
@@ -57,6 +56,13 @@ class NameResolver
         }
 
         return null;
+    }
+
+    public static function resolveAll(array $nodes): array
+    {
+        return collect($nodes)->each(function($node) {
+            return self::resolve($node);
+        })->filter()->all();
     }
 
     protected static function propertiesExist($object, array $propertyNames): bool
