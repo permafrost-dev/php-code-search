@@ -130,18 +130,14 @@ foreach($results->results as $result) {
 }
 ```
 
-### New class instances
+### Classes
 
-To search for a class created by the `new` keyword, use the `classes` method before calling `search`.
+To search for either a class definition or a class created by the `new` keyword, use the `classes`. Regular expression patterns are supported by surrounding a value with slashes `/`.
 
 ```php
 $results = $searcher
-    ->classes(['MyClass'])
+    ->classes(['MyController'])
     ->search('./app/Http/Controllers/MyController.php');
-    
-foreach($results->results as $result) {
-    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
-}
 ```
 
 ### Variable assignments
