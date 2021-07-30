@@ -24,6 +24,10 @@ class NameResolver
             return $node->props[0]->name;
         }
 
+        if ($node instanceof Node\Stmt\ClassConst) {
+            return $node->consts[0]->name;
+        }
+
         if (self::propertiesExist($node, ['class', 'name'])) {
             $class = static::resolve($node->class);
             $name = static::resolve($node->name);
