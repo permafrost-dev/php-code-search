@@ -4,6 +4,8 @@ class MyClass1
 {
     public $id = 1;
 
+    public const TEST_CONST_ONE = 'abc';
+
     public function getData(): string
     {
         return 'test';
