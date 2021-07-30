@@ -53,23 +53,28 @@ $searcher = new Searcher();
 To search a file, use the `search` method, and the `searchCode` method to search a string of code.
 
 ```php
-$results = $searcher
+$searcher
     ->functions(['strtolower', 'strtoupper'])
     ->search('./file1.php');
 
-$results = $searcher
-    ->variables(['twoA', '/^one[AB]$/'])
-    ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
+$searcher
+    ->variables(['/^one[A-Z]$/'])
+    ->searchCode('<?php $oneA = "1a";');
 ```
 
 ### Variable names
 
-To search for variables by name, use the `variables` method before calling `search`.  To use regular expressions, surround the values with `/`.
+To search for variables by name, use the `variables` method.  To use regular expressions, surround the values with `/`.
 
 ```php
 $results = $searcher
-    ->variables(['twoA', '/^one[AB]$/'])
-    ->searchCode('<?php $oneA = "1a"; $oneB = "1b"; $oneC = "1c"; $twoA = "2a"; $twoB = "2b";');
+    ->variables(['twoA', '/^one.$/'])
+    ->searchCode('<?php '.
+    '    $oneA = "1a";'.
+    '    $oneB = "1b";'.
+    '    $twoA = "2a";'.
+    '    $twoB = "2b";'.
+    '');
     
 foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
@@ -81,14 +86,10 @@ foreach($results->results as $result) {
 To search for function calls or definitions, use the `functions` method.  Regular expressions can be used by surrounding the name with slashes `/`, i.e. `/test\d+/`.
 
 ```php
-// this will search for references AND definitions for 'strtolower' and 'myfunc'
-$results = $searcher
+// search for references AND definitions for 'strtolower' and/or 'myfunc'
+$searcher
     ->functions(['strtolower', 'myfunc'])
-    ->search('./file1.php');
-    
-foreach($results->results as $result) {
-    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
-}
+    ->search('file1.php');
 ```
 
 ### Method calls
@@ -101,9 +102,10 @@ Method call nodes have an `args` property that can be looped through to retrieve
 $results = $searcher
     ->methods(['/test(One|Two)/'])
     ->searchCode('<?php '.
-    '    $obj->testOne("hello world 1"); '.
-    '    $obj->testTwo("hello world", 2); '.
-    '');
+      '    $obj->testOne("hello world 1"); '.
+      '    $obj->testTwo("hello world", 2); '.
+      ''
+    );
     
 foreach($results->results as $result) {
     echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
@@ -121,13 +123,9 @@ To search for static method or property calls, use the `static` method before ca
 Valid search terms are either a class name like `Cache`, or a class name and a method name like `Cache::remember`. 
 
 ```php
-$results = $searcher
+$searcher
     ->static(['Ray', 'Cache::has', 'Request::$myProperty'])
     ->search('./app/Http/Controllers/MyController.php');
-    
-foreach($results->results as $result) {
-    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
-}
 ```
 
 ### Classes
@@ -135,7 +133,7 @@ foreach($results->results as $result) {
 To search for either a class definition or a class created by the `new` keyword, use the `classes`. Regular expression patterns are supported by surrounding a value with slashes `/`.
 
 ```php
-$results = $searcher
+$searcher
     ->classes(['MyController'])
     ->search('./app/Http/Controllers/MyController.php');
 ```
@@ -145,13 +143,9 @@ $results = $searcher
 To search for a variable assignment by variable name, use the `assignments` method before calling `search`. _Note: The `$` should be omitted._
 
 ```php
-$results = $searcher
+$searcher
     ->assignments(['myVar'])
     ->search('./app/Http/Controllers/MyController.php');
-    
-foreach($results->results as $result) {
-    echo "Found '{$result->node->name()}' on line {$result->location->startLine}" . PHP_EOL;
-}
 ```
 
 ### Results without code snippets
@@ -159,10 +153,10 @@ foreach($results->results as $result) {
 To return search results without associated code snippets, use the `withoutSnippets` method:
 
 ```php
-$results = $searcher
-    ->functions(['strtolower'])
+$searcher
     ->withoutSnippets()
-    ->searchCode('<?php $str = strtolower("TEST");');
+    ->functions(['strtolower'])
+    ->search('file1.php');
 ```
 
 
