@@ -4,6 +4,11 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.10.0 - 2021-07-29
+
+- add support for class definition searches using `classes()`
+- internal: significant refactoring
+
 ## 1.9.0 - 2021-07-28
 
 - add support for function definition searches using `functions()` 
