@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 6, startLine: 3 }
-    node: { name: test2, args: [{ type: null, default: null, location: { column: 0, endLine: 3, startLine: 3 }, name: one }, { type: string, default: null, location: { column: 0, endLine: 3, startLine: 3 }, name: text }], location: { column: 0, endLine: 6, startLine: 3 } }
+    node: { args: [{ type: null, default: null, location: { column: 0, endLine: 3, startLine: 3 }, name: one }, { type: string, default: null, location: { column: 0, endLine: 3, startLine: 3 }, name: text }], name: test2, location: { column: 0, endLine: 6, startLine: 3 } }
     snippet: null

@@ -20,6 +20,14 @@ class NameResolver
             return $node->toString();
         }
 
+        if ($node instanceof Node\Stmt\Property) {
+            return $node->props[0]->name;
+        }
+
+        if ($node instanceof Node\Stmt\ClassConst) {
+            return $node->consts[0]->name;
+        }
+
         if (self::propertiesExist($node, ['class', 'name'])) {
             $class = static::resolve($node->class);
             $name = static::resolve($node->name);
@@ -52,6 +60,13 @@ class NameResolver
         }
 
         return null;
+    }
+
+    public static function resolveAll(array $nodes): array
+    {
+        return collect($nodes)->each(function($node) {
+            return self::resolve($node);
+        })->filter()->all();
     }
 
     protected static function propertiesExist($object, array $propertyNames): bool

@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 20, startLine: 20 }
     node: { objectName: Ray, propertyName: someProperty, location: { column: 0, endLine: 20, startLine: 20 } }
-    snippet: { snippetLineCount: 8, lines: { 13: { selected: false, lineNumber: 13, value: '    $obj = new MyClass();', isSelected: false }, 14: { selected: false, lineNumber: 14, value: '', isSelected: false }, 15: { selected: false, lineNumber: 15, value: '    $obj->withData([123])->send();', isSelected: false }, 16: { selected: false, lineNumber: 16, value: '', isSelected: false }, 17: { selected: false, lineNumber: 17, value: '    $isDisabled = AnotherClass::disabled();', isSelected: false }, 18: { selected: false, lineNumber: 18, value: '    $isEnabled = AnotherClass::enabled();', isSelected: false }, 19: { selected: false, lineNumber: 19, value: '', isSelected: false }, 20: { selected: true, lineNumber: 20, value: '    $test = Ray::$someProperty->enable();', isSelected: true } }, lineNumberStart: 20, lineNumberEnd: 20, lineNumbers: [13, 14, 15, 16, 17, 18, 19, 20], selectedBounds: { start: 20, end: 20 } }
+    snippet: null

@@ -5,8 +5,10 @@ namespace Permafrost\PhpCodeSearch\Support\Collections;
 use Permafrost\PhpCodeSearch\Support\Arr;
 
 /** @codeCoverageIgnore */
-class Collection implements Arrayable, \ArrayAccess
+class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
 {
+    use Enumerable;
+
     protected $items = [];
 
     public function __construct($items = [])
@@ -43,6 +45,19 @@ class Collection implements Arrayable, \ArrayAccess
 
         return new static(array_filter($this->items));
     }
+
+    /**
+     * Get the first item from the collection passing the given truth test.
+     *
+     * @param  callable|null  $callback
+     * @param  mixed  $default
+     * @return mixed
+     */
+    public function first(callable $callback = null, $default = null)
+    {
+        return Arr::first($this->items, $callback, $default);
+    }
+
 
     public function get($key, $default = null)
     {
@@ -225,29 +240,5 @@ class Collection implements Arrayable, \ArrayAccess
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->items);
-    }
-
-    public function offsetExists($offset)
-    {
-        return isset($this->items[$offset]);
-    }
-
-    public function offsetGet($offset)
-    {
-        return $this->items[$offset];
-    }
-
-    public function offsetSet($key, $value)
-    {
-        if (is_null($key)) {
-            $this->items[] = $value;
-        } else {
-            $this->items[$key] = $value;
-        }
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->items[$offset]);
     }
 }

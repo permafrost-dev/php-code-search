@@ -11,12 +11,25 @@ class SearcherTest extends TestCase
 {
     use MatchesSnapshots;
 
+    /** @var Searcher */
+    protected $searcher;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->searcher = $this->getSearcher();
+    }
+
+    protected function getSearcher(): Searcher
+    {
+        return (new Searcher())->withoutSnippets();
+    }
+
     /** @test */
     public function it_searches_code_strings()
     {
-        $searcher = new Searcher();
-
-        $results = $searcher
+        $results = $this->getSearcher()
             ->functions(['strtolower', 'strtoupper'])
             ->searchCode('<?' . "php \n\$myVar = strtolower('test');\n");
 
@@ -26,16 +39,15 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_function_calls()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->functions(['strtolower', 'strtoupper'])
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->functions(['strtoupper', 'printf', 'strtolower'])
             ->search($file);
 
@@ -45,11 +57,9 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_function_calls_without_snippets()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
-            ->withoutSnippets()
+        $results = $this->getSearcher()
             ->functions(['strtolower', 'strtoupper'])
             ->search($file);
 
@@ -59,10 +69,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_multi_line_function_calls()
     {
-        $searcher = new Searcher();
-        $file = new File(tests_path('data/file1.php'));
-
-        $results = $searcher
+        $results = $this->getSearcher()
             ->functions(['strtolower', 'strtoupper'])
             ->searchCode('<?' ."php
                 \$myStr = strtolower(
@@ -77,10 +84,9 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_static_method_calls()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->static(['MyClass', 'Ray'])
             ->search($file);
 
@@ -90,10 +96,9 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_static_property_accesses()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->static(['Ray::$someProperty'])
             ->search($file);
 
@@ -103,10 +108,9 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_static_method_calls_containing_the_class_and_method_name()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->static(['AnotherClass::enabled'])
             ->search($file);
 
@@ -117,10 +121,9 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_var_assignments()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->assignments(['obj'])
             ->search($file);
 
@@ -130,11 +133,22 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_classes_created_by_new()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file1.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->classes(['MyClass'])
+            ->search($file);
+
+        $this->assertMatchesSnapshot($results->results);
+    }
+
+    /** @test */
+    public function it_searches_for_class_definitions()
+    {
+        $file = new File(tests_path('data/file3.php'));
+
+        $results = $this->getSearcher()
+            ->classes(['MyClass1'])
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);
@@ -143,14 +157,14 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_only_returns_the_functions_being_searched_for()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->functions(['strtolower'])
             ->searchCode('<?' . "php \n\$myVar = strtolower(strtoupper('test'));\n");
 
         $this->assertCount(1, $results->results);
         $this->assertEquals('strtolower', $results->results[0]->node->name());
 
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->functions(['strtoupper'])
             ->searchCode('<?' . "php \n\$myVar = strtolower(strtoupper('test'));\n");
 
@@ -161,7 +175,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_finds_methods()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->methods(['methodTwo'])
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo(\$obj->methodOne('two'));\n");
 
@@ -172,7 +186,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_transforms_nested_calls_and_arguments()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->methods(['methodTwo'])
             ->searchCode('<?' . "php \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n");
 
@@ -183,7 +197,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_finds_complex_assignments()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->assignments(['myVar2'])
             ->searchCode('<?' . "php
                 \$myVar = \$obj->methodTwo(MyModel::find(1), \$obj->methodOne('two', [2, 3]), [\$this, 'handlerMethod']);\n
@@ -199,7 +213,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_finds_binary_operations()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->assignments(['obj'])
             ->searchCode('<?' . "php
                 \$obj = 1 + 3 + 2;
@@ -212,7 +226,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_finds_assign_operations()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->assignments(['obj'])
             ->searchCode('<?' . "php
                 \$obj = 'hello ' . 'world';
@@ -225,7 +239,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_finds_variables()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->variables(['obj'])
             ->searchCode('<?' . "php \n\$myVar = \$obj->methodOne('one'); \$obj->methodTwo('two');\n");
 
@@ -237,7 +251,7 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_finds_variables_using_regex()
     {
-        $results = (new Searcher())
+        $results = $this->getSearcher()
             ->variables(['/obj[AB]/'])
             ->searchCode('<?' . "php \n\$objC = \$objA->methodOne('one'); \$objB->methodTwo('two');\n");
 
@@ -249,19 +263,16 @@ class SearcherTest extends TestCase
     /** @test */
     public function it_searches_for_function_definitions()
     {
-        $searcher = new Searcher();
         $file = new File(tests_path('data/file2.php'));
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->functions(['test2'])
-            ->withoutSnippets()
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);
 
-        $results = $searcher
+        $results = $this->getSearcher()
             ->functions(['/test\d+/'])
-            ->withoutSnippets()
             ->search($file);
 
         $this->assertMatchesSnapshot($results->results);

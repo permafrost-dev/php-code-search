@@ -6,28 +6,27 @@ use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\BootsTraits;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasName;
-use Permafrost\PhpCodeSearch\Results\Nodes\Traits\TransformsArguments;
+use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasVisibility;
 use Permafrost\PhpCodeSearch\Support\ExpressionTransformer;
 use PhpParser\Node;
 
-class FunctionCallNode implements ResultNode
+class ClassPropertyNode implements ResultNode
 {
     use BootsTraits;
     use HasName;
     use HasLocation;
+    use HasVisibility;
 
-    /** @var array|ResultNode[]|ValueNode[] */
-    public $args;
+    /** @var ResultNode|ValueNode|null */
+    public $default;
 
-    public function __construct(Node\Expr\FuncCall $node)
+    public $isStatic = false;
+
+    public function __construct(Node\Stmt\Property $node)
     {
         $this->bootTraits($node);
 
-        $this->args = ExpressionTransformer::parserNodesToResultNodes($node->args);
-    }
-
-    public static function create(Node\Expr\FuncCall $node): self
-    {
-        return new static(...func_get_args());
+        $this->isStatic = $node->isStatic();
+        $this->default = ExpressionTransformer::parserNodeToResultNode($node->props[0]->default);
     }
 }
