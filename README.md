@@ -62,9 +62,11 @@ $searcher
     ->searchCode('<?php $oneA = "1a";');
 ```
 
+When searching using any of the available methods, regular expressions can be used by surrounding the name with slashes `/`, i.e. `/test\d+/`.
+
 ### Variable names
 
-To search for variables by name, use the `variables` method.  To use regular expressions, surround the values with `/`.
+To search for variables by name, use the `variables` method.
 
 ```php
 $results = $searcher
@@ -83,7 +85,7 @@ foreach($results->results as $result) {
 
 ### Functions
 
-To search for function calls or definitions, use the `functions` method.  Regular expressions can be used by surrounding the name with slashes `/`, i.e. `/test\d+/`.
+To search for function calls or definitions, use the `functions` method.  
 
 ```php
 // search for references AND definitions for 'strtolower' and/or 'myfunc'
@@ -94,7 +96,7 @@ $searcher
 
 ### Method calls
 
-To search for a method call by name, use the `methods` method before calling `search`.  Surround the search terms with slashes to use regular expressions.
+To search for a method call by name, use the `methods` method.
 
 Method call nodes have an `args` property that can be looped through to retrieve the arguments for the method call.
 
@@ -118,7 +120,7 @@ foreach($results->results as $result) {
 
 ### Static calls
 
-To search for static method or property calls, use the `static` method before calling `search`.
+To search for static method or property calls, use the `static` method.
 
 Valid search terms are either a class name like `Cache`, or a class name and a method name like `Cache::remember`. 
 
@@ -130,7 +132,7 @@ $searcher
 
 ### Classes
 
-To search for either a class definition or a class created by the `new` keyword, use the `classes`. Regular expression patterns are supported by surrounding a value with slashes `/`.
+To search for either a class definition or a class created by the `new` keyword, use the `classes` method. 
 
 ```php
 $searcher
@@ -140,7 +142,7 @@ $searcher
 
 ### Variable assignments
 
-To search for a variable assignment by variable name, use the `assignments` method before calling `search`. _Note: The `$` should be omitted._
+To search for a variable assignment by variable name, use the `assignments` method. _Note: The `$` should be omitted._
 
 ```php
 $searcher
