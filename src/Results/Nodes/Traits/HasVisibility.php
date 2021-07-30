@@ -2,7 +2,8 @@
 
 namespace Permafrost\PhpCodeSearch\Results\Nodes\Traits;
 
-trait HasVisibility {
+trait HasVisibility
+{
 
     /** @var string */
     public $visibility = 'unknown';
@@ -20,9 +21,10 @@ trait HasVisibility {
             'isProtected' => 'protected',
         ];
 
-        foreach($visibilityMap as $method => $visibility) {
+        foreach ($visibilityMap as $method => $visibility) {
             if ($node->$method()) {
                 $this->visibility = $visibility;
+
                 return;
             }
         }

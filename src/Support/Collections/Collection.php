@@ -58,7 +58,6 @@ class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
         return Arr::first($this->items, $callback, $default);
     }
 
-
     public function get($key, $default = null)
     {
         if (array_key_exists($key, $this->items)) {
