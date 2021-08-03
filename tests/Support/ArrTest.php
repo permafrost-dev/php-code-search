@@ -34,4 +34,16 @@ class ArrTest extends TestCase
         $this->assertTrue(Arr::matches('test', ['/^te.+$/', 'one']));
         $this->assertFalse(Arr::matches('test', ['/^Test$/', '/^one$/']));
     }
+
+    /** @test */
+    public function it_matches_any_string_against_other_strings()
+    {
+        $this->assertTrue(Arr::matchesAny(['one', 'two'], ['abc', 'two']));
+    }
+
+    /** @test */
+    public function it_matches_any_nested_array_of_strings()
+    {
+        $this->assertTrue(Arr::matchesAny([ 'def', ['one', [ 'two' ] ] ], ['abc', 'two']));
+    }
 }
