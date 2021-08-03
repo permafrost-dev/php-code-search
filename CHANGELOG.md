@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.10.1 - 2021-08-03
+
+- fix nested array bug in `Arr::matchesAny()`
+
 ## 1.10.0 - 2021-07-29
 
 - add support for class definition searches using `classes()`
