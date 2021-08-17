@@ -22,7 +22,13 @@ class ParameterNode implements ResultNode
     public function __construct(Node\Param $node)
     {
         $this->name = $node->var->name;
-        $this->type = optional($node->type)->toString();
+
+        if ($node->type instanceof Node\NullableType) {
+            $this->type = $node->getType();
+        } else {
+            $this->type = optional($node->type)->toString();
+        }
+
         $this->default = $node->default ? ExpressionTransformer::parserNodeToResultNode($node->default) : null;
         $this->location = GenericCodeLocation::createFromNode($node);
     }
