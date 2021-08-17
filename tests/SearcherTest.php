@@ -277,4 +277,16 @@ class SearcherTest extends TestCase
 
         $this->assertMatchesSnapshot($results->results);
     }
+
+    /** @test */
+    public function it_can_handle_chained_static_and_regular_calls()
+    {
+        $file = new File(tests_path('data/file4.php'));
+
+        $results = $this->getSearcher()
+            ->methods(['firstOrFail'])
+            ->search($file);
+
+        $this->assertMatchesSnapshot($results->results);
+    }
 }
