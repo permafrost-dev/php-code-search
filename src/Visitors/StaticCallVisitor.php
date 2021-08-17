@@ -24,7 +24,7 @@ class StaticCallVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\StaticCall) {
-            $name = $node->class->toString();
+            $name = $node->class->getType();
             $methodName = $node->name->toString();
 
             if (Arr::matches($name, $this->names, true) || Arr::matches("{$name}::{$methodName}", $this->names, true)) {

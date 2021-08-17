@@ -37,6 +37,8 @@ class NameResolver
             }
 
             if ($node instanceof Node\Expr\StaticCall) {
+                $name = $node->name->toString();
+                $class = $node->class->getType();
                 return [$class, "{$class}::{$name}"];
             }
 
