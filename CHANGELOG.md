@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.10.3 - 2021-08-17
+
+- fix another bug with resolving static calls
+
 ## 1.10.2 - 2021-08-17
 
 - fix bug with resolving static method call names
