@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.10.2 - 2021-08-17
+
+- fix bug with resolving static method call names
+
 ## 1.10.1 - 2021-08-03
 
 - fix nested array bug in `Arr::matchesAny()`
