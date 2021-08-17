@@ -289,4 +289,14 @@ class SearcherTest extends TestCase
 
         $this->assertMatchesSnapshot($results->results);
     }
+
+    /** @test */
+    public function it_can_handle_nullable_parameters()
+    {
+        $results = $this->getSearcher()
+            ->functions(['testFive'])
+            ->search(tests_path('data/file5.php'));
+
+        $this->assertMatchesSnapshot($results->results);
+    }
 }
