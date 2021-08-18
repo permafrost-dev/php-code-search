@@ -25,10 +25,12 @@ class AssignmentVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\Assign) {
-            if (Arr::matches($node->var->name, $this->names, true)) {
-                $resultNode = AssignmentNode::create($node);
+            if (! $node->var instanceof Node\Expr\ArrayDimFetch) {
+                if (Arr::matches($node->var->name, $this->names, true)) {
+                    $resultNode = AssignmentNode::create($node);
 
-                $this->results->add($resultNode, $resultNode->location());
+                    $this->results->add($resultNode, $resultNode->location());
+                }
             }
         }
     }
