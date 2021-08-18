@@ -16,15 +16,7 @@ class VariableNode implements ResultNode
 
     public function __construct(Node $node)
     {
-
         $this->name = NameResolver::resolve($node);
-
-//        if ($node instanceof Node\Expr\New_) {
-//            $this->name = $node->class->toString();
-//        } else {
-//            $this->name = $node->name;
-//        }
-
         $this->location = GenericCodeLocation::createFromNode($node);
     }
 
