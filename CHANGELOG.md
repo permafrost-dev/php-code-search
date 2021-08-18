@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.10.5 - 2021-08-17
+
+- various bug fixes, code cleanup
+
 ## 1.10.4 - 2021-08-17
 
 - fix nullable parameter type bug
