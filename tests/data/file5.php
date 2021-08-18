@@ -14,5 +14,3 @@ class MyClassFive
 }
 
 MyClassFive::one(null);
-
-
