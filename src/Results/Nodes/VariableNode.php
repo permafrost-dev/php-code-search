@@ -4,6 +4,7 @@ namespace Permafrost\PhpCodeSearch\Results\Nodes;
 
 use Permafrost\PhpCodeSearch\Code\GenericCodeLocation;
 use Permafrost\PhpCodeSearch\Results\Nodes\Traits\HasLocation;
+use Permafrost\PhpCodeSearch\Support\NameResolver;
 use PhpParser\Node;
 
 class VariableNode implements ResultNode
@@ -15,11 +16,14 @@ class VariableNode implements ResultNode
 
     public function __construct(Node $node)
     {
-        if ($node instanceof Node\Expr\New_) {
-            $this->name = $node->class->toString();
-        } else {
-            $this->name = $node->name;
-        }
+
+        $this->name = NameResolver::resolve($node);
+
+//        if ($node instanceof Node\Expr\New_) {
+//            $this->name = $node->class->toString();
+//        } else {
+//            $this->name = $node->name;
+//        }
 
         $this->location = GenericCodeLocation::createFromNode($node);
     }

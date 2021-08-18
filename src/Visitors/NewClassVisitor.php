@@ -4,6 +4,8 @@ namespace Permafrost\PhpCodeSearch\Visitors;
 
 use Permafrost\PhpCodeSearch\Results\FileSearchResults;
 use Permafrost\PhpCodeSearch\Results\Nodes\VariableNode;
+use Permafrost\PhpCodeSearch\Support\Arr;
+use Permafrost\PhpCodeSearch\Support\NameResolver;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
@@ -23,9 +25,11 @@ class NewClassVisitor extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Expr\New_) {
-            $resultNode = VariableNode::create($node);
+            if (Arr::matches(NameResolver::resolve($node->class), $this->names, true)) {
+                $resultNode = VariableNode::create($node);
 
-            $this->results->add($resultNode, $resultNode->location());
+                $this->results->add($resultNode, $resultNode->location());
+            }
         }
     }
 }
