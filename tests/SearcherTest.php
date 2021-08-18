@@ -295,6 +295,7 @@ class SearcherTest extends TestCase
     {
         $results = $this->getSearcher()
             ->functions(['testFive'])
+            ->static(['one'])
             ->search(tests_path('data/file5.php'));
 
         $this->assertMatchesSnapshot($results->results);
