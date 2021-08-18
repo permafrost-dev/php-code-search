@@ -2,7 +2,3 @@
     location: { column: 0, endLine: 13, startLine: 13 }
     node: { variableName: obj, value: { subNodeNames: [class, args], type: Expr_New, line: 13, startLine: 13, endLine: 13, startTokenPos: -1, endTokenPos: -1, startFilePos: -1, endFilePos: -1, comments: {  }, docComment: null, attributes: { startLine: 13, endLine: 13 }, class: { subNodeNames: [parts], first: MyClass, last: MyClass, unqualified: true, qualified: false, fullyQualified: false, relative: false, specialClassName: false, type: Name, line: 13, startLine: 13, endLine: 13, startTokenPos: -1, endTokenPos: -1, startFilePos: -1, endFilePos: -1, comments: {  }, docComment: null, attributes: { startLine: 13, endLine: 13 }, parts: [MyClass] }, args: {  } }, name: obj, location: { column: 0, endLine: 13, startLine: 13 } }
     snippet: null
--
-    location: { column: 0, endLine: 13, startLine: 13 }
-    node: { name: MyClass, location: { column: 0, endLine: 13, startLine: 13 } }
-    snippet: null
