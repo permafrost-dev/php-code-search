@@ -1,6 +1,4 @@
 <?php
 
-    $checkInResponse = CheckInResponse
-        ::whereCheckInRequestUuid($requestUuid)
-        ::whereSessionRegistrationUuid($sessionRegistration->uuid)
+    $checkInResponse = CheckInResponse::whereCheckInRequestUuid($requestUuid)::whereSessionRegistrationUuid($sessionRegistration->uuid)
         ->firstOrFail();
