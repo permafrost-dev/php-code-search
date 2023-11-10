@@ -1,21 +1,14 @@
 version: 2
 updates:
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-    labels:
-      - "github-actions"
-      - "dependencies"
+      interval: "weekly"
 
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     allow:
       - dependency-type: "direct"
     versioning-strategy: increase-if-necessary
-    labels:
-      - "composer"
-      - "dependencies"
