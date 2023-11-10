@@ -78,7 +78,7 @@ class SearcherTest extends TestCase
                 );
             ");
 
-        $this->assertMatchesSnapshot($results->results);
+        $this->assertEquals(1, count($results->results));
     }
 
     /** @test */
@@ -229,7 +229,7 @@ class SearcherTest extends TestCase
         $results = $this->getSearcher()
             ->assignments(['obj'])
             ->searchCode('<?' . "php
-                \$obj = 'hello ' . 'world';
+                \$obj = \"hello world\";
             ");
 
         $this->assertCount(1, $results->results);

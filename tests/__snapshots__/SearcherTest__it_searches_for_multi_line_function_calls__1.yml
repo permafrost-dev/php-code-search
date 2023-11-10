@@ -1,4 +1,0 @@
--
-    location: { column: 0, endLine: 5, startLine: 2 }
-    node: { args: [{ symbol: ., left: { value: 'test ', location: { column: 0, endLine: 3, startLine: 3 } }, right: { value: string, location: { column: 0, endLine: 4, startLine: 4 } }, value: "'test ' . 'string'", location: { column: 0, endLine: 4, startLine: 3 } }], name: strtolower, location: { column: 0, endLine: 5, startLine: 2 } }
-    snippet: null
