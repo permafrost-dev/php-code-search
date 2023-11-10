@@ -29,8 +29,8 @@ class BinaryOperationNode implements OperationNode, ValueNode
         $this->left = ExpressionTransformer::parserNodeToResultNode($node->left);
         $this->right = ExpressionTransformer::parserNodeToResultNode($node->right);
 
-//        $this->value = '';
-//        if (property_exists($this->left, 'value') && property_exists($this->right, 'value')) {
+        //        $this->value = '';
+        //        if (property_exists($this->left, 'value') && property_exists($this->right, 'value')) {
         $leftValue = '';
         $rightValue = '';
 

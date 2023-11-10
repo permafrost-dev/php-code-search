@@ -1,20 +1,20 @@
 <?php
-    ray('12345');
+ray('12345');
 
-    printf("%s\n", strtolower('TEST'));
+printf("%s\n", strtolower('TEST'));
 
-    echo strtoupper('test') . PHP_EOL;
+echo strtoupper('test') . PHP_EOL;
 
-    function test1()
-    {
-        Ray::rateLimiter()->count(5);
-    }
+function test1()
+{
+    Ray::rateLimiter()->count(5);
+}
 
-    $obj = new MyClass();
+$obj = new MyClass();
 
-    $obj->withData([123])->send();
+$obj->withData([123])->send();
 
-    $isDisabled = AnotherClass::disabled();
-    $isEnabled = AnotherClass::enabled();
+$isDisabled = AnotherClass::disabled();
+$isEnabled = AnotherClass::enabled();
 
-    $test = Ray::$someProperty->enable();
+$test = Ray::$someProperty->enable();
