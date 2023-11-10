@@ -1,4 +1,4 @@
 -
     location: { column: 0, endLine: 2, startLine: 2 }
-    node: { variableName: obj, value: { symbol: ., left: { value: 'hello ', location: { column: 0, endLine: 2, startLine: 2 } }, right: { value: world, location: { column: 0, endLine: 2, startLine: 2 } }, value: '''hello '' . ''world''', location: { column: 0, endLine: 2, startLine: 2 } }, name: obj, location: { column: 0, endLine: 2, startLine: 2 } }
+    node: { variableName: obj, value: { symbol: ., left: { value: 'hello ', location: { column: 0, endLine: 2, startLine: 2 } }, right: { value: world, location: { column: 0, endLine: 2, startLine: 2 } }, value: "'hello ' . 'world'", location: { column: 0, endLine: 2, startLine: 2 } }, name: obj, location: { column: 0, endLine: 2, startLine: 2 } }
     snippet: null

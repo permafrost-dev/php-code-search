@@ -1,4 +1,4 @@
 -
-    location: { column: 0, endLine: 6, startLine: 3 }
-    node: { variableName: { subNodeNames: [name], specialClassName: false, type: Identifier, line: 5, startLine: 5, endLine: 5, startTokenPos: -1, endTokenPos: -1, startFilePos: -1, endFilePos: -1, comments: {  }, docComment: null, attributes: { startLine: 5, endLine: 5 }, name: whereSessionRegistrationUuid }, methodName: firstOrFail, name: $whereSessionRegistrationUuid->firstOrFail, args: {  }, location: { column: 0, endLine: 6, startLine: 3 } }
+    location: { column: 0, endLine: 4, startLine: 3 }
+    node: { variableName: { subNodeNames: [name], specialClassName: false, type: Identifier, line: 3, startLine: 3, endLine: 3, startTokenPos: -1, endTokenPos: -1, startFilePos: -1, endFilePos: -1, comments: {  }, docComment: null, attributes: { startLine: 3, endLine: 3 }, name: whereSessionRegistrationUuid }, methodName: firstOrFail, name: $whereSessionRegistrationUuid->firstOrFail, args: {  }, location: { column: 0, endLine: 4, startLine: 3 } }
     snippet: null
