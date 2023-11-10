@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.11.0 - 2023-11-10
+
+- update helper function names to avoid issues when running in a Laravel application, thanks to @Hypnopompia for reporting the issue.
+
 ## 1.10.6 - 2023-11-10
 
 - fix warnings in PHP 8.1, closes #31
