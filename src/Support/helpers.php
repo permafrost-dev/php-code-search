@@ -7,7 +7,7 @@ if (! function_exists('opt')) {
     /**
      * "optional" helper function
      * @param $value
-     * @return mixed|__anonymous@237
+     * @return mixed
      */
     function opt($value)
     {
