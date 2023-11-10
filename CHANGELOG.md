@@ -4,6 +4,10 @@ All notable changes to `php-code-search` will be documented in this file.
 
 ---
 
+## 1.10.6 - 2023-11-10
+
+- fix warnings in PHP 8.1, closes #31
+
 ## 1.10.5 - 2021-08-17
 
 - various bug fixes, code cleanup
