@@ -30,7 +30,7 @@ class StatementTransformer
 
     public static function parserNodesToResultNode(array $nodes): array
     {
-        return collect($nodes)->map(function ($node) {
+        return collection($nodes)->map(function ($node) {
             return self::parserNodeToResultNode($node);
         })->toArray();
     }

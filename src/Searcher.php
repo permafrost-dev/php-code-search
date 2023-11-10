@@ -180,7 +180,7 @@ class Searcher
     {
         $nodes = (new NodeFinder())->findInstanceOf($ast, $class);
 
-        return collect($nodes)->filter(function (Node $node) use ($names) {
+        return collection($nodes)->filter(function (Node $node) use ($names) {
             $name = NameResolver::resolve($node) ?? false;
 
             return $name && Arr::matchesAny($name, $names, true);

@@ -178,7 +178,7 @@ class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
         $values = $this->getArrayableItems($values);
 
         return $this->filter(function ($item) use ($key, $values, $strict) {
-            return in_array(data_get($item, $key), $values, $strict);
+            return in_array(get_data($item, $key), $values, $strict);
         });
     }
 
@@ -210,7 +210,7 @@ class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
         }
 
         return function ($item) use ($key, $operator, $value) {
-            $retrieved = data_get($item, $key);
+            $retrieved = get_data($item, $key);
 
             $strings = array_filter([$retrieved, $value], function ($value) {
                 return is_string($value) || (is_object($value) && method_exists($value, '__toString'));

@@ -3,8 +3,13 @@
 use Permafrost\PhpCodeSearch\Support\Arr;
 use Permafrost\PhpCodeSearch\Support\Collections\Collection;
 
-if (! function_exists('optional')) {
-    function optional($value)
+if (! function_exists('opt')) {
+    /**
+     * "optional" helper function
+     * @param $value
+     * @return mixed|__anonymous@237
+     */
+    function opt($value)
     {
         if (! $value) {
             return new class {
@@ -20,12 +25,12 @@ if (! function_exists('optional')) {
             };
         }
 
-        return value($value);
+        return val($value);
     }
 }
 
 /** @codeCoverageIgnore */
-if (! function_exists('data_get')) {
+if (! function_exists('get_data')) {
     /**
      * Get an item from an array or object using "dot" notation.
      *
@@ -34,7 +39,7 @@ if (! function_exists('data_get')) {
      * @param  mixed  $default
      * @return mixed
      */
-    function data_get($target, $key, $default = null)
+    function get_data($target, $key, $default = null)
     {
         if (is_null($key)) {
             return $target;
@@ -53,13 +58,13 @@ if (! function_exists('data_get')) {
                 if ($target instanceof Collection) {
                     $target = $target->all();
                 } elseif (! is_iterable($target)) {
-                    return value($default);
+                    return val($default);
                 }
 
                 $result = [];
 
                 foreach ($target as $item) {
-                    $result[] = data_get($item, $key);
+                    $result[] = get_data($item, $key);
                 }
 
                 return in_array('*', $key) ? Arr::collapse($result) : $result;
@@ -70,7 +75,7 @@ if (! function_exists('data_get')) {
             } elseif (is_object($target) && isset($target->{$segment})) {
                 $target = $target->{$segment};
             } else {
-                return value($default);
+                return val($default);
             }
         }
 
@@ -79,21 +84,21 @@ if (! function_exists('data_get')) {
 }
 
 /** @codeCoverageIgnore */
-if (! function_exists('value')) {
+if (! function_exists('val')) {
     /**
      * Return the default value of the given value.
      *
      * @param  mixed  $value
      * @return mixed
      */
-    function value($value, ...$args)
+    function val($value, ...$args)
     {
         return $value instanceof Closure ? $value(...$args) : $value;
     }
 }
 
-if (! function_exists('collect')) {
-    function collect($items)
+if (! function_exists('collection')) {
+    function collection($items)
     {
         return new Collection($items);
     }

@@ -68,7 +68,7 @@ class NameResolver
 
     public static function resolveAll(array $nodes): array
     {
-        return collect($nodes)->each(function ($node) {
+        return collection($nodes)->each(function ($node) {
             return self::resolve($node);
         })->filter()->all();
     }

@@ -10,7 +10,7 @@ trait BootsTraits
     {
         $reflectionObject = new \ReflectionObject($this);
 
-        collect($reflectionObject->getTraitNames())
+        collection($reflectionObject->getTraitNames())
             ->map(function (string $name) {
                 if (strpos($name, __NAMESPACE__) === false) {
                     return null;

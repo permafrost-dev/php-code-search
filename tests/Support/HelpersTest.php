@@ -9,7 +9,7 @@ class HelpersTest extends TestCase
     /** @test */
     public function it_optionally_allows_chaining_method_calls_when_passed_a_null_argument()
     {
-        $this->assertNull(optional(null)->test());
+        $this->assertNull(opt(null)->test());
     }
 
     /** @test */
@@ -22,6 +22,6 @@ class HelpersTest extends TestCase
             }
         };
 
-        $this->assertEquals(123, optional($class)->test());
+        $this->assertEquals(123, opt($class)->test());
     }
 }

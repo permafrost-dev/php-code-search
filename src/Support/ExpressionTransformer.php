@@ -35,7 +35,7 @@ class ExpressionTransformer
 {
     public static function parserNodesToResultNodes(array $nodes): array
     {
-        return collect($nodes)->map(function ($node) {
+        return collection($nodes)->map(function ($node) {
             return static::parserNodeToResultNode($node);
         })->all();
     }

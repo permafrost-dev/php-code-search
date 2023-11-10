@@ -26,7 +26,7 @@ class ParameterNode implements ResultNode
         if ($node->type instanceof Node\NullableType) {
             $this->type = $node->getType();
         } else {
-            $this->type = optional($node->type)->toString();
+            $this->type = opt($node->type)->toString();
         }
 
         $this->default = $node->default ? ExpressionTransformer::parserNodeToResultNode($node->default) : null;

@@ -46,7 +46,7 @@ class Arr
             $strings = [$strings];
         }
 
-        return collect($strings)->map(function ($str) use ($values, $allowRegex) {
+        return collection($strings)->map(function ($str) use ($values, $allowRegex) {
             if (is_array($str)) {
                 return self::matchesAny($str, $values, $allowRegex);
             }
@@ -123,7 +123,7 @@ class Arr
     {
         if (is_null($callback)) {
             if (empty($array)) {
-                return value($default);
+                return val($default);
             }
 
             foreach ($array as $item) {
@@ -137,7 +137,7 @@ class Arr
             }
         }
 
-        return value($default);
+        return val($default);
     }
 
     /**
@@ -151,7 +151,7 @@ class Arr
     public static function last(array $array, callable $callback = null, $default = null)
     {
         if (is_null($callback)) {
-            return empty($array) ? value($default) : end($array);
+            return empty($array) ? val($default) : end($array);
         }
 
         return static::first(array_reverse($array, true), $callback, $default);
@@ -172,7 +172,7 @@ class Arr
         [$value, $key] = static::explodePluckParameters($value, $key);
 
         foreach ($array as $item) {
-            $itemValue = data_get($item, $value);
+            $itemValue = get_data($item, $value);
 
             // If the key is "null", we will just append the value to the array and keep
             // looping. Otherwise we will key the array using the value of the key we
@@ -180,7 +180,7 @@ class Arr
             if (is_null($key)) {
                 $results[] = $itemValue;
             } else {
-                $itemKey = data_get($item, $key);
+                $itemKey = get_data($item, $key);
 
                 if (is_object($itemKey) && method_exists($itemKey, '__toString')) {
                     $itemKey = (string) $itemKey;
