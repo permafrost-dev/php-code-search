@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "nikic/php-parser": "^4.10",
+        "nikic/php-parser": "^5.0",
         "permafrost-dev/code-snippets": "^1.2.0"
     },
     "require-dev": {
