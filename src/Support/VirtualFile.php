@@ -18,7 +18,7 @@ class VirtualFile extends File
 
     public function unlink()
     {
-        if (dirname($this->path) !== sys_get_temp_dir()) {
+        if (!strpos(dirname($this->path), sys_get_temp_dir())) {
             return;
         }
 
