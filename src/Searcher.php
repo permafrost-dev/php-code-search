@@ -23,6 +23,7 @@ use PhpParser\Node\Stmt;
 use PhpParser\NodeFinder;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
+use PhpParser\PhpVersion;
 
 class Searcher
 {
@@ -55,7 +56,7 @@ class Searcher
 
     public function __construct($parser = null)
     {
-        $this->parser = $parser ?? (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+        $this->parser = $parser ?? (new ParserFactory())->createForHostVersion();
     }
 
     public function assignments(array $varNames): self
