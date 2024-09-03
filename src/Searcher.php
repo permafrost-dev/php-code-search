@@ -23,7 +23,6 @@ use PhpParser\Node\Stmt;
 use PhpParser\NodeFinder;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
-use PhpParser\PhpVersion;
 
 class Searcher
 {
