@@ -13,7 +13,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.2, 8.1, 8.0, 7.4]
+        php: [8.4, 8.2, 8.1, 8.0, 7.4]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -36,7 +36,12 @@ jobs:
       - name: Install dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction
 
-      - name: Execute tests
+      - name: Execute tests (PHP 8.4 -  unit suite only)
+        if: matrix.php == '8.4'
+        run: ./vendor/bin/phpunit --testsuite Unit
+
+      - name: Execute tests (older PHP - full suite with snapshots)
+        if: matrix.php != '8.4'
         run: ./vendor/bin/phpunit --coverage-clover clover.xml -d --without-creating-snapshots
 
       - name: Upload coverage to Codecov
