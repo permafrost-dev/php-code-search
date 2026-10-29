@@ -25,7 +25,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "spatie/phpunit-snapshot-assertions": "^4.2"
+        "spatie/phpunit-snapshot-assertions": "^4.2",
+        "symfony/property-access": "^5.4",
+        "symfony/property-info": "^5.4",
+        "symfony/serializer": "^5.4"
     },
     "autoload": {
         "psr-4": {

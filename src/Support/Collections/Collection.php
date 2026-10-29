@@ -37,7 +37,7 @@ class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
         return $this;
     }
 
-    public function filter(callable $callback = null): self
+    public function filter(?callable $callback = null): self
     {
         if ($callback) {
             return new static(Arr::where($this->items, $callback));
@@ -53,7 +53,7 @@ class Collection implements Arrayable, \ArrayAccess, \Countable, \Iterator
      * @param  mixed  $default
      * @return mixed
      */
-    public function first(callable $callback = null, $default = null)
+    public function first(?callable $callback = null, $default = null)
     {
         return Arr::first($this->items, $callback, $default);
     }
